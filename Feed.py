@@ -28,10 +28,7 @@ class RSSFeed(Feed):
 
     def getFeed(self):
 	"""Builds an ultra-liberally parsed feed object from the URL."""
-	try:
-	    return feedparser.parse(self.uri)
-	except (socket.timeout, UnicodeDecodeError), e:
-	    sys.stderr.write("Feed: %s (%s)\n%s\n" % (self.name, self.uri, e))
+	return feedparser.parse(self.uri)
 
 
 class SimulatedFeed(Feed):
@@ -80,11 +77,8 @@ class HTMLFeed(SimulatedFeed):
 
     def getLink(self):
 	"""Reads the HTML page and extracts the link and title."""
-	try:
-	    f = urllib2.urlopen(self.uri)
-	    html = f.read().decode(self.encoding)
-	except socket.timeout:
-	    return
+	f = urllib2.urlopen(self.uri)
+	html = f.read().decode(self.encoding)
 	# resolve relative URIs
 	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding)
 	m = self.regex.search(html)

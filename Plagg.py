@@ -3,7 +3,7 @@ corresponding to the items in the feeds."""
 
 # $Id$
 
-import os, time, xml.sax
+import os, sys, time, xml.sax
 
 import Feed, Entries
 
@@ -83,6 +83,10 @@ class Plagg(xml.sax.handler.ContentHandler):
 	feed.attrs = attrs
 
 	# get and process this feed
-	f = feed.getFeed()
+	try:
+	    f = feed.getFeed()
+	except Exception, e:
+	    sys.stderr.write("Feed: %s (%s)\n%s\n" % (feed.name, feed.uri, e))
+	    return
 	e = Entries.BlosxomEntries(os.path.join(self.newspath, nick))
 	e.processFeed(f)
