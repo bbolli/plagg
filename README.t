@@ -123,7 +123,7 @@ I use to generate my "blogroll":http://www.drbeat.li/news/news.opml.
 h3. 3.3. HTML scraping
 
 Set the @type@ to @"x-plagg-html"@. In this case, plagg reads the HTML page
-whose URL is in the @link@ attribute. It then uses the @regex@ attribute
+whose URL is in the @htmlUrl@ attribute. It then uses the @regex@ attribute
 to extract an item title, a link and, optionally, a body.
 I use this type to grab a few comics off sites that don't provide an RSS feed.
 
@@ -132,13 +132,13 @@ There are two ways to specify the regex:
 dl. Using named groups ("@(?P<name>...)@" regex syntax): This requires you to include in the regex three named groups called @link@, @title@ and @body@, which are use as their name indicates (cf. APOD). If you want to scrape an item body, you must use this kind of regex.
 Using numbered groups ("@(...)@" regex syntax): The first group defines the link, the second one defines the title (cf. Dilbert).
 
-In each case, at the moment the regex is matched against the item body,
+In each case, at the moment the regex is matched against the page's HTML source,
 all relative URLs have already been converted to absolute ones, which means
 that you can't simply copy a regex from a page's HTML source.
 
 Example:
 
-literal.. <pre>&lt;outline text="Dilbert" type="x-plagg-html" link="http://www.dilbert.com/"
+literal.. <pre>&lt;outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/"
     regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.[gj][ip][fg])&quot;"
     hours="8-10"/&gt;
 </pre>
@@ -147,7 +147,7 @@ h3. 3.4. Computed items
 
 Set @type@ to @"x-plagg-computed"@, and set the @commands@ attribute to the
 Python commands that should be executed. These commands should set @self.itemLink@
-and optionally @self.itemTitle@ (cf. Garfield)
+and optionally @self.itemTitle@ and @self.itemBody@ (cf. Garfield)
 
 Example:
 
