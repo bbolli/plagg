@@ -1,7 +1,7 @@
 h1. plagg, a RSS aggregator
 
 
-h2. 0. What is this?
+h2(#what). 0. What is this?
 
 plagg is a weblog/news aggregator that works in conjunction with
 "Rael Dornfest's":http://www.raelity.org "blosxom":http://www.blosxom.com.
@@ -12,7 +12,7 @@ generates blosxom blog entries from these feeds. You can see
 examples of plagg's output "on my news page":http://www.drbeat.li/news.
 
 
-h2. 1. Installation
+h2(#install). 1. Installation
 
 # Download and install "Mark Pilgrim's":http://diveintomark.org "Ultra-liberal Feed Parser 3.3":http://feedparser.org/
 # Download "plagg":plagg.tar.gz
@@ -22,15 +22,15 @@ h2. 1. Installation
 # Run @plagg@ _opmlfile_ _newsdir_ as often as you like from a cron job
 
 
-h2. 2. Usage
+h2(#usage). 2. Usage
 
 h3. 2.1. Synopsis
 
-pre. plagg -nvVh [opmlfile [destdir [nickname ...]]]
+pre. plagg -nvVh [opmlfile [newsdir [nickname ...]]]
 
 h3. 2.2. Options
 
-dl. -n: Write a file @Latest.txt@ that contains the new entries to @newsdir@.
+dl. -n: Write a file _newsdir_/@Latest.txt@ that contains the new entries.
 -v: Be verbose. May be repeated for additional effect.
 -V: Display version information and exit.
 -h: Display usage information and exit.
@@ -38,7 +38,7 @@ dl. -n: Write a file @Latest.txt@ that contains the new entries to @newsdir@.
 h3. 2.3. Arguments
 
 dl. opmlfile: The OPML file containing the feeds to read and generate news items from.
-destdir: The destination directory where the news items are stored. This should be under your blosxom data directory.
+newsdir: The destination directory in subdirectories of which the news items are stored. This should be inside your blosxom data directory so that blosxom can find and display the items.
 nickname: If given, updates only the feeds with the given nicknames (ignoring their @hours@ attribute), otherwise updates all feeds.
 
 The default arguments for opmlfile and destdir can be set in the @plagg@ script.
@@ -99,8 +99,9 @@ h4. 3.1.4. Overriding the directory name
 
 *@nick@="string"*
 
-Sets the "nickname" of a feed. The nickname is used as directory name and
-for selecting a single feed for updating. The default nickname is the lowercase
+Sets the "nickname" of a feed. The nickname is used as directory name under
+_newsdir_ and when selectively updating with the _nickname_ command line
+argument. The default nickname of an outline element is the lowercase
 @text@ attribute.
 
 h3. 3.2. RSS/Atom feeds
@@ -116,7 +117,7 @@ literal.. <pre>&lt;outline text="Linux Weekly News" nick="lwn" type="rss"
 </pre>
 
 p. The @htmlUrl@ attribute is not used by @plagg@ itself, but by @opml.xsl@, which
-I use to generate my "blogroll":http://www.drbeat.li/news/news.html.
+I use to generate my "blogroll":http://www.drbeat.li/news/news.opml.
 
 
 h3. 3.3. HTML scraping
@@ -195,20 +196,20 @@ h2(#changelog). 4. Changelog
 * Version 1.2, ==2004-11-25==:
 ** Print an exception trace only at log level 2 and above
 ** Generate a feed title attribute with the tagline
-** Send the correct User-Agent string which was lost by using httpcache.py (patch sent to and accepted by Joe Gregorio)
+** Send the correct User-Agent string which was lost by using httpcache.py (patch sent to and "accepted by":http://bitworking.org/news/httpcache_py_1_0_2 Joe Gregorio)
 * Version 1.3, ==2004-12-29==:
 ** Added the @-n@ option
 ** Process feeds only if they have changed
 ** Allow more than one nickname on the command line
 
 
-h2. 5. TODO
+h2(#todo). 5. TODO
 
 * Should use @skipHours@ from the RSS feed instead of using @hours@
 * Support RSS enclosures
 
 
-h2. 6. Author
+h2(#author). 6. Author
 
 Beat Bolli @<me&#43;plagg&#64;drbeat&#46;li>@, http://www.drbeat.li/py/plagg
 
