@@ -28,7 +28,7 @@ def _filename(title, desc):
 def _encode(text):
     """Converts a unicode string to its iso-8859-15 equivalent."""
     if isinstance(text, unicode):
-	text = text.encode(Plagg.ENCODING, 'xmlcharrefreplace')
+	return text.encode(Plagg.ENCODING, 'xmlcharrefreplace')
     return text
 
 def _decode(text):
@@ -80,7 +80,8 @@ class BlosxomEntries(Entries):
 	link = item.get('link')
 	if title and link:
 	    title = _linktag(link, title)
-	body = item.get('description', '').strip()
+	body = item.get('content', [{}])[0].get('value') or item.get('description', '')
+	body = body.strip()
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
 	footer = '<p class="blosxomEntryFoot">' + item.get('date', '')
@@ -97,13 +98,6 @@ class BlosxomEntries(Entries):
 	title, body, footer = self.makeEntry(channel, item)
 	entry = u'\n'.join(map(_decode, [title, body, footer]))
 
-	# get publication date/time
-	mdate = item.get('date_parsed')
-	#if not mdate:
-	#    mdate = channel.get('date_parsed')
-	if mdate:
-	    mdate = time.mktime(mdate)	# convert date/time 9-tuple to timestamp
-
 	# determine this entry's filename
 	fn = _filename(title, body)
 	if not fn: return
@@ -119,7 +113,9 @@ class BlosxomEntries(Entries):
 	f.close()
 
 	# set modification time if present
+	mdate = item.get('date_parsed')
 	if mdate:
+	    mdate = time.mktime(mdate)	# convert date/time 9-tuple to timestamp
 	    os.utime(fname, (mdate, mdate))
 
 	# logging
@@ -128,7 +124,7 @@ class BlosxomEntries(Entries):
 	    if self.lastChannel != currentChannel:
 		print currentChannel
 		self.lastChannel = currentChannel
-	    print '  ' + (_markup.sub('', title).encode('iso-8859-1') or fn)
+	    print '  ' + _encode(_markup.sub('', title) or fn)
 
 
 def _test():
