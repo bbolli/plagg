@@ -31,10 +31,17 @@ class Plagg(xml.sax.handler.ContentHandler):
     """The application class. Generates entries from each feed in the OPML file."""
 
     def __init__(self, opmlfile, newspath, nick=None):
+	self.opmlfile = opmlfile
 	self.newspath = newspath
 	self.nick = nick
+	self.logging = self.errors = self.entries = 0
 	xml.sax.handler.ContentHandler.__init__(self)
-	xml.sax.parse(opmlfile, self)
+
+    def setLogging(self, logging):
+	self.logging = logging
+
+    def startOPML(self):
+	xml.sax.parse(self.opmlfile, self)
 
     def startElement(self, name, attrs):
 	if name == 'outline':
@@ -60,7 +67,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	# create a Feed instance based on the OPML type attribute
 	kind = attrs.get('type', 'rss').lower()
 	if kind == 'rss':
-	    uri = attrs.get('xmlurl', '')
+	    uri = attrs.get('xmlurl')
 	    if not uri: return
 	    feed = Feed.RSSFeed(name, uri)
 	elif kind == 'x-bb-html':
@@ -69,8 +76,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    feed = Feed.HTMLFeed(name, uri, regex)
 	elif kind == 'x-bb-suite':
 	    uri, suite = attrs.get('link'), attrs.get('suite')
-	    if not suite:
-	        return
+	    if not suite: return
 	    feed = Feed.SuiteFeed(name, uri, suite)
 	else:
 	    return
@@ -83,6 +89,8 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    feed.getFeed()
 	except Exception, e:
 	    sys.stderr.write("Feed: %s (%s)\n%s\n" % (feed.name, feed.uri, str(e)))
+	    self.errors += 1
 	    return
 	e = Entries.BlosxomEntries(os.path.join(self.newspath, nick))
-	e.processFeed(feed)
+	e.logging = self.logging
+	self.entries += e.processFeed(feed)

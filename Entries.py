@@ -27,7 +27,7 @@ def _filename(title, desc):
     return fn[:15] + '...' + fn[-5:]
 
 def _encode(text):
-    """Converts a unicode string to its iso-8859-15 equivalent."""
+    """Converts a unicode string to its encoded equivalent."""
     if isinstance(text, unicode):
 	return text.encode(Plagg.ENCODING, 'xmlcharrefreplace')
     return text
@@ -44,16 +44,20 @@ class Entries:
     Processes blog entries from a feed object."""
 
     def processFeed(self, feed):
-	"""Processes each entry of a feed object."""
-	if not feed.feed: return	# skip empty feeds
+	"""Processes each entry of a feed object.
+	Returns the number of new entries."""
+	if not feed.feed: return 0	# skip empty feeds
 	self.feed = feed
 	channel = feed.feed['channel']
 	items = feed.feed['items']
+	entries = 0
 	# Process the entries
 	for item in items:
 	    if item.has_key('link'):
 		item['link'] = feed.replaceLink(item['link'])
-	    self.processItem(channel, item)
+	    if self.processItem(channel, item):
+		entries += 1
+	return entries
 
     def processItem(self, channel, item):
 	"""Processes an entry for one RSS item. Subclasses must implement this."""
@@ -92,6 +96,8 @@ class BlosxomEntries(Entries):
 	footer = '<p class="blosxomEntryFoot">' + item.get('date', '')
 	if link and not title:
 	    footer += '\n[%s]' % _linktag(link, 'Link')
+	if item.has_key('comments'):
+	    footer += '\n[%s]' % _linktag(item['comments'], 'Comments')
 	footer += '\n[%s]\n</p>\n' % _linktag(channel['link'], channel['title'])
 
 	return title, body, footer
@@ -131,6 +137,7 @@ class BlosxomEntries(Entries):
 		self.lastChannel = currentChannel
 	    print '  ' + _encode(_markup.sub('', title) or fn)
 
+	return 1
 
 def _test():
     import Feed
@@ -145,4 +152,5 @@ def _test():
 	klass, nick, args = t[0], t[1], t[2:]
 	feed = klass(nick, *args).getFeed()
 	e = BlosxomEntries('test/' + nick)
+	e.logging = 1
 	e.processEntries(feed)
