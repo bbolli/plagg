@@ -3,7 +3,7 @@ ALL: plagg.tar.gz README.inc
 .PHONY: dist install
 
 plagg.tar.gz: README README.html MANIFEST setup.py plagg Plagg/*.py news.opml opml.xsl
-	tar czf plagg.tar.gz $^
+	tar -czf $@ $^
 
 README.inc: README.t
 	textile -o1 <$^ >$@
