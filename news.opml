@@ -18,7 +18,7 @@
 			<outline text="Symlink" type="rss" link="http://www.symlink.ch/" xmlUrl="http://www.symlink.ch/symlinkch.rss"/>
 			<outline text="WiFi Network News" nick="wifi" type="rss" link="http://wifinetnews.com/" xmlUrl="http://wifinetnews.com/xml/rss.xml"/>
 			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
-			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://stuff.vandervossen.net/feeds/dailypython.rss"/>
+			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://www.pythonware.com/daily/rss2.xml"/>
 			<outline text="SecurityFocus" nick="bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/news.xml"/>
 		</outline>
 		<outline text="Mobile">
