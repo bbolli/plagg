@@ -2,9 +2,9 @@
 
 # $Id$
 
-import sys, re, socket, urllib2
+import sys, os, re, socket, urllib2
 
-import feedparser	# use at least version 3 beta 22!
+import feedparser	# needs at least version 3 beta 22!
 feedparser.USER_AGENT = 'plagg/%s ' % re.sub('\D', '', '$Rev$') + feedparser.USER_AGENT
 #feedparser._debug = 1
 
@@ -41,7 +41,7 @@ class HTMLFeed(Feed):
     self.regex must contain one to three named groups. The group 'link' returns
     the extracted link, the optional group 'title' contains the item title, the
     third group 'body' returns the entry's body text. All relative links will
-    already have been converted to absolute."""
+    already have been converted to absolute, and img tags will end with " />"."""
 
     RSS_TEMPLATE = """\
 <?xml version="1.0" encoding="%(encoding)s"?>
@@ -86,11 +86,35 @@ class HTMLFeed(Feed):
 		    self.itemTitle = m.group(2)
 	    except IndexError:
 		pass
+	else:
+	    sys.stderr.write("Regex '%s' not found in page:\n\n----\n%s----\n" % (
+		self.regex.pattern, html
+	    ))
 
     def getFeed(self):
 	self.getLink()
 	if not self.itemLink:
 	    return None
+
+	# If the savepath and saveurl attributes are present,
+	# save the linked-to item and adjust the itemLink to
+	# point to the local copy. Allow to fake the referrer
+	# while getting the remote file.
+	attr = self.attrs.get
+	if attr('savepath') and attr('saveurl'):
+	    basename = re.search('([^/]+)$', self.itemLink).group(1)
+	    localfile = os.path.join(attr('savepath'), basename)
+	    # only get and save the file if it doesn't exist yet
+	    if not os.path.isfile(localfile):
+		req = urllib2.Request(self.itemLink)
+		req.add_header('Referer', attr('referrer') or self.uri)
+		image = urllib2.urlopen(req).read()
+		f = file(localfile, 'wb')
+		f.write(image)
+		f.close()
+	    # adjust the itemLink in every case
+	    self.itemLink = attr('saveurl') + '/' + basename
+
 	rss = self.RSS_TEMPLATE % self.__dict__
 	return feedparser.parse(rss)
 

@@ -69,6 +69,9 @@ class Plagg(xml.sax.handler.ContentHandler):
 	else:
 	    return
 
+	# let the feed object know about the attribute dict
+	feed.attrs = attrs
+
 	# observe hours (in UTC!) unless a single feed is requested
 	hours = attrs.get('hours')
 	if hours and not self.nick and not _matchHours(hours, time.gmtime()[3]):
