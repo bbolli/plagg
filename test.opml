@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<opml version="1.0">
+    <body>
+	<out-line text="updates" type="rss"
+	    xmlUrl="http://gw/bblog/software/debian/updates/bolli/2004/index.rss"
+	/>
+	<outline text="updates" type="rss"
+	    xmlUrl="file:///home/bb/src/python/plagg/index.rss"
+	/>
+    </body>
+</opml>

@@ -1,0 +1,23 @@
+#!/usr/bin/python
+
+"""Reads an OPML file, gets all feeds in it and writes Blosxom entries
+corresponding to the items in the feeds."""
+
+from sys import argv, stderr
+
+import Plagg
+
+OPML = '/home/bb/projects/python/plagg/news.opml'
+PATH = '/home/bb/bblog/test'
+
+argc = len(argv) - 1
+if argc == 0:
+    Plagg.Plagg(OPML, PATH)
+elif argc == 1:
+    Plagg.Plagg(argv[1], PATH)
+elif argc == 2:
+    Plagg.Plagg(argv[1], argv[2])
+elif argc == 3:
+    Plagg.Plagg(argv[1], argv[2], argv[3])
+else:
+    print >>stderr, argv[0] + ': use 0 to 3 arguments: OPML file, bblog directory, feed name'

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<opml version="1.0">
+	<head>
+		<title>news.opml</title>
+		<dateModified>Mon, 02 Feb 2004 13:06:45 +0100</dateModified>
+		<ownerName>Beat Bolli</ownerName>
+		<ownerEmail>bbolli@ewanet.ch</ownerEmail>
+	</head>
+	<body>
+		<outline text="News">
+			<outline text="Slashdot" type="rss" xmlUrl="http://slashdot.org/slashdot.rss"/>
+			<outline text="Heise" type="rss" xmlUrl="http://www.heise.de/newsticker/heise.rdf"/>
+			<outline text="Linux Weekly News" nick="lwn" type="rss" xmlUrl="http://lwn.net/headlines/rss"/>
+			<outline text="The Register" nick="reg" type="rss" xmlUrl="http://www.theregister.co.uk/feeds/latest.rdf"/>
+			<outline text="Symlink" nick="sym" type="rss" xmlUrl="http://www.symlink.ch/symlinkch.rdf"/>
+			<outline text="WiFi Network News" nick="wifi" type="rss" xmlUrl="http://wifinetnews.com/xml/rss.xml"/>
+			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
+			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://stuff.vandervossen.net/feeds/dailypython.rss"/>
+			<outline text="Bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/vulnerabilities.xml"/>
+		</outline>
+		<outline text="Science">
+			<outline text="Christian Science Monitor" nick="cs" type="rss" xmlUrl="http://www.csmonitor.com/rss/scitech.rss"/>
+			<outline text="Astronomy Picture of the Day" nick="apod" type="rss" link="http://antwrp.gsfc.nasa.gov/apod/" regex="&lt;img SRC=&quot;(image/(\d{4}/.*\..*))&quot;"/>
+			<outline text="Mars Rover" nick="mars" type="rss" xmlUrl="http://www.markcarey.com/mars/mars-rover-photos.rdf"/>
+		</outline>
+		<outline text="Articles">
+			<outline text="Linux Journal" nick="lj" type="rss" xmlUrl="http://www.linuxjournal.com/news.rss"/>
+			<outline text="Groklaw" type="rss" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
+			<outline text="I, Cringely" nick="cringely" type="rss" xmlUrl="http://cgi.pbs.org/cgi-registry/cringely/cringelyrdf.pl"/>
+		</outline>
+		<outline text="Blogs">
+			<outline text="Mark Pilgrim" nick="mark" type="rss" xmlUrl="http://diveintomark.org/xml/atom.xml"/>
+			<outline text="Dave Winer" nick="winer" type="rss" xmlUrl="http://www.scripting.com/rss.xml"/>
+			<outline text="Doc Searls" nick="doc" type="rss" xmlUrl="http://partners.userland.com/people/docSearls.xml"/>
+			<outline text="The Scobleizer" nick="scoble" type="rss" xmlurl="http://radio.weblogs.com/0001011/rss.xml"/>
+			<outline text="Dan Gillmor" nick="dgillmor" type="rss" xmlUrl="http://weblog.siliconvalley.com/column/dangillmor/index.xml"/>
+			<outline text="Paul Boutin" nick="boutin" type="rss" xmlUrl="http://paulboutin.weblogger.com/xml/rss.xml"/>
+			<outline text="Simon Willison" nick="simon" type="rss" xmlUrl="http://simon.incutio.com/syndicate/rss1.0"/>
+			<outline text="Steve Gillmor" nick="sgillmor" type="rss" xmlUrl="http://www.crn.com/weblogs/stevegillmor/rss.xml"/>
+		</outline>
+		<outline text="Comics">
+			<outline text="Dilbert" type="x-bb-html" link="http://www.dilbert.com/" regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.gif)&quot;" hours="8"/>
+			<outline text="Garfield" type="x-bb-html" link="http://garfield.ucomics.com" regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ga/\d{4}/ga(\d{6})\.gif)&quot;" hours="8"/>
+			<xx-outline text="Userfriendly" nick="uf" type="x-bb-html" link="http://www.userfriendly.org/static/" regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d{6})\.gif)&quot;&gt;" from="/xuf" to="/uf" hours="8"/>
+			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-bb-html" link="http://www.ucomics.com/calvinandhobbes/" regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ch/\d{4}/ch(\d{6})\.gif)&quot;" hours="8"/>
+		</outline>
+	</body>
+</opml>
