@@ -5,6 +5,7 @@ news.opml
 opml.xsl
 plagg
 setup.py
+Plagg/httpcache.py
 Plagg/Entries.py
 Plagg/Feed.py
 Plagg/Plagg.py

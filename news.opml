@@ -21,7 +21,6 @@
 			<outline text="WiFi Network News" nick="wifi" type="rss" htmlUrl="http://wifinetnews.com/" xmlUrl="http://wifinetnews.com/xml/rss.xml"/>
 			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
 			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://www.pythonware.com/daily/rss2.xml"/>
-			<outline text="SecurityFocus" nick="bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/vulnerabilities.xml"/>
 			<outline text="Crypto-Gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
 			<outline text="Engadget" type="rss" htmlUrl="http://www.engadget.com/" xmlUrl="http://www.engadget.com/rss.xml"
 				bodyFrom="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" bodyTo=""/>
