@@ -6,9 +6,15 @@ import os, re, time
 import Plagg		# for default encoding
 
 
-def _linktag(href, text):
+def _escape(text):
+    """Replaces the three common HTML character entities."""
+    return text.replace('&', '&amp;').replace('<', '&lt;'). \
+	replace('>', '&gt;').replace('"', '&quot;').replace('\'', '&apos;')
+
+def _linktag(href, text, **attrs):
     """Returns a HTML link tag."""
-    return u'<a href="%s">%s</a>' % (href, _decode(text))
+    a = ''.join([' %s="%s"' % (k, _escape(v)) for k, v in attrs.items() if v])
+    return u'<a href="%s"%s>%s</a>' % (href, a, _decode(text))
 
 def _unescape(text):
     """Replaces the three common HTML character entities."""
@@ -102,7 +108,7 @@ class BlosxomEntries(Entries):
 	    footer += '\n[%s]' % _linktag(link, 'Link')
 	if item.has_key('comments'):
 	    footer += '\n[%s]' % _linktag(item['comments'], 'Comments')
-	footer += '\n[%s]\n</p>\n' % _linktag(channel['link'], channel['title'])
+	footer += '\n[%s]\n</p>\n' % _linktag(channel['link'], channel['title'], title=channel.get('tagline'))
 
 	return title, body, footer
 
