@@ -7,6 +7,9 @@ def _linktag(href, text):
     """Returns a HTML link tag."""
     return '<a href="%s">%s</a>' % (href, text)
 
+def _unescape(text):
+    """Replaces the three common HTML character entities."""
+    return text.replace('&gt;', '>').replace('&lt;', '<').replace('&amp;', '&')
 
 _markup = re.compile(r'<.*?>', re.M + re.S)
 _notword = re.compile(r'\W')
@@ -19,6 +22,20 @@ def _filename(title, desc):
     fn = fn.replace('&apos;', "'").replace('&quot;', '"')
     fn = _notword.sub('_', fn)
     return fn[:15] + '...' + fn[-5:]
+
+_encoding = 'iso8859_15'	# default character encoding
+
+def _encode(text):
+    """Converts a unicode string to its iso-8859-15 equivalent."""
+    if isinstance(text, unicode):
+	text = text.encode(_encoding, 'replace')
+    return text
+
+def _decode(text):
+    """Converts a string to its unicode equivalent."""
+    if isinstance(text, str):
+	text = unicode(text, _encoding, 'replace')
+    return text
 
 
 class Entries:
@@ -59,7 +76,8 @@ class BlosxomEntries(Entries):
 	# - if there's no title but a link, the link goes into the footer.
 	# The footer consists of the date, the item link (if present and no
 	# title), and the channel link.
-	title, link = item.get('title', '').replace('\n', ' '), item.get('link')
+	title = _unescape(item.get('title', '').replace('\n', ' '))
+	link = item.get('link')
 	if title and link:
 	    title = _linktag(link, title)
 	body = item.get('description', '').strip()
@@ -77,7 +95,7 @@ class BlosxomEntries(Entries):
 	sets its mtime to the timestamp, if present."""
 
 	title, body, footer = self.makeEntry(channel, item)
-	entry = '\n'.join([title, body, footer])
+	entry = u'\n'.join(map(_decode, [title, body, footer]))
 
 	# get publication date/time
 	mdate = item.get('date_parsed')
@@ -96,10 +114,8 @@ class BlosxomEntries(Entries):
 	    return
 
 	# write out the entry
-	if isinstance(entry, unicode):
-	    entry = entry.encode('iso-8859-15', 'replace')
 	f = file(fname, 'w')
-	f.write(entry)
+	f.write(_encode(entry))
 	f.close()
 
 	# set modification time if present
