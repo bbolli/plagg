@@ -38,12 +38,14 @@
 		</outline>
 		<outline text="Articles">
 			<outline text="Linux Journal" nick="lj" type="rss" link="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
-			<offline text="linuxdevcenter" type="rss" link="http://www.oreillynet.com/" xmlUrl="http://www.oreillynet.com/meerkat/?_fl=rss10&amp;t=ALL&amp;c=1112"/>
 			<outline text="Groklaw" type="rss" link="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
+			<outline text="A List apart" type="rss" link="http://www.alistapart.com" xmlUrl="http://www.alistapart.com/rss.xml"/>
+			<outline text="OSDir.com" type="rss" link="http://osdir.com/" xmlUrl="http://osdir.com/rss.php"
+				bodyFrom="&lt;br /&gt;&lt;br /&gt;OSDir RSS .*" bodyTo=""/>
 		</outline>
 		<outline text="Blogs">
 			<outline text="Mark Pilgrim" nick="mark" type="rss" link="http://diveintomark.org/" xmlUrl="http://diveintomark.org/xml/atom.xml"/>
-			<outline text="Mark Pilgrim&#8217;s b-links" nick="mark/blinks" type="rss" link="http://diveintomark.org/" xmlUrl="http://diveintomark.org/xml/blink.xml"/>
+			<outline text="Mark Pilgrim&#8217;s b-links" nick="mark/blinks" type="rss" xmlUrl="http://diveintomark.org/xml/blink.xml"/>
 			<outline text="Dave Winer" nick="winer" type="rss" link="http://www.scripting.com/" xmlUrl="http://www.scripting.com/rss.xml"/>
 			<outline text="Doc Searls" nick="doc" type="rss" link="doc.weblogs.com/" xmlUrl="http://partners.userland.com/people/docSearls.xml"/>
 			<outline text="The Scobleizer" nick="scoble" type="rss" link="http://radio.weblogs.com/0001011/" xmlUrl="http://radio.weblogs.com/0001011/rss.xml"/>
