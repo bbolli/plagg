@@ -4,7 +4,7 @@ h1. README file for plagg
 h2. 0. What is this?
 
 plagg is a weblog/news aggregator that works in conjunction with
-"Rael Dornfest":http://www.raelity.org's "blosxom":http://www.blosxom.com.
+"Rael Dornfest's":http://www.raelity.org "blosxom":http://www.blosxom.com.
 It can be easily extended to support other blogging tools.
 
 plagg reads an OPML file containing a list of RSS or Atom feeds, and
@@ -14,7 +14,8 @@ example of plagg's output "on my news page":http://www.drbeat.li/news.
 
 h2. 1. Installation
 
-# Install "Mark Pilgrim":http://diveintomark.org's "Ultra-liberal Feed Parser 3.3":http://feedparser.org/
+# Install "Mark Pilgrim's":http://diveintomark.org "Ultra-liberal Feed Parser 3.3":http://feedparser.org/
+# Download "plagg":plagg.tar.gz
 # Untar the distribution file to a directory of your choice
 # Move the @plagg@ script to a directory in your @$PATH@
 # In @plagg@, adjust the path in the call to @sys.path.insert()@ to the path you have chosen in step 2
@@ -38,7 +39,7 @@ h3. 2.3. Arguments
 
 dl. opmlfile: The OPML file containing the feeds to read and generate news items from.
 destdir: The destination directory where the news items are stored. This should be under your blosxom data directory.
-nickname: If given, updates only the feed with the given nickname, otherwise updates all feeds.
+nickname: If given, updates only the feed with the given nickname (ignoring its @hours@ attribute), otherwise updates all feeds.
 
 The default arguments for opmlfile and destdir can be set in the @plagg@ script.
 
@@ -65,7 +66,8 @@ Example:
 
 literal. <pre>bodyFrom="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" bodyTo=""</pre>
 
-This deletes every @<div>@ that begins immediately with a @<span>@.
+This deletes every @<div>@ that immediately begins with a @<span>@.
+
 Please keep in mind that in the actual OPML file, the "less than", "greater than"
 and "quote" signs have to be escaped as @&amp;lt;@, @&amp;gt;@ and @&amp;quot;@,
 respectively.
@@ -168,7 +170,8 @@ empty, the item link itself.
 
 h2. 4. TODO
 
-* Should use @skipHours@ from the RSS feed instead of using @hours@.
+* Use the Python distutils for installing
+* Should use @skipHours@ from the RSS feed instead of using @hours@
 
 
 pre. $Id$

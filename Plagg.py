@@ -52,7 +52,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	"""Handles one OPML outline element."""
 
 	# get common attributes
-	name = attrs.get('text')
+	name = attrs.get('text') or attrs.get('title')
 	if not name: return
 	nick = attrs.get('nick', name.lower())
 
@@ -71,11 +71,11 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    if not uri: return
 	    feed = Feed.RSSFeed(attrs, name, uri)
 	elif kind == 'x-plagg-html':
-	    uri, regex = attrs.get('link'), attrs.get('regex')
+	    uri, regex = attrs.get('htmlurl'), attrs.get('regex')
 	    if not uri or not regex: return
 	    feed = Feed.HTMLFeed(attrs, name, uri, regex)
 	elif kind == 'x-plagg-computed':
-	    uri, suite = attrs.get('link'), attrs.get('commands')
+	    uri, suite = attrs.get('htmlurl'), attrs.get('commands')
 	    if not suite: return
 	    feed = Feed.ComputedFeed(attrs, name, uri, suite)
 	else:

@@ -2,13 +2,14 @@
 
 # $Id$
 
-import sys, os, re, socket, urllib2
-
+import sys, os, re, urllib2
 import feedparser	# needs at least version 3 beta 22!
-feedparser.USER_AGENT = 'plagg/%s ' % re.sub('\D', '', '$Rev$') + feedparser.USER_AGENT
-#feedparser._debug = 1
-
 import Plagg		# for default encoding
+
+USER_AGENT = 'plagg/%s' % re.sub('\D', '', '$Rev$')
+
+feedparser.USER_AGENT = USER_AGENT + ' ' + feedparser.USER_AGENT
+#feedparser._debug = 1
 
 
 class Feed:

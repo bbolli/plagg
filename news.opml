@@ -11,70 +11,70 @@
 	</head>
 	<body>
 		<outline text="News">
-			<outline text="Slashdot" type="rss" link="http://slashdot.org/" xmlUrl="http://slashdot.org/slashdot.rss"/>
-			<outline text="Heise" type="rss" link="http://www.heise.de/" xmlUrl="http://www.heise.de/newsticker/heise.rdf"
+			<outline text="Slashdot" type="rss" htmlUrl="http://slashdot.org/" xmlUrl="http://slashdot.org/slashdot.rss"/>
+			<outline text="Heise" type="rss" htmlUrl="http://www.heise.de/" xmlUrl="http://www.heise.de/newsticker/heise.rdf"
 				linkFrom="meldung/" linkTo="meldung/print/"/>
-			<outline text="Linux Weekly News" nick="lwn" type="rss" link="http://lwn.net/" xmlUrl="http://lwn.net/headlines/rss"/>
-			<outline text="The Register" nick="reg" type="rss" link="http://www.theregister.co.uk/" xmlUrl="http://www.theregister.co.uk/headlines.rss"
+			<outline text="Linux Weekly News" nick="lwn" type="rss" htmlUrl="http://lwn.net/" xmlUrl="http://lwn.net/headlines/rss"/>
+			<outline text="The Register" nick="reg" type="rss" htmlUrl="http://www.theregister.co.uk/" xmlUrl="http://www.theregister.co.uk/headlines.rss"
 				linkFrom="/$" linkTo="/print.html"/>
-			<outline text="Symlink" type="rss" link="http://www.symlink.ch/" xmlUrl="http://www.symlink.ch/symlinkch.rss"/>
-			<outline text="WiFi Network News" nick="wifi" type="rss" link="http://wifinetnews.com/" xmlUrl="http://wifinetnews.com/xml/rss.xml"/>
+			<outline text="Symlink" type="rss" htmlUrl="http://www.symlink.ch/" xmlUrl="http://www.symlink.ch/symlinkch.rss"/>
+			<outline text="WiFi Network News" nick="wifi" type="rss" htmlUrl="http://wifinetnews.com/" xmlUrl="http://wifinetnews.com/xml/rss.xml"/>
 			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
 			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://www.pythonware.com/daily/rss2.xml"/>
 			<outline text="SecurityFocus" nick="bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/news.xml"/>
-			<outline text="Crypto-Gram" type="rss" link="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
-			<outline text="Engadget" type="rss" link="http://www.engadget.com/" xmlUrl="http://www.engadget.com/rss.xml"
+			<outline text="Crypto-Gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
+			<outline text="Engadget" type="rss" htmlUrl="http://www.engadget.com/" xmlUrl="http://www.engadget.com/rss.xml"
 				bodyFrom="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" bodyTo=""/>
 		</outline>
 		<outline text="Mobile">
-			<outline text="MobileTracker" type="rss" link="http://www.mobiletracker.net/" xmlUrl="http://www.mobiletracker.net/index.rdf"/>
-			<outline text="MobileWhack" type="rss" link="http://www.mobilewhack.com/" xmlUrl="http://www.mobilewhack.com/index.rss"/>
+			<outline text="MobileTracker" type="rss" htmlUrl="http://www.mobiletracker.net/" xmlUrl="http://www.mobiletracker.net/index.rdf"/>
+			<outline text="MobileWhack" type="rss" htmlUrl="http://www.mobilewhack.com/" xmlUrl="http://www.mobilewhack.com/index.rss"/>
 		</outline>
 		<outline text="Science">
-			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" link="http://antwrp.gsfc.nasa.gov/apod/"
+			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="http://antwrp.gsfc.nasa.gov/apod/"
 				regex="(?is)&lt;IMG SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; ?(?P&lt;title&gt;.*?) ?&lt;/b&gt; &lt;br /&gt;.*?Explanation: &lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; &lt;center&gt;"
 				hours="8-10"/>
 			<outline text="Mars Rover" nick="mars" type="rss" xmlUrl="http://www.markcarey.com/mars/mars-rover-photos.rdf" hours="12"/>
 		</outline>
 		<outline text="Articles">
-			<outline text="Linux Journal" nick="lj" type="rss" link="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
-			<outline text="Groklaw" type="rss" link="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
-			<outline text="A List apart" type="rss" link="http://www.alistapart.com" xmlUrl="http://www.alistapart.com/rss.xml"/>
-			<outline text="OSDir.com" type="rss" link="http://osdir.com/" xmlUrl="http://osdir.com/rss.php"
+			<outline text="Linux Journal" nick="lj" type="rss" htmlUrl="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
+			<outline text="Groklaw" type="rss" htmlUrl="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
+			<outline text="A List apart" type="rss" htmlUrl="http://www.alistapart.com" xmlUrl="http://www.alistapart.com/rss.xml"/>
+			<outline text="OSDir.com" type="rss" htmlUrl="http://osdir.com/" xmlUrl="http://osdir.com/rss.php"
 				bodyFrom="&lt;br /&gt;&lt;br /&gt;OSDir RSS .*" bodyTo=""/>
 		</outline>
 		<outline text="Blogs">
-			<outline text="Mark Pilgrim" nick="mark" type="rss" link="http://diveintomark.org/" xmlUrl="http://diveintomark.org/xml/atom.xml"/>
+			<outline text="Mark Pilgrim" nick="mark" type="rss" htmlUrl="http://diveintomark.org/" xmlUrl="http://diveintomark.org/xml/atom.xml"/>
 			<outline text="Mark Pilgrim&#8217;s b-links" nick="mark/blinks" type="rss" xmlUrl="http://diveintomark.org/xml/blink.xml"/>
-			<outline text="Dave Winer" nick="winer" type="rss" link="http://www.scripting.com/" xmlUrl="http://www.scripting.com/rss.xml"/>
-			<outline text="Doc Searls" nick="doc" type="rss" link="doc.weblogs.com/" xmlUrl="http://partners.userland.com/people/docSearls.xml"/>
-			<outline text="The Scobleizer" nick="scoble" type="rss" link="http://radio.weblogs.com/0001011/" xmlUrl="http://radio.weblogs.com/0001011/rss.xml"/>
-			<outline text="Dan Gillmor" nick="dgillmor" type="rss" link="http://weblog.siliconvalley.com/column/dangillmor/" xmlUrl="http://weblog.siliconvalley.com/column/dangillmor/index.xml"/>
-			<outline text="Paul Boutin" nick="boutin" type="rss" link="http://paulboutin.weblogger.com/" xmlUrl="http://paulboutin.weblogger.com/xml/rss.xml"/>
-			<outline text="Simon Willison" nick="simon" type="rss" link="http://simon.incutio.com/" xmlUrl="http://simon.incutio.com/syndicate/rss1.0"/>
-			<outline text="Steve Gillmor" nick="sgillmor" type="rss" link="http://blog.ziffdavis.com/gillmor/" xmlUrl="http://blog.ziffdavis.com/gillmor/Rss.aspx"/>
-			<outline text="Tim Bray" nick="ongoing" type="rss" link="http://www.tbray.org/ongoing/" xmlUrl="http://www.tbray.org/ongoing/ongoing.rss"/>
-			<outline text="Russell Beattie" nick="russell" type="rss" link="http://www.russellbeattie.com/notebook/" xmlUrl="http://www.russellbeattie.com/notebook/rss.jsp"
-				bodyFrom="&lt;p align=&quot;center&quot;&gt;.*?johnkerry.*?&lt;/p&gt;" bodyTo=""/>
-			<outline text="Jeffrey Zeldman" nick="zeldman" type="rss" link="http://www.zeldman.com/" xmlUrl="http://www.zeldman.com/feed/zeldman.xml"/>
-			<outline text="Mark Nottingham" nick="mnot" type="rss" link="http://www.mnot.net/blog/" xmlUrl="http://www.mnot.net/blog/index.rdf"/>
-			<outline text="Wes Felter" nick="wmf" type="rss" link="http://wmf.editthispage.com/" xmlUrl="http://wmf.editthispage.com/xml/rss.xml"/>
-			<outline text="Gary Turner" nick="garyturner" type="rss" link="http://weblog.garyturner.net/" xmlUrl="http://weblog.garyturner.net/BLOG.XML"/>
-			<!-- outline text="bblog" type="rss" link="http://www.drbeat.li/" xmlUrl="http://www.drbeat.li/index.rss"/ -->
+			<outline text="Dave Winer" nick="winer" type="rss" htmlUrl="http://www.scripting.com/" xmlUrl="http://www.scripting.com/rss.xml"/>
+			<outline text="Doc Searls" nick="doc" type="rss" htmlUrl="doc.weblogs.com/" xmlUrl="http://partners.userland.com/people/docSearls.xml"/>
+			<outline text="The Scobleizer" nick="scoble" type="rss" htmlUrl="http://radio.weblogs.com/0001011/" xmlUrl="http://radio.weblogs.com/0001011/rss.xml"/>
+			<outline text="Dan Gillmor" nick="dgillmor" type="rss" htmlUrl="http://weblog.siliconvalley.com/column/dangillmor/" xmlUrl="http://weblog.siliconvalley.com/column/dangillmor/index.xml"/>
+			<outline text="Paul Boutin" nick="boutin" type="rss" htmlUrl="http://paulboutin.weblogger.com/" xmlUrl="http://paulboutin.weblogger.com/xml/rss.xml"/>
+			<outline text="Simon Willison" nick="simon" type="rss" htmlUrl="http://simon.incutio.com/" xmlUrl="http://simon.incutio.com/syndicate/rss1.0"/>
+			<outline text="Steve Gillmor" nick="sgillmor" type="rss" htmlUrl="http://blog.ziffdavis.com/gillmor/" xmlUrl="http://blog.ziffdavis.com/gillmor/Rss.aspx"/>
+			<outline text="Tim Bray" nick="ongoing" type="rss" htmlUrl="http://www.tbray.org/ongoing/" xmlUrl="http://www.tbray.org/ongoing/ongoing.rss"/>
+			<outline text="Russell Beattie" nick="russell" type="rss" htmlUrl="http://www.russellbeattie.com/notebook/" xmlUrl="http://www.russellbeattie.com/notebook/rss.jsp"
+				bodyFrom="(?s)&lt;p align=&quot;center&quot;&gt;.{1,2}&lt;a href=&quot;http://www\.johnkerry.*?&lt;/p&gt;" bodyTo=""/>
+			<outline text="Jeffrey Zeldman" nick="zeldman" type="rss" htmlUrl="http://www.zeldman.com/" xmlUrl="http://www.zeldman.com/feed/zeldman.xml"/>
+			<outline text="Mark Nottingham" nick="mnot" type="rss" htmlUrl="http://www.mnot.net/blog/" xmlUrl="http://www.mnot.net/blog/index.rdf"/>
+			<outline text="Wes Felter" nick="wmf" type="rss" htmlUrl="http://wmf.editthispage.com/" xmlUrl="http://wmf.editthispage.com/xml/rss.xml"/>
+			<outline text="Gary Turner" nick="garyturner" type="rss" htmlUrl="http://weblog.garyturner.net/" xmlUrl="http://weblog.garyturner.net/BLOG.XML"/>
+			<!-- outline text="bblog" type="rss" htmlUrl="http://www.drbeat.li/" xmlUrl="http://www.drbeat.li/index.rss"/ -->
 		</outline>
 		<outline text="Comics">
-			<outline text="Dilbert" type="x-plagg-html" link="http://www.dilbert.com/"
+			<outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/"
 				regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.[gj][ip][fg])&quot;"
 				hours="8-10"/>
-			<outline text="Garfield" type="x-plagg-computed" link="http://garfield.ucomics.com"
+			<outline text="Garfield" type="x-plagg-computed" htmlUrl="http://garfield.ucomics.com"
 				commands="import time&#10;tm = time.gmtime()&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.itemLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
 				hours="8"/>
-			<outline text="Userfriendly" nick="uf" type="x-plagg-html" link="http://www.userfriendly.org/static/"
+			<outline text="Userfriendly" nick="uf" type="x-plagg-html" htmlUrl="http://www.userfriendly.org/static/"
 				regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d{6})\.gif)&quot; /&gt;"
 				linkFrom="/xuf" linkTo="/uf"
 				savepath="/home/bb/public_html/news/uf" saveurl="/news/uf"
 				hours="8-10"/>
-			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" link="http://www.ucomics.com/calvinandhobbes/"
+			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.ucomics.com/calvinandhobbes/"
 				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ch/\d{4}/ch(\d{6})\.gif)&quot;"
 				hours="8-10"/>
 		</outline>
