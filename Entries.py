@@ -1,9 +1,10 @@
-"Entries.py -- make blog entries from a feedparser dict"
+"Entries.py -- make blog entries from a feed object"
 
 # $Id$
 
 import os, re, time
 import Plagg		# for default encoding
+
 
 def _linktag(href, text):
     """Returns a HTML link tag."""
@@ -48,7 +49,14 @@ class Entries:
 	self.feed = feed
 	channel = feed.feed['channel']
 	items = feed.feed['items']
+	# Prepare for link replacement
+	old, new = feed.attrs.get('from'), feed.attrs.get('to')
+	if old:
+	    old = re.compile(old, re.I)
+	# Process the entries
 	for item in items:
+	    if item.has_key('link') and old and new is not None:
+		item['link'] = old.sub(new, item['link'])
 	    self.processItem(channel, item)
 
     def processItem(self, channel, item):

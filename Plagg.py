@@ -66,11 +66,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	elif kind == 'x-bb-html':
 	    uri, regex = attrs.get('link'), attrs.get('regex')
 	    if not uri or not regex: return
-	    old, new = attrs.get('from'), attrs.get('to')
-	    if not old or new is None:
-		feed = Feed.HTMLFeed(name, uri, regex)
-	    else:
-		feed = Feed.HTMLSubstituteFeed(name, uri, regex, old, new)
+	    feed = Feed.HTMLFeed(name, uri, regex)
 	elif kind == 'x-bb-suite':
 	    uri, suite = attrs.get('link'), attrs.get('suite')
 	    if not suite:

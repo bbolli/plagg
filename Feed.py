@@ -28,7 +28,7 @@ class Feed:
 class RSSFeed(Feed):
 
     def getFeed(self):
-	"""Builds an ultra-liberally parsed feed object from the URL."""
+	"""Builds an ultra-liberally parsed feed dict from the URL."""
 	self.feed = feedparser.parse(self.uri)
 
 
@@ -131,20 +131,6 @@ class HTMLFeed(SimulatedFeed):
 	    self.itemLink = attr('saveurl') + '/' + basename
 
 	self.generateFeed()
-
-
-class HTMLSubstituteFeed(HTMLFeed):
-    """Same as class HTMLFeed, except that the item's link undergoes a
-    string replacement."""
-
-    def __init__(self, name, uri, regex, old, new):
-	HTMLFeed.__init__(self, name, uri, regex)
-	self.old = old
-	self.new = new
-
-    def getLink(self):
-	HTMLFeed.getLink(self)
-	self.itemLink = self.itemLink.replace(self.old, self.new)
 
 
 class SuiteFeed(HTMLFeed):
