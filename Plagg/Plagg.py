@@ -87,7 +87,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	except Exception, e:
 	    import traceback
 	    sys.stderr.write("Feed: %s (%s)\n" % (feed.name.encode(ENCODING, 'replace'), feed.uri))
-	    if self.logging:
+	    if self.logging > 1:
 		traceback.print_exc(file=sys.stderr)
 	    else:
 		sys.stderr.write("%s\n" % e)
