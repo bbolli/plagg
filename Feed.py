@@ -1,6 +1,7 @@
 # Feed.py -- one configured feed
 
-import re, socket, urllib2
+import sys, re, socket, urllib2
+
 import feedparser
 
 # hide differences between version 2 and 3 of feedparser
@@ -31,8 +32,8 @@ class RSSFeed(Feed):
 	"""Builds an ultra-liberally parsed feed object from the URL."""
 	try:
 	    return feedparser.parse(self.uri)
-	except socket.timeout:
-	    return None
+	except (socket.timeout, UnicodeDecodeError), e:
+	    sys.stderr.write("Feed: %s (%s)\n%s\n" % (self.name, self.uri, e))
 
 
 class HTMLFeed(Feed):

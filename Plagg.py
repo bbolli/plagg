@@ -43,6 +43,8 @@ class Plagg(xml.sax.handler.ContentHandler):
 	name = attrs.get('text')
 	if not name: return
 	nick = attrs.get('nick', name.lower())
+
+	# select by nickname
 	if self.nick and nick != self.nick: return
 
 	# create a Feed instance based on the OPML type attribute
