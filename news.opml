@@ -27,7 +27,6 @@
 			<outline text="MobileWhack" type="rss" xmlUrl="http://www.mobilewhack.com/index.rss"/>
 		</outline>
 		<outline text="Science">
-			<outline text="Christian Science Monitor" nick="cs" type="rss" xmlUrl="http://www.csmonitor.com/rss/scitech.rss"/>
 			<outline text="Astronomy Picture of the Day" nick="apod" type="x-bb-html" link="http://antwrp.gsfc.nasa.gov/apod/"
 				regex="(?is)&lt;IMG SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; (?P&lt;title&gt;.*?) &lt;/b&gt; &lt;br /&gt;.*?Explanation: &lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; &lt;center&gt;"
 				hours="8-10"
@@ -51,6 +50,7 @@
 			<outline text="Tim Bray" nick="ongoing" type="rss" xmlUrl="http://www.tbray.org/ongoing/ongoing.rss"/>
 			<outline text="Russell Beattie" nick="russell" type="rss" xmlUrl="http://www.russellbeattie.com/notebook/rss.jsp"/>
 			<outline text="Jeffrey Zeldman" nick="zeldman" type="rss" xmlUrl="http://www.zeldman.com/feed/zeldman.xml"/>
+			<outline text="Mark Nottingham" nick="mnot" type="rss" xmlUrl="http://www.mnot.net/blog/index.rdf"/>
 		</outline>
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-bb-html" link="http://www.dilbert.com/"
@@ -58,8 +58,8 @@
 				hours="8-10"
 			/>
 			<outline text="Garfield" type="x-bb-suite" link="http://garfield.ucomics.com"
-				suite="import time&#10;tm = time.gmtime(time.time()-2*86400)&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.itemLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
-				hours="8-10"
+				suite="import time&#10;tm = time.gmtime()&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.itemLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
+				hours="8"
 			/>
 			<outline text="Userfriendly" nick="uf" type="x-bb-html" link="http://www.userfriendly.org/static/"
 				regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d{6})\.gif)&quot; /&gt;" from="/xuf" to="/uf"
