@@ -15,10 +15,10 @@
 			<outline text="Heise" type="rss" htmlUrl="http://www.heise.de/" xmlUrl="http://www.heise.de/newsticker/heise.rdf"
 				linkFrom="meldung/" linkTo="meldung/print/"/>
 			<outline text="Linux Weekly News" nick="lwn" type="rss" htmlUrl="http://lwn.net/" xmlUrl="http://lwn.net/headlines/rss"/>
-			<outline text="The Register" nick="reg" type="rss" htmlUrl="http://www.theregister.co.uk/" xmlUrl="http://www.theregister.co.uk/headlines.rss"
+			<outline text="The Register" nick="reg" type="rss" htmlUrl="http://www.theregister.co.uk/" xmlUrl="http://www.theregister.co.uk/excerpts.rss"
 				linkFrom="/$" linkTo="/print.html"/>
 			<outline text="Symlink" type="rss" htmlUrl="http://www.symlink.ch/" xmlUrl="http://www.symlink.ch/symlinkch.rss"/>
-			<outline text="WiFi Network News" nick="wifi" type="rss" htmlUrl="http://wifinetnews.com/" xmlUrl="http://wifinetnews.com/xml/rss.xml"/>
+			<x-outline text="WiFi Network News" nick="wifi" type="rss" htmlUrl="http://wifinetnews.com/" xmlUrl="http://wifinetnews.com/atom.xml"/>
 			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/" hours="6"/>
 			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://www.pythonware.com/daily/rss2.xml"/>
 			<outline text="Crypto-Gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
@@ -39,7 +39,8 @@
 		<outline text="Articles">
 			<outline text="Linux Journal" nick="lj" type="rss" htmlUrl="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
 			<outline text="Groklaw" type="rss" htmlUrl="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
-			<outline text="A List apart" type="rss" htmlUrl="http://www.alistapart.com" xmlUrl="http://www.alistapart.com/rss.xml"/>
+			<outline text="A List apart" nick="ala" type="rss" htmlUrl="http://www.alistapart.com/" xmlUrl="http://www.alistapart.com/rss.xml"/>
+			<outline text="2600" type="rss" htmlUrl="http://www.2600.com/" xmlUrl="http://www.2600.com/rss.xml"/>
 		</outline>
 		<outline text="Blogs">
 			<x-outline text="Mark Pilgrim" nick="mark" type="rss" htmlUrl="http://diveintomark.org/" xmlUrl="http://diveintomark.org/xml/atom.xml"/>
@@ -56,8 +57,8 @@
 			<outline text="Jeffrey Zeldman" nick="zeldman" type="rss" htmlUrl="http://www.zeldman.com/" xmlUrl="http://www.zeldman.com/feed/zeldman.xml"/>
 			<outline text="Mark Nottingham" nick="mnot" type="rss" htmlUrl="http://www.mnot.net/blog/" xmlUrl="http://www.mnot.net/blog/index.rdf"/>
 			<outline text="Wes Felter" nick="wmf" type="rss" htmlUrl="http://wmf.editthispage.com/" xmlUrl="http://wmf.editthispage.com/xml/rss.xml"/>
-			<outline text="Gary Turner" nick="garyturner" type="rss" htmlUrl="http://weblog.garyturner.net/" xmlUrl="http://weblog.garyturner.net/BLOG.XML"/>
-			<!-- outline text="bblog" type="rss" htmlUrl="http://www.drbeat.li/" xmlUrl="http://www.drbeat.li/index.rss"/ -->
+			<outline text="Gary Turner" nick="garyturner" type="rss" htmlUrl="http://weblog.garyturner.net/" xmlUrl="http://weblog.garyturner.net/blog.xml"/>
+			<x-outline text="bblog" type="rss" htmlUrl="http://www.drbeat.li/" xmlUrl="http://www.drbeat.li/index.rss"/>
 		</outline>
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/"
