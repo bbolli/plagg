@@ -24,7 +24,7 @@
 			<outline text="SecurityFocus" nick="bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/news.xml"/>
 			<outline text="Crypto-Gram" type="rss" link="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
 			<outline text="Engadget" type="rss" link="http://www.engadget.com/" xmlUrl="http://www.engadget.com/rss.xml"
-				bodyFrom="(?s)&lt;div&gt;&lt;span&gt;Free RSS feeds.*?/div&gt;" bodyTo=""/>
+				bodyFrom="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" bodyTo=""/>
 		</outline>
 		<outline text="Mobile">
 			<outline text="MobileTracker" type="rss" link="http://www.mobiletracker.net/" xmlUrl="http://www.mobiletracker.net/index.rdf"/>
