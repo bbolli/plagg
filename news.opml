@@ -40,8 +40,6 @@
 			<outline text="Linux Journal" nick="lj" type="rss" htmlUrl="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
 			<outline text="Groklaw" type="rss" htmlUrl="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
 			<outline text="A List apart" type="rss" htmlUrl="http://www.alistapart.com" xmlUrl="http://www.alistapart.com/rss.xml"/>
-			<outline text="OSDir.com" type="rss" htmlUrl="http://osdir.com/" xmlUrl="http://osdir.com/rss.php"
-				bodyFrom="&lt;br /&gt;&lt;br /&gt;OSDir RSS .*" bodyTo=""/>
 		</outline>
 		<outline text="Blogs">
 			<outline text="Mark Pilgrim" nick="mark" type="rss" htmlUrl="http://diveintomark.org/" xmlUrl="http://diveintomark.org/xml/atom.xml"/>

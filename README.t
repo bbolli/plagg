@@ -172,6 +172,6 @@ h2. 4. TODO
 
 * Use the Python distutils for installing
 * Should use @skipHours@ from the RSS feed instead of using @hours@
-
+* Support "enclosures"
 
 pre. $Id$

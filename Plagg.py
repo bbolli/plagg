@@ -90,7 +90,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    if self.logging:
 		traceback.print_exc(file=sys.stderr)
 	    else:
-		sys.stderr.write("%s\n", e)
+		sys.stderr.write("%s\n" % e)
 	    self.errors += 1
 	    return
 	if self.logging > 1:
