@@ -2,7 +2,9 @@ ALL: plagg.tar.gz README.inc
 
 .PHONY: dist install
 
-plagg.tar.gz: README README.html MANIFEST setup.py plagg Plagg/*.py news.opml opml.xsl
+source := MANIFEST $(shell cat MANIFEST)
+
+plagg.tar.gz: ${source}
 	tar -czf $@ $^
 
 README.inc: README.t
@@ -14,7 +16,7 @@ README.html: README.t
 README: README.html
 	lynx -dump $^ >$@
 
-dist:
+dist: ${source}
 	python setup.py sdist
 
 install:
