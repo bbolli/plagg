@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<?xml-stylesheet type="text/xsl" href="opml.xsl" media="screen"?>
+<?xml-stylesheet href="opml.xsl" type="text/xsl" media="screen"?>
+<!-- ?xml-stylesheet href="/bb.css" type="text/css" media="screen"? -->
 
 <opml version="1.0">
 	<head>
 		<title>2b&#8217;s blogroll</title>
-		<dateModified>Fri, 21 May 2004 12:26:51 +0200</dateModified>
 		<x-svn-id>$Id$</x-svn-id>
 		<ownerName>Beat Bolli</ownerName>
-		<ownerEmail>bbolli (@) ewanet (dot) ch</ownerEmail>
+		<ownerEmail>bbolli (at) ewanet (dot) ch</ownerEmail>
 	</head>
 	<body>
 		<outline text="News">
@@ -19,14 +19,15 @@
 				linkFrom="/$" linkTo="/print.html"/>
 			<outline text="Symlink" type="rss" htmlUrl="http://www.symlink.ch/" xmlUrl="http://www.symlink.ch/symlinkch.rss"/>
 			<outline text="WiFi Network News" nick="wifi" type="rss" htmlUrl="http://wifinetnews.com/" xmlUrl="http://wifinetnews.com/xml/rss.xml"/>
-			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
+			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/" hours="6"/>
 			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://www.pythonware.com/daily/rss2.xml"/>
 			<outline text="Crypto-Gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
 			<outline text="Engadget" type="rss" htmlUrl="http://www.engadget.com/" xmlUrl="http://www.engadget.com/rss.xml"
 				bodyFrom="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" bodyTo=""/>
 		</outline>
 		<outline text="Mobile">
-			<outline text="MobileTracker" type="rss" htmlUrl="http://www.mobiletracker.net/" xmlUrl="http://www.mobiletracker.net/index.rdf"/>
+			<outline text="MobileTracker" type="rss" htmlUrl="http://www.mobiletracker.net/" xmlUrl="http://www.mobiletracker.net/index.rdf"
+				bodyfrom=".p..a href=.http://feeds.feedburner.com/.+?img src=.+? border=.0. /../a../p." bodyto=""/>
 			<outline text="MobileWhack" type="rss" htmlUrl="http://www.mobilewhack.com/" xmlUrl="http://www.mobilewhack.com/index.rss"/>
 		</outline>
 		<outline text="Science">
@@ -41,8 +42,8 @@
 			<outline text="A List apart" type="rss" htmlUrl="http://www.alistapart.com" xmlUrl="http://www.alistapart.com/rss.xml"/>
 		</outline>
 		<outline text="Blogs">
-			<outline text="Mark Pilgrim" nick="mark" type="rss" htmlUrl="http://diveintomark.org/" xmlUrl="http://diveintomark.org/xml/atom.xml"/>
-			<outline text="Mark Pilgrim&#8217;s b-links" nick="mark/blinks" type="rss" xmlUrl="http://diveintomark.org/xml/blink.xml"/>
+			<x-outline text="Mark Pilgrim" nick="mark" type="rss" htmlUrl="http://diveintomark.org/" xmlUrl="http://diveintomark.org/xml/atom.xml"/>
+			<x-outline text="Mark Pilgrim&#8217;s b-links" nick="mark/blinks" type="rss" xmlUrl="http://diveintomark.org/xml/blink.xml"/>
 			<outline text="Dave Winer" nick="winer" type="rss" htmlUrl="http://www.scripting.com/" xmlUrl="http://www.scripting.com/rss.xml"/>
 			<outline text="Doc Searls" nick="doc" type="rss" htmlUrl="doc.weblogs.com/" xmlUrl="http://partners.userland.com/people/docSearls.xml"/>
 			<outline text="The Scobleizer" nick="scoble" type="rss" htmlUrl="http://radio.weblogs.com/0001011/" xmlUrl="http://radio.weblogs.com/0001011/rss.xml"/>
