@@ -6,6 +6,8 @@ import sys, os, re, urllib2
 import feedparser	# needs at least version 3 beta 22!
 import Plagg		# for default encoding
 
+from httpcache import HTTPCache
+
 USER_AGENT = 'plagg/%s' % re.sub('\D', '', '$Rev$')
 
 feedparser.USER_AGENT = USER_AGENT + ' ' + feedparser.USER_AGENT
@@ -45,7 +47,8 @@ class RSSFeed(Feed):
 
     def getFeed(self):
 	"""Builds an ultra-liberally parsed feed dict from the URL."""
-	self.feed = feedparser.parse(self.uri)
+	rss = HTTPCache(self.uri).content()
+	self.feed = feedparser.parse(rss)
 
 
 class SimulatedFeed(Feed):
@@ -94,8 +97,7 @@ class HTMLFeed(SimulatedFeed):
 
     def getLink(self):
 	"""Reads the HTML page and extracts the link and title."""
-	f = urllib2.urlopen(self.uri)
-	html = f.read().decode(self.encoding)
+	html = HTTPCache(self.uri).content().decode(self.encoding)
 	# resolve relative URIs
 	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding)
 	# search for the regex
