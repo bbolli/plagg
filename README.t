@@ -173,4 +173,9 @@ h2. 4. TODO
 * Should use @skipHours@ from the RSS feed instead of using @hours@
 * Support RSS enclosures
 
+h2. 5. Author
+
+Beat Bolli @<me&#43;plagg&#64;drbeat&#46;li>@,
+http://www.drbeat.li/py/plagg
+
 pre. $Id$
