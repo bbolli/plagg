@@ -39,9 +39,10 @@ class HTMLFeed(Feed):
     """Extracts a single link from a HTML page and builds an ad-hoc feed
     object from it.
 
-    self.regex must contain one or two groups. The first group returns the 
-    extracted link, the optional second group contains the item title. All 
-    relative links will already have been converted to absolute."""
+    self.regex must contain one to three named groups. The group 'link' returns
+    the extracted link, the optional group 'title' contains the item title, the
+    third group 'body' returns the entry's body text. All relative links will
+    already have been converted to absolute."""
 
     RSS_TEMPLATE = """\
 <?xml version="1.0" encoding="iso-8859-1"?>
@@ -52,16 +53,17 @@ class HTMLFeed(Feed):
     <link>%(uri)s</link>
     <item>
       <title>%(itemTitle)s</title>
-      <description>&lt;img src="%(itemLink)s" /&gt;</description>
+      <description>&lt;img src="%(itemLink)s" /&gt;%(itemBody)s</description>
     </item>
   </channel>
 </rss>"""
 
     def __init__(self, name, uri, regex):
 	Feed.__init__(self, name, uri)
-	self.regex = re.compile(regex, re.I + 0*re.M)
+	self.regex = re.compile(regex, re.I)
 	self.itemLink = ''
 	self.itemTitle = ''
+	self.itemBody = ''
 
     def getLink(self):
 	"""Reads the HTML page and extracts the link and title."""
@@ -74,9 +76,16 @@ class HTMLFeed(Feed):
 	html = feedparser._resolveRelativeURIs(html, self.uri)
 	m = self.regex.search(html)
 	if m:
-	    self.itemLink = m.group(1)
-	    if m.group(2):
-		self.itemTitle = m.group(2)
+	    try:
+		if m.groupdict():	# new-style group names in regex
+		    self.itemLink = m.group('link')
+		    self.itemTitle = m.group('title')
+		    self.itemBody = '<p>' + m.group('body') + '</p>'
+		else:
+		    self.itemLink = m.group(1)
+		    self.itemTitle = m.group(2)
+	    except IndexError:
+		pass
 
     def getFeed(self):
 	self.getLink()
