@@ -96,6 +96,7 @@ class BlosxomEntries(Entries):
 	).strip()
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
+	body = self.feed.replaceText(body, 'bodyfrom', 'bodyto')
 	footer = '<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
 	if link and not title:
 	    footer += '\n[%s]' % _linktag(link, 'Link')
