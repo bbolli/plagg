@@ -148,8 +148,8 @@ class HTMLFeed(SimulatedFeed):
 	self.generateFeed()
 
 
-class SuiteFeed(HTMLFeed):
-    """Builds the itemLink out of an arbitrary Python statement suite."""
+class ComputedFeed(HTMLFeed):
+    """Builds the itemLink out of arbitrary Python statements."""
 
     def __init__(self, attrs, name, uri, suite):
 	SimulatedFeed.__init__(self, attrs, name, uri)

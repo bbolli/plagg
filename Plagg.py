@@ -70,14 +70,14 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    uri = attrs.get('xmlurl')
 	    if not uri: return
 	    feed = Feed.RSSFeed(attrs, name, uri)
-	elif kind == 'x-bb-html':
+	elif kind == 'x-plagg-html':
 	    uri, regex = attrs.get('link'), attrs.get('regex')
 	    if not uri or not regex: return
 	    feed = Feed.HTMLFeed(attrs, name, uri, regex)
-	elif kind == 'x-bb-suite':
-	    uri, suite = attrs.get('link'), attrs.get('suite')
+	elif kind == 'x-plagg-computed':
+	    uri, suite = attrs.get('link'), attrs.get('commands')
 	    if not suite: return
-	    feed = Feed.SuiteFeed(attrs, name, uri, suite)
+	    feed = Feed.ComputedFeed(attrs, name, uri, suite)
 	else:
 	    return
 
@@ -85,7 +85,12 @@ class Plagg(xml.sax.handler.ContentHandler):
 	try:
 	    feed.getFeed()
 	except Exception, e:
-	    sys.stderr.write("Feed: %s (%s)\n%s\n" % (feed.name, feed.uri, str(e)))
+	    import traceback
+	    sys.stderr.write("Feed: %s (%s)\n" % (feed.name, feed.uri))
+	    if self.logging:
+		traceback.print_exc(file=sys.stderr)
+	    else:
+		sys.stderr.write("%s\n", e)
 	    self.errors += 1
 	    return
 	if self.logging > 1:

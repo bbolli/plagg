@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="opml.xsl" media="screen"?>
 
 <opml version="1.0">
@@ -31,7 +31,7 @@
 			<outline text="MobileWhack" type="rss" link="http://www.mobilewhack.com/" xmlUrl="http://www.mobilewhack.com/index.rss"/>
 		</outline>
 		<outline text="Science">
-			<outline text="Astronomy Picture of the Day" nick="apod" type="x-bb-html" link="http://antwrp.gsfc.nasa.gov/apod/"
+			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" link="http://antwrp.gsfc.nasa.gov/apod/"
 				regex="(?is)&lt;IMG SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; ?(?P&lt;title&gt;.*?) ?&lt;/b&gt; &lt;br /&gt;.*?Explanation: &lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; &lt;center&gt;"
 				hours="8-10"/>
 			<outline text="Mars Rover" nick="mars" type="rss" xmlUrl="http://www.markcarey.com/mars/mars-rover-photos.rdf" hours="12"/>
@@ -54,25 +54,27 @@
 			<outline text="Simon Willison" nick="simon" type="rss" link="http://simon.incutio.com/" xmlUrl="http://simon.incutio.com/syndicate/rss1.0"/>
 			<outline text="Steve Gillmor" nick="sgillmor" type="rss" link="http://blog.ziffdavis.com/gillmor/" xmlUrl="http://blog.ziffdavis.com/gillmor/Rss.aspx"/>
 			<outline text="Tim Bray" nick="ongoing" type="rss" link="http://www.tbray.org/ongoing/" xmlUrl="http://www.tbray.org/ongoing/ongoing.rss"/>
-			<outline text="Russell Beattie" nick="russell" type="rss" link="http://www.russellbeattie.com/notebook/" xmlUrl="http://www.russellbeattie.com/notebook/rss.jsp"/>
+			<outline text="Russell Beattie" nick="russell" type="rss" link="http://www.russellbeattie.com/notebook/" xmlUrl="http://www.russellbeattie.com/notebook/rss.jsp"
+				bodyFrom="&lt;p align=&quot;center&quot;&gt;.*?johnkerry.*?&lt;/p&gt;" bodyTo=""/>
 			<outline text="Jeffrey Zeldman" nick="zeldman" type="rss" link="http://www.zeldman.com/" xmlUrl="http://www.zeldman.com/feed/zeldman.xml"/>
 			<outline text="Mark Nottingham" nick="mnot" type="rss" link="http://www.mnot.net/blog/" xmlUrl="http://www.mnot.net/blog/index.rdf"/>
 			<outline text="Wes Felter" nick="wmf" type="rss" link="http://wmf.editthispage.com/" xmlUrl="http://wmf.editthispage.com/xml/rss.xml"/>
 			<outline text="Gary Turner" nick="garyturner" type="rss" link="http://weblog.garyturner.net/" xmlUrl="http://weblog.garyturner.net/BLOG.XML"/>
+			<!-- outline text="bblog" type="rss" link="http://www.drbeat.li/" xmlUrl="http://www.drbeat.li/index.rss"/ -->
 		</outline>
 		<outline text="Comics">
-			<outline text="Dilbert" type="x-bb-html" link="http://www.dilbert.com/"
+			<outline text="Dilbert" type="x-plagg-html" link="http://www.dilbert.com/"
 				regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.[gj][ip][fg])&quot;"
 				hours="8-10"/>
-			<outline text="Garfield" type="x-bb-suite" link="http://garfield.ucomics.com"
-				suite="import time&#10;tm = time.gmtime()&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.itemLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
+			<outline text="Garfield" type="x-plagg-computed" link="http://garfield.ucomics.com"
+				commands="import time&#10;tm = time.gmtime()&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.itemLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
 				hours="8"/>
-			<outline text="Userfriendly" nick="uf" type="x-bb-html" link="http://www.userfriendly.org/static/"
+			<outline text="Userfriendly" nick="uf" type="x-plagg-html" link="http://www.userfriendly.org/static/"
 				regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d{6})\.gif)&quot; /&gt;"
 				linkFrom="/xuf" linkTo="/uf"
 				savepath="/home/bb/public_html/news/uf" saveurl="/news/uf"
 				hours="8-10"/>
-			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-bb-html" link="http://www.ucomics.com/calvinandhobbes/"
+			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" link="http://www.ucomics.com/calvinandhobbes/"
 				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ch/\d{4}/ch(\d{6})\.gif)&quot;"
 				hours="8-10"/>
 		</outline>
