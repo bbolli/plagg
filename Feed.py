@@ -154,7 +154,7 @@ class SuiteFeed(HTMLFeed):
 	self.suite = suite
 
     def getLink(self):
-        """Execute the suite which should set at least  self.itemLink"""
+        """Execute the suite which should set at least self.itemLink"""
     	try:
 	    exec self.suite
 	except Exception, e:
