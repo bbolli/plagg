@@ -54,7 +54,7 @@ class HTMLFeed(Feed):
     <link>%(uri)s</link>
     <item>
       <title>%(itemTitle)s</title>
-      <description>&lt;img src="%(itemLink)s" /&gt;%(itemBody)s</description>
+      <description>&lt;p&gt;&lt;img src="%(itemLink)s" /&gt;&lt;/p&gt;%(itemBody)s</description>
     </item>
   </channel>
 </rss>"""
