@@ -21,7 +21,7 @@
 		</outline>
 		<outline text="Science">
 			<outline text="Christian Science Monitor" nick="cs" type="rss" xmlUrl="http://www.csmonitor.com/rss/scitech.rss"/>
-			<outline text="Astronomy Picture of the Day" nick="apod" type="rss" link="http://antwrp.gsfc.nasa.gov/apod/" regex="&lt;img SRC=&quot;(image/(\d{4}/.*\..*))&quot;"/>
+			<outline text="Astronomy Picture of the Day" nick="apod" type="rss" link="http://antwrp.gsfc.nasa.gov/apod/" regex="&lt;img SRC=&quot;(image/(\\d{4}/.*?\\..*?))\&quot;"/>
 			<outline text="Mars Rover" nick="mars" type="rss" xmlUrl="http://www.markcarey.com/mars/mars-rover-photos.rdf"/>
 		</outline>
 		<outline text="Articles">
