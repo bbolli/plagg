@@ -21,7 +21,7 @@
 			<outline text="WiFi Network News" nick="wifi" type="rss" htmlUrl="http://wifinetnews.com/" xmlUrl="http://wifinetnews.com/xml/rss.xml"/>
 			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
 			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://www.pythonware.com/daily/rss2.xml"/>
-			<outline text="SecurityFocus" nick="bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/news.xml"/>
+			<outline text="SecurityFocus" nick="bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/vulnerabilities.xml"/>
 			<outline text="Crypto-Gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
 			<outline text="Engadget" type="rss" htmlUrl="http://www.engadget.com/" xmlUrl="http://www.engadget.com/rss.xml"
 				bodyFrom="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" bodyTo=""/>
@@ -50,10 +50,9 @@
 			<outline text="Dan Gillmor" nick="dgillmor" type="rss" htmlUrl="http://weblog.siliconvalley.com/column/dangillmor/" xmlUrl="http://weblog.siliconvalley.com/column/dangillmor/index.xml"/>
 			<outline text="Paul Boutin" nick="boutin" type="rss" htmlUrl="http://paulboutin.weblogger.com/" xmlUrl="http://paulboutin.weblogger.com/xml/rss.xml"/>
 			<outline text="Simon Willison" nick="simon" type="rss" htmlUrl="http://simon.incutio.com/" xmlUrl="http://simon.incutio.com/syndicate/rss1.0"/>
-			<outline text="Steve Gillmor" nick="sgillmor" type="rss" htmlUrl="http://blog.ziffdavis.com/gillmor/" xmlUrl="http://blog.ziffdavis.com/gillmor/Rss.aspx"/>
+			<outline text="Steve Gillmor" nick="sgillmor" type="rss" htmlUrl="http://blogs.zdnet.com/Gillmor/" xmlUrl="http://blogs.zdnet.com/Gillmor/wp-rss2.php"/>
 			<outline text="Tim Bray" nick="ongoing" type="rss" htmlUrl="http://www.tbray.org/ongoing/" xmlUrl="http://www.tbray.org/ongoing/ongoing.rss"/>
-			<outline text="Russell Beattie" nick="russell" type="rss" htmlUrl="http://www.russellbeattie.com/notebook/" xmlUrl="http://www.russellbeattie.com/notebook/rss.jsp"
-				bodyFrom="(?s)&lt;p align=&quot;center&quot;&gt;.{1,2}&lt;a href=&quot;http://www\.johnkerry.*?&lt;/p&gt;" bodyTo=""/>
+			<outline text="Russell Beattie" nick="russell" type="rss" htmlUrl="http://www.russellbeattie.com/notebook/" xmlUrl="http://www.russellbeattie.com/notebook/rss.jsp"/>
 			<outline text="Jeffrey Zeldman" nick="zeldman" type="rss" htmlUrl="http://www.zeldman.com/" xmlUrl="http://www.zeldman.com/feed/zeldman.xml"/>
 			<outline text="Mark Nottingham" nick="mnot" type="rss" htmlUrl="http://www.mnot.net/blog/" xmlUrl="http://www.mnot.net/blog/index.rdf"/>
 			<outline text="Wes Felter" nick="wmf" type="rss" htmlUrl="http://wmf.editthispage.com/" xmlUrl="http://wmf.editthispage.com/xml/rss.xml"/>
