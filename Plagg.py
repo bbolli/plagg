@@ -43,7 +43,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	name = attrs.get('text')
 	if not name: return
 	nick = attrs.get('nick', name.lower())
-	if self.nick and nick != self.nick.lower(): return
+	if self.nick and nick != self.nick: return
 
 	# create a Feed instance based on the OPML type attribute
 	kind = attrs.get('type', 'rss').lower()
@@ -62,9 +62,9 @@ class Plagg(xml.sax.handler.ContentHandler):
 	else:
 	    return
 
-	# observe hours (in UTC!)
+	# observe hours (in UTC!) unless a single feed is requested
 	hours = attrs.get('hours')
-	if hours and not _matchHours(hours, time.gmtime()[3]):
+	if hours and not self.nick and not _matchHours(hours, time.gmtime()[3]):
 	    return
 
 	# get and process this feed
