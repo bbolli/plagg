@@ -14,11 +14,11 @@ example of plagg's output "on my news page":http://www.drbeat.li/news.
 
 h2. 1. Installation
 
-# Install "Mark Pilgrim's":http://diveintomark.org "Ultra-liberal Feed Parser 3.3":http://feedparser.org/
+# Download and install "Mark Pilgrim's":http://diveintomark.org "Ultra-liberal Feed Parser 3.3":http://feedparser.org/
 # Download "plagg":plagg.tar.gz
 # Untar the distribution file to a directory of your choice
-# Run @python setup.py install@
-# Run @plagg@ _opmlfile_ _newsdir_ as often as you like from a cron job.
+# Run @su -c "python setup.py install"@
+# Run @plagg@ _opmlfile_ _newsdir_ as often as you like from a cron job
 
 
 h2. 2. Usage
@@ -170,22 +170,23 @@ the HTTP request. The default referrer is either the @link@ attribute, or, if
 empty, the item link itself.
 
 
-h2. 4. History
+h2(#changelog). 4. Changelog
 
-* Version 1.0, 2004-10-29:
+* Version 1.0, ==2004-10-29==:
 ** Initial public release
-* Version 1.1, 2004-11-11:
+* Version 1.1, ==2004-11-11==:
 ** Added HTTP caching, thanks to Joe Gregorio's "httpcache.py":http://bitworking.org/projects/httpcache
-* Version 1.2, 2004-11-25:
+* Version 1.2, ==2004-11-25==:
 ** Print an exception trace only at log level 2 and above
 ** Generate a feed title attribute with the tagline
-** Send the correct User-Agent string which was lost by using httpcache.py (patch sent to Joe)
+** Send the correct User-Agent string which was lost by using httpcache.py (patch sent to Joe Gregorio)
 
 
 h2. 5. TODO
 
 * Should use @skipHours@ from the RSS feed instead of using @hours@
 * Support RSS enclosures
+
 
 h2. 6. Author
 
