@@ -26,7 +26,7 @@ class Feed:
 	raise NotImplementedError('Feed.getFeed()')
 
     def replaceLink(self, link, delRepl=0):
-	return self.replaceText(link, 'from', 'to', delRepl)
+	return self.replaceText(link, 'linkFrom', 'linkTo', delRepl)
 
     def replaceText(self, text, old, new, delRepl=0):
 	"""Performs a regex replacement according to the "old" and "new" attributes
