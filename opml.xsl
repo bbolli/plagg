@@ -13,7 +13,7 @@
   <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
   <head>
   <title><xsl:value-of select="opml/head/title"/></title>
-  <link rel="stylesheet" href="/bb.css" type="text/css" />
+  <link rel="stylesheet" href="http://www.drbeat.li/bb.css" type="text/css" />
   </head>
   <body><div id="body">
   <xsl:apply-templates/>
