@@ -81,13 +81,20 @@ class HTMLFeed(SimulatedFeed):
 	html = f.read().decode(self.encoding)
 	# resolve relative URIs
 	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding)
+	# search for the regex
 	m = self.regex.search(html)
 	if m:
 	    try:
 		if m.groupdict():	# new-style group names in regex
 		    self.itemLink = m.group('link')
 		    self.itemTitle = m.group('title')
-		    self.itemBody = '<p>' + m.group('body') + '</p>'
+		    if m.group('body'):
+			self.itemBody = '<p>' + m.group('body') + '</p>'
+			# strip whitespace inside href attributes (for APOD)
+			self.itemBody = re.sub(r'''(?s)href=(['"]).+?\1''',	# "
+			    lambda m: re.sub(r'\s+', '', m.group(0)),
+			    self.itemBody
+			)
 		else:
 		    self.itemLink = m.group(1)
 		    self.itemTitle = m.group(2)
