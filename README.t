@@ -1,4 +1,4 @@
-h1. README file for plagg
+h1. plagg, a RSS aggregator
 
 
 h2. 0. What is this?
@@ -8,8 +8,8 @@ plagg is a weblog/news aggregator that works in conjunction with
 It can be easily extended to support other blogging tools.
 
 plagg reads an OPML file containing a list of RSS or Atom feeds, and
-generates blosxom blog entries from these feeds. You can see an
-example of plagg's output "on my news page":http://www.drbeat.li/news.
+generates blosxom blog entries from these feeds. You can see
+examples of plagg's output "on my news page":http://www.drbeat.li/news.
 
 
 h2. 1. Installation
@@ -18,6 +18,7 @@ h2. 1. Installation
 # Download "plagg":plagg.tar.gz
 # Untar the distribution file to a directory of your choice
 # Run @su -c "python setup.py install"@
+# Set up an "OPML":#opml file containing the feeds you'd like to read
 # Run @plagg@ _opmlfile_ _newsdir_ as often as you like from a cron job
 
 
@@ -29,7 +30,7 @@ pre. plagg -nvVh [opmlfile [destdir [nickname ...]]]
 
 h3. 2.2. Options
 
-dl. -n: Write a file @Latest.txt@ that contains the new entries.
+dl. -n: Write a file @Latest.txt@ that contains the new entries to @newsdir@.
 -v: Be verbose. May be repeated for additional effect.
 -V: Display version information and exit.
 -h: Display usage information and exit.
@@ -43,7 +44,9 @@ nickname: If given, updates only the feeds with the given nicknames (ignoring th
 The default arguments for opmlfile and destdir can be set in the @plagg@ script.
 
 
-h2. 3. OPML syntax
+h2(#opml). 3. The OPML file
+
+The distribution contains my OPML file as an example.
 
 The basic OMPL syntax is defined in the "OPML specification":http://www.opml.org/spec.
 
@@ -170,6 +173,18 @@ If necessary, you can define the @referrer@ attribute which will be passed in
 the HTTP request. The default referrer is either the @link@ attribute, or, if
 empty, the item link itself.
 
+h3. 3.6. Rendering the OPML file as XHTML
+
+The distribution tar file contains the XSL style sheet @opml.xsl@ that transforms
+an OPML file into XHTML. Place your OPML file and the style sheet (or symbolic links
+to them) in a directory that your HTTP server can access and you can display
+a properly indented view of your OPML file just by entering its URL in your browser.
+Modern browsers understand enough of XML to apply the XSL file before displaying the page.
+
+If you want to adjust the resulting XHTML, you have to adjust the location and name
+of your CSS style sheet in the XSL file, as well as the CSS class names of the generated
+@<div>@ tags.
+
 
 h2(#changelog). 4. Changelog
 
@@ -180,10 +195,12 @@ h2(#changelog). 4. Changelog
 * Version 1.2, ==2004-11-25==:
 ** Print an exception trace only at log level 2 and above
 ** Generate a feed title attribute with the tagline
-** Send the correct User-Agent string which was lost by using httpcache.py (patch sent to Joe Gregorio)
+** Send the correct User-Agent string which was lost by using httpcache.py (patch sent to and accepted by Joe Gregorio)
 * Version 1.3, ==2004-12-29==:
 ** Added the @-n@ option
 ** Process feeds only if they have changed
+** Allow more than one nickname on the command line
+
 
 h2. 5. TODO
 
