@@ -14,7 +14,7 @@ if sys.hexversion < 0x02020300:
 
 setup(
     name="plagg",
-    version="1.0",
+    version="1.1",
     description="plagg is an RSS/Atom feed aggregator",
     author="Beat Bolli",
     author_email="bbolli@ewanet.ch",
