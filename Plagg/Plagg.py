@@ -87,12 +87,15 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    feed.getFeed()
 	except Exception, e:
 	    import traceback
-	    sys.stderr.write("Feed: %s (%s)\n" % (feed.name.encode(ENCODING, 'replace'), feed.uri))
 	    if self.logging > 1:
+		sys.stderr.write("Feed: %s (%s)\n" % (feed.name.encode(ENCODING, 'replace'), feed.uri))
 		traceback.print_exc(file=sys.stderr)
+		self.errors += 1
 	    else:
-		sys.stderr.write("%s\n" % e)
-	    self.errors += 1
+		e_str = str(e).lower()
+		if e_str.find('timed out') < 0 and e_str.find('connection refused') < 0:
+		    sys.stderr.write("Feed: %s (%s)\n%s\n" % (feed.name.encode(ENCODING, 'replace'), feed.uri, e))
+		    self.errors += 1
 	    return
 	if self.logging > 1:
 	    print feed.feed
