@@ -19,8 +19,8 @@
 				linkFrom="/$" linkTo="/print.html"/>
 			<outline text="Symlink" type="rss" htmlUrl="http://www.symlink.ch/" xmlUrl="http://www.symlink.ch/symlinkch.rss"/>
 			<x-outline text="WiFi Network News" nick="wifi" type="rss" htmlUrl="http://wifinetnews.com/" xmlUrl="http://wifinetnews.com/atom.xml"/>
-			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/" hours="6"/>
-			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://www.pythonware.com/daily/rss2.xml"/>
+			<outline text="Bible Verse" nick="bible" type="rss" htmlUrl="http://www.gnpcb.org/esv/" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/" hours="6"/>
+			<outline text="Daily Python News" nick="dailypy" type="rss" htmlUrl="http://www.pythonware.com/daily/" xmlUrl="http://www.pythonware.com/daily/rss2.xml"/>
 			<outline text="Crypto-Gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
 			<outline text="Engadget" type="rss" htmlUrl="http://www.engadget.com/" xmlUrl="http://www.engadget.com/rss.xml"
 				bodyFrom="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" bodyTo=""/>
@@ -34,7 +34,7 @@
 			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="http://antwrp.gsfc.nasa.gov/apod/"
 				regex="(?is)&lt;IMG SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; ?(?P&lt;title&gt;.*?) ?&lt;/b&gt; &lt;br /&gt;.*?Explanation: &lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; &lt;center&gt;"
 				hours="8-10"/>
-			<outline text="Mars Rover" nick="mars" type="rss" xmlUrl="http://www.markcarey.com/mars/mars-rover-photos.rdf" hours="12"/>
+			<outline text="Mars Rover" nick="mars" type="rss" htmlUrl="http://www.markcarey.com/mars/" xmlUrl="http://www.markcarey.com/mars/mars-rover-photos.rdf" hours="12"/>
 		</outline>
 		<outline text="Articles">
 			<outline text="Linux Journal" nick="lj" type="rss" htmlUrl="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
