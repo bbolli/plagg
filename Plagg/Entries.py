@@ -37,6 +37,11 @@ def _decode(text):
 	text = unicode(text, Plagg.ENCODING, 'replace')
     return text
 
+if time.localtime()[8]:
+    tz = time.altzone
+else:
+    tz = time.timezone
+
 
 class Entry:
     """Blog entry class.
@@ -92,7 +97,9 @@ class Entry:
 	# modification time
 	self.mdate = item.get('date_parsed') or item.get('modified_parsed')
 	if self.mdate:
-	    self.tm = time.mktime(self.mdate)	# convert date/time 9-tuple to timestamp
+	    self.tm = time.mktime(self.mdate) - tz	# convert date/time 9-tuple to timestamp
+	    self.mdate = time.localtime(self.tm)
+	    print self.mdate, time.ctime(self.tm)
 
     def setEntry(self, title, body, footer=''):
 	self._title = self.title = title
