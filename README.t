@@ -166,14 +166,21 @@ the HTTP request. The default referrer is either the @link@ attribute, or, if
 empty, the item link itself.
 
 
-h2. 4. TODO
+h2. 4. History
+
+* Version 1.0, 2004-10-29: Initial public release
+* Version 1.1, 2004-11-11: Added HTTP caching, thanks to Joe Gregorio's "httpcache.py":http://bitworking.org/projects/httpcache
+
+
+h2. 5. TODO
 
 * Should use @skipHours@ from the RSS feed instead of using @hours@
 * Support RSS enclosures
 
-h2. 5. Author
+h2. 6. Author
 
-Beat Bolli @<me&#43;plagg&#64;drbeat&#46;li>@,
-http://www.drbeat.li/py/plagg
+Beat Bolli @<me&#43;plagg&#64;drbeat&#46;li>@, http://www.drbeat.li/py/plagg
+
+&nbsp;
 
 pre. $Id$
