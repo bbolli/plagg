@@ -41,7 +41,7 @@ def _decode(text):
 
 class Entries:
     """Abstract Entry class.
-    Processes blog entries from a dict returned by feedparser."""
+    Processes blog entries from a feed object."""
 
     def processFeed(self, feed):
 	"""Processes each entry of a feed object."""
@@ -49,14 +49,10 @@ class Entries:
 	self.feed = feed
 	channel = feed.feed['channel']
 	items = feed.feed['items']
-	# Prepare for link replacement
-	old, new = feed.attrs.get('from'), feed.attrs.get('to')
-	if old:
-	    old = re.compile(old, re.I)
 	# Process the entries
 	for item in items:
-	    if item.has_key('link') and old and new is not None:
-		item['link'] = old.sub(new, item['link'])
+	    if item.has_key('link'):
+		item['link'] = feed.replaceLink(item['link'])
 	    self.processItem(channel, item)
 
     def processItem(self, channel, item):

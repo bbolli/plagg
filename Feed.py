@@ -10,19 +10,30 @@ feedparser.USER_AGENT = 'plagg/%s ' % re.sub('\D', '', '$Rev$') + feedparser.USE
 
 import Plagg		# for default encoding
 
+
 class Feed:
     """Abstract Feed class.
-    Knows its name and URI.
-    Can build a Blosxom entry from a feedparser object."""
+    Knows its name and URI, <outline> attributes and feedparser dict."""
 
     def __init__(self, name, uri):
 	self.name = name
 	self.uri = uri
+	self.attrs = {}
 	self.feed = {}
 
     def getFeed(self):
-	"""Returns a feedparser dictionary. Subclasses must implement this."""
+	"""Sets self.feed to a feedparser dictionary. Subclasses must implement this."""
 	raise NotImplementedError('Feed.getFeed()')
+
+    def replaceLink(self, link, delRepl=0):
+	"""Performs a regex replacement according to the "from" and "to" attributes
+	of the <outline> element."""
+	old, new = self.attrs.get('from'), self.attrs.get('to')
+	if old and new is not None:
+	    link = re.sub(old, new, link)
+	if old and delRepl:
+	    del self.attrs['from']	# prevent another replacement
+	return link
 
 
 class RSSFeed(Feed):
@@ -115,20 +126,20 @@ class HTMLFeed(SimulatedFeed):
 	# save the linked-to item and adjust the itemLink to
 	# point to the local copy. Allow to fake the referrer
 	# while getting the remote file.
-	attr = self.attrs.get
-	if attr('savepath') and attr('saveurl'):
-	    basename = re.search('([^/]+)$', self.itemLink).group(1)
-	    localfile = os.path.join(attr('savepath'), basename)
+	if self.attrs.get('savepath') and self.attrs.get('saveurl'):
+	    link = self.replaceLink(self.itemLink, delRepl=1)
+	    basename = re.search('([^/]+)$', link).group(1)
+	    localfile = os.path.join(self.attrs['savepath'], basename)
 	    # only get and save the file if it doesn't exist yet
 	    if not os.path.isfile(localfile):
-		req = urllib2.Request(self.itemLink)
-		req.add_header('Referer', attr('referrer') or self.uri or self.itemLink)
+		req = urllib2.Request(link)
+		req.add_header('Referer', self.attrs.get('referrer') or self.uri or link)
 		image = urllib2.urlopen(req).read()
 		f = file(localfile, 'wb')
 		f.write(image)
 		f.close()
 	    # adjust the itemLink in every case
-	    self.itemLink = attr('saveurl') + '/' + basename
+	    self.itemLink = self.attrs['saveurl'] + '/' + basename
 
 	self.generateFeed()
 
