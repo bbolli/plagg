@@ -18,10 +18,11 @@
 			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
 			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://stuff.vandervossen.net/feeds/dailypython.rss"/>
 			<outline text="Bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/vulnerabilities.xml"/>
+			<outline text="NTK" type="rss" xmlUrl="http://www.ntk.net/rss.php3"/>
 		</outline>
 		<outline text="Science">
 			<outline text="Christian Science Monitor" nick="cs" type="rss" xmlUrl="http://www.csmonitor.com/rss/scitech.rss"/>
-			<outline text="Astronomy Picture of the Day" nick="apod" type="x-bb-html" link="http://antwrp.gsfc.nasa.gov/apod/" regex="&lt;img SRC=&quot;(http://.*?/image/(\d{4}/.*?\..*?))&quot;" hours="8"/>
+			<outline text="Astronomy Picture of the Day" nick="apod" type="x-bb-html" link="http://antwrp.gsfc.nasa.gov/apod/" regex="(?is)&lt;img SRC=&quot;(?P&lt;link&gt;http://.*?/image/(?P&lt;title&gt;\d{4}/.*?\..*?))&quot;.*? Explanation: &lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; &lt;center&gt;" hours="8"/>
 			<outline text="Mars Rover" nick="mars" type="rss" xmlUrl="http://www.markcarey.com/mars/mars-rover-photos.rdf"/>
 		</outline>
 		<outline text="Articles">
@@ -38,6 +39,8 @@
 			<outline text="Paul Boutin" nick="boutin" type="rss" xmlUrl="http://paulboutin.weblogger.com/xml/rss.xml"/>
 			<outline text="Simon Willison" nick="simon" type="rss" xmlUrl="http://simon.incutio.com/syndicate/rss1.0"/>
 			<outline text="Steve Gillmor" nick="sgillmor" type="rss" xmlUrl="http://blog.ziffdavis.com/gillmor/Rss.aspx"/>
+			<outline text="Tim Bray" nick="ongoing" type="rss" xmlUrl="http://www.tbray.org/ongoing/ongoing.rss"/>
+			<outline text="Russell Beattie" nick="russell" type="rss" xmlUrl="http://www.russellbeattie.com/notebook/rss.jsp"/>
 		</outline>
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-bb-html" link="http://www.dilbert.com/" regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.gif)&quot;" hours="8"/>
