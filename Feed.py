@@ -31,10 +31,10 @@ class Feed:
     def replaceText(self, text, old, new, delRepl=0):
 	"""Performs a regex replacement according to the "old" and "new" attributes
 	of the <outline> element."""
-	old, new = self.attrs.get(old), self.attrs.get(new)
-	if old:
-	    if new is not None:
-		text = re.sub(old, new, text)
+	oldtext, newtext = self.attrs.get(old), self.attrs.get(new)
+	if oldtext:
+	    if newtext is not None:
+		text = re.sub(oldtext, newtext, text)
 	    if delRepl:
 		del self.attrs[old]	# prevent another replacement
 	return text
