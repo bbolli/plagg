@@ -89,13 +89,14 @@ class BlosxomEntries(Entries):
 	link = item.get('link')
 	if title and link:
 	    title = _linktag(link, title)
-	body = item.get('content', [{}])[0].get('value') \
-	    or item.get('description', '') \
-	    or item.get('summary', '')
-	body = body.strip()
+	body = (
+	    item.get('content', [{}])[0].get('value') or
+	    item.get('description') or
+	    item.get('summary', '')
+	).strip()
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
-	footer = '<p class="blosxomEntryFoot">' + (item.get('date', '') or item.get('modified', ''))
+	footer = '<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
 	if link and not title:
 	    footer += '\n[%s]' % _linktag(link, 'Link')
 	if item.has_key('comments'):
@@ -107,6 +108,14 @@ class BlosxomEntries(Entries):
     def processItem(self, channel, item):
 	"""Builds the text of one Blosxom entry, saves it in self.path and 
 	sets its mtime to the timestamp, if present."""
+
+	# get modification time if present
+	mdate = item.get('date_parsed') or item.get('modified_parsed')
+	if mdate:
+	    tm = time.mktime(mdate)	# convert date/time 9-tuple to timestamp
+	    # ignore entries older than 32 days
+	    if tm < time.time() - 32 * 86400:
+		return
 
 	title, body, footer = self.makeEntry(channel, item)
 	entry = u'\n'.join(map(_decode, [title, body, footer]))
@@ -121,15 +130,13 @@ class BlosxomEntries(Entries):
 	    return
 
 	# write out the entry
-	f = file(fname, 'w')
+	f = open(fname, 'w')
 	f.write(_encode(entry))
 	f.close()
 
 	# set modification time if present
-	mdate = item.get('date_parsed') or item.get('modified_parsed')
 	if mdate:
-	    mdate = time.mktime(mdate)	# convert date/time 9-tuple to timestamp
-	    os.utime(fname, (mdate, mdate))
+	    os.utime(fname, (tm, tm))
 
 	# logging
 	if self.logging:
@@ -137,7 +144,9 @@ class BlosxomEntries(Entries):
 	    if self.lastChannel != currentChannel:
 		print _encode(currentChannel)
 		self.lastChannel = currentChannel
-	    print '  ' + _encode(_markup.sub('', title) or fn)
+	    print '  ' + \
+		(mdate and time.asctime(mdate) + ' ' or '') + \
+		_encode(_markup.sub('', title) or fn)
 
 	return 1
 
