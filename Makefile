@@ -11,7 +11,7 @@ README.inc: README.t
 	textile -o1 <$^ >$@
 
 README.html: README.t
-	-textile <$^ | tidy -asxml -i -n -wrap 76 >$@
+	-textile <$^ | tidy -latin1 -asxml -i -n -wrap 76 >$@
 
 README: README.html
 	lynx -dump $^ >$@
