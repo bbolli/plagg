@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="opml.xsl" media="screen"?>
 
 <opml version="1.0">
 	<head>
-		<title>news.opml</title>
+		<title>bb's blogroll</title>
 		<dateModified>Thu, 25 Mar 2004 14:23:01 +0100</dateModified>
-		<!-- $Id$ -->
+		<x-svn-id>$Id$</x-svn-id>
 		<ownerName>Beat Bolli</ownerName>
 		<ownerEmail>bbolli@ewanet.ch</ownerEmail>
 	</head>
@@ -31,19 +32,18 @@
 				regex="(?is)&lt;IMG SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; (?P&lt;title&gt;.*?) &lt;/b&gt; &lt;br /&gt;.*?Explanation: &lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; &lt;center&gt;"
 				hours="8-10"
 			/>
-			<outline text="Mars Rover" nick="mars" type="rss" xmlUrl="http://www.markcarey.com/mars/mars-rover-photos.rdf"/>
+			<outline text="Mars Rover" nick="mars" type="rss" xmlUrl="http://www.markcarey.com/mars/mars-rover-photos.rdf" hours="12"/>
 		</outline>
 		<outline text="Articles">
 			<outline text="Linux Journal" nick="lj" type="rss" xmlUrl="http://www.linuxjournal.com/news.rss"/>
 			<outline0 text="linuxdevcenter" type="rss" xmlUrl="http://www.oreillynet.com/meerkat/?_fl=rss10&amp;t=ALL&amp;c=1112"/>
 			<outline text="Groklaw" type="rss" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
-			<outline text="I, Cringely" nick="cringely" type="rss" xmlUrl="http://cgi.pbs.org/cgi-registry/cringely/cringelyrdf.pl"/>
 		</outline>
 		<outline text="Blogs">
 			<outline text="Mark Pilgrim" nick="mark" type="rss" xmlUrl="http://diveintomark.org/xml/atom.xml"/>
 			<outline text="Dave Winer" nick="winer" type="rss" xmlUrl="http://www.scripting.com/rss.xml"/>
 			<outline text="Doc Searls" nick="doc" type="rss" xmlUrl="http://partners.userland.com/people/docSearls.xml"/>
-			<outline text="The Scobleizer" nick="scoble" type="rss" xmlurl="http://radio.weblogs.com/0001011/rss.xml"/>
+			<outline text="The Scobleizer" nick="scoble" type="rss" xmlUrl="http://radio.weblogs.com/0001011/rss.xml"/>
 			<outline text="Dan Gillmor" nick="dgillmor" type="rss" xmlUrl="http://weblog.siliconvalley.com/column/dangillmor/index.xml"/>
 			<outline text="Paul Boutin" nick="boutin" type="rss" xmlUrl="http://paulboutin.weblogger.com/xml/rss.xml"/>
 			<outline text="Simon Willison" nick="simon" type="rss" xmlUrl="http://simon.incutio.com/syndicate/rss1.0"/>
@@ -57,8 +57,8 @@
 				regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.[gj][ip][fg])&quot;"
 				hours="8-10"
 			/>
-			<outline text="Garfield" type="x-bb-html" link="http://garfield.ucomics.com"
-				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ga/\d{4}/ga(\d{6})\.gif)&quot;"
+			<outline text="Garfield" type="x-bb-suite" link="http://garfield.ucomics.com"
+				suite="import time&#10;tm = time.gmtime(time.time()-2*86400)&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.itemLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
 				hours="8-10"
 			/>
 			<outline text="Userfriendly" nick="uf" type="x-bb-html" link="http://www.userfriendly.org/static/"

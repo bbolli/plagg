@@ -34,14 +34,10 @@ class RSSFeed(Feed):
 	    sys.stderr.write("Feed: %s (%s)\n%s\n" % (self.name, self.uri, e))
 
 
-class HTMLFeed(Feed):
-    """Extracts a single link from a HTML page and builds an ad-hoc feed
-    object from it.
-
-    self.regex must contain one to three named groups. The group 'link' returns
-    the extracted link, the optional group 'title' contains the item title, the
-    third group 'body' returns the entry's body text. All relative links will
-    already have been converted to absolute, and img tags will end with " />"."""
+class SimulatedFeed(Feed):
+    """Simulates a feed by providing a template of an RSS 2.0 feed with
+    one entry. Is used by subclasses which know how to get an item from
+    a website."""
 
     RSS_TEMPLATE = """\
 <?xml version="1.0" encoding="%(encoding)s"?>
@@ -57,13 +53,30 @@ class HTMLFeed(Feed):
   </channel>
 </rss>"""
 
-    def __init__(self, name, uri, regex):
+    def __init__(self, name, uri):
 	Feed.__init__(self, name, uri)
-	self.regex = re.compile(regex, re.I)
 	self.itemLink = ''
 	self.itemTitle = ''
 	self.itemBody = ''
 	self.encoding = Plagg.ENCODING
+
+    def generateFeed(self):
+	rss = self.RSS_TEMPLATE % self.__dict__
+	return feedparser.parse(rss)
+
+
+class HTMLFeed(SimulatedFeed):
+    """Extracts a single link from a HTML page and builds an ad-hoc feed
+    object from it.
+
+    self.regex must contain one to three named groups. The group 'link' returns
+    the extracted link, the optional group 'title' contains the item title, the
+    third group 'body' returns the entry's body text. All relative links will
+    already have been converted to absolute, and img tags will end with " />"."""
+
+    def __init__(self, name, uri, regex):
+	SimulatedFeed.__init__(self, name, uri)
+	self.regex = re.compile(regex, re.I)
 
     def getLink(self):
 	"""Reads the HTML page and extracts the link and title."""
@@ -107,7 +120,7 @@ class HTMLFeed(Feed):
 	    # only get and save the file if it doesn't exist yet
 	    if not os.path.isfile(localfile):
 		req = urllib2.Request(self.itemLink)
-		req.add_header('Referer', attr('referrer') or self.uri)
+		req.add_header('Referer', attr('referrer') or self.uri or self.itemLink)
 		image = urllib2.urlopen(req).read()
 		f = file(localfile, 'wb')
 		f.write(image)
@@ -115,11 +128,12 @@ class HTMLFeed(Feed):
 	    # adjust the itemLink in every case
 	    self.itemLink = attr('saveurl') + '/' + basename
 
-	rss = self.RSS_TEMPLATE % self.__dict__
-	return feedparser.parse(rss)
+	return self.generateFeed()
 
 
 class HTMLSubstituteFeed(HTMLFeed):
+    """Same as class HTMLFeed, except that the item's link undergoes a
+    string replacement."""
 
     def __init__(self, name, uri, regex, old, new):
 	HTMLFeed.__init__(self, name, uri, regex)
@@ -129,3 +143,22 @@ class HTMLSubstituteFeed(HTMLFeed):
     def getLink(self):
 	HTMLFeed.getLink(self)
 	self.itemLink = self.itemLink.replace(self.old, self.new)
+
+
+class SuiteFeed(HTMLFeed):
+    """Builds the itemLink out of an arbitrary Python statement suite."""
+
+    def __init__(self, name, uri, suite):
+	SimulatedFeed.__init__(self, name, uri)
+	self.suite = suite
+
+    def getLink(self):
+        """Execute the suite which should set at least  self.itemLink"""
+    	try:
+	    exec self.suite
+	except Exception, e:
+	    sys.stderr.write("%s in suite\n\n----\n%s\n----\n" % (str(e), self.suite))
+	    self.itemLink = ''
+	    return
+	if not self.itemTitle:
+	    self.itemTitle = re.search('([^/]+)(?:\.\w+)$', self.itemLink).group(1)

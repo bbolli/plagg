@@ -52,6 +52,11 @@ class Plagg(xml.sax.handler.ContentHandler):
 	# select by nickname
 	if self.nick and nick != self.nick: return
 
+	# observe hours (in UTC!) unless a single feed is requested
+	hours = attrs.get('hours')
+	if hours and not self.nick and not _matchHours(hours, time.gmtime()[3]):
+	    return
+
 	# create a Feed instance based on the OPML type attribute
 	kind = attrs.get('type', 'rss').lower()
 	if kind == 'rss':
@@ -66,16 +71,16 @@ class Plagg(xml.sax.handler.ContentHandler):
 		feed = Feed.HTMLFeed(name, uri, regex)
 	    else:
 		feed = Feed.HTMLSubstituteFeed(name, uri, regex, old, new)
+	elif kind == 'x-bb-suite':
+	    uri, suite = attrs.get('link'), attrs.get('suite')
+	    if not suite:
+	        return
+	    feed = Feed.SuiteFeed(name, uri, suite)
 	else:
 	    return
 
 	# let the feed object know about the attribute dict
 	feed.attrs = attrs
-
-	# observe hours (in UTC!) unless a single feed is requested
-	hours = attrs.get('hours')
-	if hours and not self.nick and not _matchHours(hours, time.gmtime()[3]):
-	    return
 
 	# get and process this feed
 	f = feed.getFeed()
