@@ -23,6 +23,7 @@
 			<outline text="Crypto-Gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
 			<outline text="Engadget" type="rss" htmlUrl="http://www.engadget.com/" xmlUrl="http://www.engadget.com/rss.xml"
 				bodyFrom="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" bodyTo=""/>
+			<outline text="Cult of Mac" nick="cultofmac" type="rss" htmlUrl="http://wiredblogs.tripod.com/cultofmac/index.blog" xmlUrl="http://wiredblogs.tripod.com/cultofmac/rss.xml"/>
 		</outline>
 		<outline text="Mobile">
 			<outline text="MobileTracker" type="rss" htmlUrl="http://www.mobiletracker.net/" xmlUrl="http://www.mobiletracker.net/index.rdf"
