@@ -9,7 +9,7 @@ Installation
 0. Install Mark Pilgrim's Ultra-liberal Feed Parser 3.3 from
    http://feedparser.org/
 1. Untar the distribution file to a directory of your choice
-2. Move the blagg script to a directory in your $PATH
+2. Move the plagg script to a directory in your $PATH
 3. Adjust the path in the call to sys.path.insert to the
    path you have chosen in step 1
 4. Adjust the names of your OPML file and your news directory.
