@@ -27,8 +27,9 @@ Requires Python 2.2 or later
 """
 
 __author__ = "Joe Gregorio (joe@bitworking.org)"
-__copyright__ = "Copyright 2003, Joe Gregorio"
-__contributors__ = []
+__copyright__ = "Copyright 2004, Joe Gregorio"
+__contributors__ = ["Kendall Clark"]
+__version__ = "1.0.1 $Rev: 20 $"
 __license__ = "MIT"
 __history__ = """
 """
@@ -42,11 +43,11 @@ if not os.path.exists(cacheSubDir__):
 
 class HTTPCache:
     """Represents a single cached URL"""
-    url_ = ""
-    info_ = None
-    content_ = None
-    
+   
     def __init__(self, url):
+        self.info_ = None
+        self.content_ = None
+        self.fresh_ = False
         self.url_ = url
         #Create a non-clashing name for each url in the cache.
         digest = md5.new(url).digest()
@@ -68,7 +69,7 @@ class HTTPCache:
                 response = urllib2.urlopen(request)
             except urllib2.HTTPError, e:
                 if (304 == e.code):
-                    pass
+                    self.fresh_ = True
                 else:
                     raise urllib2.HTTPError, e
             else:
@@ -88,6 +89,15 @@ class HTTPCache:
     def content(self):
         """Get the content as a single string."""
         return self.content_
+
+    def filename(self):
+         """Get the full path file name of the cached file."""
+         return self.cacheFullPath_
+ 
+    def fresh(self):
+         """Get the state of the cache; if true, the cached copy is
+         fresh; if false, it's stale."""
+         return self.fresh_
 
     def info(self):
         """Returns and rfc822.Message for manipulating headers.
@@ -132,23 +142,21 @@ class HTTPCache:
     
 if __name__ == '__main__':
     # To run these unit tests you should have a web server installed on the local machine.
-    # Alter rootPath and url to point to the location of the root directory for said server.
+    # Alter rootPath to point to the location of the root directory for said server.
     import unittest
 
-    testFile = 'testContent.xml'
-    rootPath = '/var/www'
-    url = 'http://127.0.0.1/' + testFile
+    rootPath = 'c:/Apache/Apache2/htdocs'
 
     def clearCache():
         [os.unlink(os.path.join(cacheSubDir__, name)) for name in os.listdir(cacheSubDir__)]
 
     def writeTargetFile():
-        f = file(os.path.join(rootPath, testFile), "w")
+        f = file(os.path.join(rootPath, 'testContent.xml'), "w")
         f.write("""<rss><channel><item></item></channel></rss>""")
         f.close()
 
     def writeTargetFileAlternate():
-        f = file(os.path.join(rootPath, testFile), "w")
+        f = file(os.path.join(rootPath, 'testContent.xml'), "w")
         f.write("""<rss></rss>""")
         f.close()
 
@@ -156,36 +164,39 @@ if __name__ == '__main__':
         def testCreation(self):
             clearCache()
             writeTargetFile()
-            cache = HTTPCache(url)
+            cache = HTTPCache('http://127.0.0.1/testContent.xml')
             content = cache.content()
             info = cache.info()
-            self.assertEqual(info['Url'], url)
+            self.assertEqual(info['Url'], 'http://127.0.0.1/testContent.xml')
+            self.assertEqual(cache.filename(), ".cache\827456fdc98606d568b6f03e09168738")
             fileNames = os.listdir(cacheSubDir__)
             self.assertEqual(len(fileNames), 1)            
             f = file(os.path.join(cacheSubDir__, fileNames[0]), "r")
             orig_content = f.read()
-            self.assertNotEqual(orig_content.find('Url: ' + url), -1)
+            self.assertNotEqual(orig_content.find('Url: http://127.0.0.1/testContent.xml'), -1)
             f.close()
             
         def testCachedGet(self):
             clearCache()
             writeTargetFile()
-            cache0 = HTTPCache(url)
-            cache = HTTPCache(url)
+            cache0 = HTTPCache('http://127.0.0.1/testContent.xml')
+            cache = HTTPCache('http://127.0.0.1/testContent.xml')
+            self.assertEqual(cache0.fresh(), False)
+            self.assertEqual(cache.fresh(), True)
             content = cache.content()
             info = cache.info()
-            self.assertEqual(info['Url'], url)
+            self.assertEqual(info['Url'], 'http://127.0.0.1/testContent.xml')
             
 
         def testChangedGet(self):
             clearCache()
             writeTargetFile()
-            cache = HTTPCache(url)
+            cache = HTTPCache('http://127.0.0.1/testContent.xml')
             content = cache.content()
             info = cache.info()
-            self.assertEqual(info['Url'], url)
+            self.assertEqual(info['Url'], 'http://127.0.0.1/testContent.xml')
             writeTargetFileAlternate()
-            cache2 = HTTPCache(url)
+            cache2 = HTTPCache('http://127.0.0.1/testContent.xml')
             content2 = cache2.content()
             info2 = cache2.info()
             self.assertNotEqual(content, content2)
@@ -197,28 +208,28 @@ if __name__ == '__main__':
             file should still contain the old added header."""
             clearCache()
             writeTargetFile()
-            cache = HTTPCache(url)
+            cache = HTTPCache('http://127.0.0.1/testContent.xml')
             content = cache.content()
             info = cache.info()
-            self.assertEqual(info['Url'], url)
+            self.assertEqual(info['Url'], 'http://127.0.0.1/testContent.xml')
             cache.add_headers({"md5" : "03030eeeef33, 2034023feef, 23493208903"})
             writeTargetFileAlternate()
-            cache2 = HTTPCache(url)
+            cache2 = HTTPCache('http://127.0.0.1/testContent.xml')
             content2 = cache2.content()
             info2 = cache2.info()
             self.assertNotEqual(content, content2)
             self.assertEqual("""<rss></rss>""", content2)
             self.assertEqual(info2['md5'], "03030eeeef33, 2034023feef, 23493208903")
 
-        def notestVeryLastCachedGetZip(self):
+        def testVeryLastCachedGetZip(self):
             clearCache()
             writeTargetFile()
-            cache = HTTPCache('http://diveintomark.org/xml/atom.xml')
+            cache = HTTPCache('http://diveintomark.org/')
             content = cache.content()
             info = cache.info()
-            self.assertEqual(info['Url'], 'http://diveintomark.org/xml/rss.xml')
+            self.assertEqual(info['Url'], 'http://diveintomark.org/')
             self.assertEqual(info['content-encoding'], 'gzip')
-            
+
     unittest.main()		
     
     
