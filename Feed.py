@@ -18,6 +18,7 @@ class Feed:
     def __init__(self, name, uri):
 	self.name = name
 	self.uri = uri
+	self.feed = {}
 
     def getFeed(self):
 	"""Returns a feedparser dictionary. Subclasses must implement this."""
@@ -28,7 +29,7 @@ class RSSFeed(Feed):
 
     def getFeed(self):
 	"""Builds an ultra-liberally parsed feed object from the URL."""
-	return feedparser.parse(self.uri)
+	self.feed = feedparser.parse(self.uri)
 
 
 class SimulatedFeed(Feed):
@@ -59,7 +60,7 @@ class SimulatedFeed(Feed):
 
     def generateFeed(self):
 	rss = self.RSS_TEMPLATE % self.__dict__
-	return feedparser.parse(rss)
+	self.feed = feedparser.parse(rss)
 
 
 class HTMLFeed(SimulatedFeed):
@@ -108,7 +109,7 @@ class HTMLFeed(SimulatedFeed):
     def getFeed(self):
 	self.getLink()
 	if not self.itemLink:
-	    return None
+	    return
 
 	# If the savepath and saveurl attributes are present,
 	# save the linked-to item and adjust the itemLink to
@@ -129,7 +130,7 @@ class HTMLFeed(SimulatedFeed):
 	    # adjust the itemLink in every case
 	    self.itemLink = attr('saveurl') + '/' + basename
 
-	return self.generateFeed()
+	self.generateFeed()
 
 
 class HTMLSubstituteFeed(HTMLFeed):

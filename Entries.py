@@ -43,10 +43,11 @@ class Entries:
     Processes blog entries from a dict returned by feedparser."""
 
     def processFeed(self, feed):
-	"""Processes each entry of a feedparser dict."""
-	if not feed: return	# skip empty feeds
-	channel = feed['channel']
-	items = feed['items']
+	"""Processes each entry of a feed object."""
+	if not feed.feed: return	# skip empty feeds
+	self.feed = feed
+	channel = feed.feed['channel']
+	items = feed.feed['items']
 	for item in items:
 	    self.processItem(channel, item)
 

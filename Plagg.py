@@ -84,9 +84,9 @@ class Plagg(xml.sax.handler.ContentHandler):
 
 	# get and process this feed
 	try:
-	    f = feed.getFeed()
+	    feed.getFeed()
 	except Exception, e:
 	    sys.stderr.write("Feed: %s (%s)\n%s\n" % (feed.name, feed.uri, str(e)))
 	    return
 	e = Entries.BlosxomEntries(os.path.join(self.newspath, nick))
-	e.processFeed(f)
+	e.processFeed(feed)
