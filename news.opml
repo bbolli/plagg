@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <?xml-stylesheet href="opml.xsl" type="text/xsl" media="screen"?>
-<!-- ?xml-stylesheet href="/bb.css" type="text/css" media="screen"? -->
 
 <opml version="1.0">
 	<head>
-		<title>2b&#8217;s blogroll</title>
+		<title>Meine Blog-Liste</title>
 		<x-svn-id>$Id$</x-svn-id>
 		<ownerName>Beat Bolli</ownerName>
 		<ownerEmail>bbolli (at) ewanet (dot) ch</ownerEmail>
@@ -35,12 +34,14 @@
 				regex="(?is)&lt;IMG SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; ?(?P&lt;title&gt;.*?) ?&lt;/b&gt; &lt;br /&gt;.*?Explanation: &lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; &lt;center&gt;"
 				hours="8-10"/>
 			<outline text="Mars Rover" nick="mars" type="rss" htmlUrl="http://www.markcarey.com/mars/" xmlUrl="http://www.markcarey.com/mars/index.rdf" hours="6"/>
+			<outline text="Roland Piquepaille" nick="roland" type="rss" htmlUrl="http://www.primidi.com/" xmlUrl="http://www.primidi.com/rss.xml"/>
 		</outline>
 		<outline text="Articles">
 			<outline text="Linux Journal" nick="lj" type="rss" htmlUrl="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
 			<outline text="Groklaw" type="rss" htmlUrl="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
 			<outline text="A List apart" nick="ala" type="rss" htmlUrl="http://www.alistapart.com/" xmlUrl="http://www.alistapart.com/rss.xml"/>
 			<outline text="2600" type="rss" htmlUrl="http://www.2600.com/" xmlUrl="http://www.2600.com/rss.xml"/>
+			<outline text="Kernel Traffic" nick="ktraffic" type="rss" htmlUrl="http://www.kerneltraffic.org/kernel-traffic/latest.html" xmlUrl="http://www.kerneltraffic.org/kernel-traffic/rss.rdf"/>
 		</outline>
 		<outline text="Blogs">
 			<x-outline text="Mark Pilgrim" nick="mark" type="rss" htmlUrl="http://diveintomark.org/" xmlUrl="http://diveintomark.org/xml/atom.xml"/>
@@ -48,7 +49,8 @@
 			<outline text="Dave Winer" nick="winer" type="rss" htmlUrl="http://www.scripting.com/" xmlUrl="http://www.scripting.com/rss.xml"/>
 			<outline text="Doc Searls" nick="doc" type="rss" htmlUrl="doc.weblogs.com/" xmlUrl="http://partners.userland.com/people/docSearls.xml"/>
 			<outline text="The Scobleizer" nick="scoble" type="rss" htmlUrl="http://radio.weblogs.com/0001011/" xmlUrl="http://radio.weblogs.com/0001011/rss.xml"/>
-			<outline text="Dan Gillmor" nick="dgillmor" type="rss" htmlUrl="http://weblog.siliconvalley.com/column/dangillmor/" xmlUrl="http://weblog.siliconvalley.com/column/dangillmor/index.xml"/>
+			<outline text="Dan Gillmor (old)" nick="dgillmor" type="rss" htmlUrl="http://weblog.siliconvalley.com/column/dangillmor/" xmlUrl="http://weblog.siliconvalley.com/column/dangillmor/index.xml"/>
+			<outline text="Dan Gillmor" nick="dgillmor" type="rss" htmlUrl="http://dangillmor.typepad.com/" xmlUrl="http://dangillmor.typepad.com/dan_gillmor_on_grassroots/index.rdf"/>
 			<outline text="Paul Boutin" nick="boutin" type="rss" htmlUrl="http://paulboutin.weblogger.com/" xmlUrl="http://paulboutin.weblogger.com/xml/rss.xml"/>
 			<outline text="Simon Willison" nick="simon" type="rss" htmlUrl="http://simon.incutio.com/" xmlUrl="http://simon.incutio.com/syndicate/rss1.0"/>
 			<outline text="Steve Gillmor" nick="sgillmor" type="rss" htmlUrl="http://blogs.zdnet.com/Gillmor/" xmlUrl="http://blogs.zdnet.com/Gillmor/wp-rss2.php"/>
