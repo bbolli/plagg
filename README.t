@@ -17,10 +17,8 @@ h2. 1. Installation
 # Install "Mark Pilgrim's":http://diveintomark.org "Ultra-liberal Feed Parser 3.3":http://feedparser.org/
 # Download "plagg":plagg.tar.gz
 # Untar the distribution file to a directory of your choice
-# Move the @plagg@ script to a directory in your @$PATH@
-# In @plagg@, adjust the path in the call to @sys.path.insert()@ to the path you have chosen in step 2
-# Also in @plagg@, adjust the names of your OPML file and your news directory
-# Run plagg as often as you like from a cron job.
+# Run @python setup.py install@
+# Run @plagg@ _opmlfile_ _newsdir_ as often as you like from a cron job.
 
 
 h2. 2. Usage
