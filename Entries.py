@@ -7,7 +7,7 @@ import os, re, time
 
 def _linktag(href, text):
     """Returns a HTML link tag."""
-    return '<a href="%s">%s</a>' % (href, text)
+    return u'<a href="%s">%s</a>' % (href, _decode(text))
 
 def _unescape(text):
     """Replaces the three common HTML character entities."""
