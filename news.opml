@@ -12,9 +12,11 @@
 	<body>
 		<outline text="News">
 			<outline text="Slashdot" type="rss" link="http://slashdot.org/" xmlUrl="http://slashdot.org/slashdot.rss"/>
-			<outline text="Heise" type="rss" link="http://www.heise.de/" xmlUrl="http://www.heise.de/newsticker/heise.rdf" from="meldung/" to="meldung/print/"/>
+			<outline text="Heise" type="rss" link="http://www.heise.de/" xmlUrl="http://www.heise.de/newsticker/heise.rdf"
+				linkFrom="meldung/" linkTo="meldung/print/"/>
 			<outline text="Linux Weekly News" nick="lwn" type="rss" link="http://lwn.net/" xmlUrl="http://lwn.net/headlines/rss"/>
-			<outline text="The Register" nick="reg" type="rss" link="http://www.theregister.co.uk/" xmlUrl="http://www.theregister.co.uk/headlines.rss" from="/$" to="/print.html"/>
+			<outline text="The Register" nick="reg" type="rss" link="http://www.theregister.co.uk/" xmlUrl="http://www.theregister.co.uk/headlines.rss"
+				linkFrom="/$" linkTo="/print.html"/>
 			<outline text="Symlink" type="rss" link="http://www.symlink.ch/" xmlUrl="http://www.symlink.ch/symlinkch.rss"/>
 			<outline text="WiFi Network News" nick="wifi" type="rss" link="http://wifinetnews.com/" xmlUrl="http://wifinetnews.com/xml/rss.xml"/>
 			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
