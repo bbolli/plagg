@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+>
 
 <!-- $Id: opml.xsl 349 2004-10-25 21:01:47Z bb $ -->
 
-<xsl:output method="xml" indent="no"
+<xsl:output method="xml" indent="yes"
   doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
   doctype-public="-//W3C//DTD XHTML 1.1//EN"
 />
 
 <xsl:template match="/">
-  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de">
+  <!-- not supported by IE6: xsl:processing-instruction name="xml-stylesheet">href="/bb.css" type="text/css" title="2b style"</xsl:processing-instruction-->
+  <html>
   <head>
   <title><xsl:value-of select="opml/head/title"/></title>
-  <link rel="stylesheet" href="http://www.drbeat.li/bb.css" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="/bb.css" title="2b style" />
   </head>
   <body><div id="body">
   <xsl:apply-templates/>
@@ -29,7 +33,6 @@
 
 <xsl:template match="body">
   <div id="main">
-  <p>Dies ist meine mehr oder weniger regelmässig gelesene Blog-Liste.</p>
   <ul><xsl:apply-templates/></ul>
   <p><code><xsl:value-of select="../head/x-svn-id"/></code></p>
   </div>
