@@ -28,8 +28,8 @@ Requires Python 2.2 or later
 
 __author__ = "Joe Gregorio (joe@bitworking.org)"
 __copyright__ = "Copyright 2004, Joe Gregorio"
-__contributors__ = ["Kendall Clark"]
-__version__ = "1.0.1 $Rev: 20 $"
+__contributors__ = ["Kendall Clark", "Beat Bolli"]
+__version__ = "1.0.2 $Rev: 20 $"
 __license__ = "MIT"
 __history__ = """
 """
@@ -44,7 +44,7 @@ if not os.path.exists(cacheSubDir__):
 class HTTPCache:
     """Represents a single cached URL"""
    
-    def __init__(self, url):
+    def __init__(self, url, add_headers={}):
         self.info_ = None
         self.content_ = None
         self.fresh_ = False
@@ -53,6 +53,8 @@ class HTTPCache:
         digest = md5.new(url).digest()
         cacheFileName = "".join(["%02x" % (ord(c),) for c in digest])
         self.cacheFullPath_ = os.path.join(cacheSubDir__, cacheFileName)
+        self.headers_ = {"Accept-Encoding": "gzip"}
+        self.headers_.update(add_headers)
     
         if (os.path.exists(self.cacheFullPath_)):
             # Load up the cached version and use it's 'ETag' header value, if it exists.
@@ -61,7 +63,7 @@ class HTTPCache:
             f.seek(0)
             self.content_ = f.read().split('\n\n', 1)[1]
             f.close()
-            request = urllib2.Request(url, None, {"Accept-encoding" : "gzip"})
+            request = urllib2.Request(url, None, self.headers_)
             if self.info_.has_key('ETag'):
                 request.add_header("If-None-Match", self.info_['ETag'])
             
@@ -80,7 +82,7 @@ class HTTPCache:
                 
         else:
             # There isn't a cached version of this URL yet.
-            request = urllib2.Request(url, None, {"Accept-Encoding" : "gzip"})
+            request = urllib2.Request(url, None, self.headers_)
             response = urllib2.urlopen(request)
             response.info()['Url'] = url
             self.content_ = self._writeContent(response.info(), response)

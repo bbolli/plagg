@@ -8,9 +8,8 @@ import Plagg		# for default encoding
 
 from httpcache import HTTPCache
 
-USER_AGENT = 'plagg/%s' % re.sub('\D', '', '$Rev$')
+USER_AGENT = 'plagg/%s (+http://www.drbeat.li/py/plagg/)' % re.sub('\D', '', '$Rev$')
 
-feedparser.USER_AGENT = USER_AGENT + ' ' + feedparser.USER_AGENT
 #feedparser._debug = 1
 
 
@@ -22,6 +21,7 @@ class Feed:
 	self.attrs = attrs
 	self.name = name
 	self.uri = uri
+	self.headers = {'User-Agent': USER_AGENT}
 	self.feed = {}
 
     def getFeed(self):
@@ -47,7 +47,7 @@ class RSSFeed(Feed):
 
     def getFeed(self):
 	"""Builds an ultra-liberally parsed feed dict from the URL."""
-	rss = HTTPCache(self.uri).content()
+	rss = HTTPCache(self.uri, self.headers).content()
 	self.feed = feedparser.parse(rss)
 
 
@@ -97,7 +97,7 @@ class HTMLFeed(SimulatedFeed):
 
     def getLink(self):
 	"""Reads the HTML page and extracts the link and title."""
-	html = HTTPCache(self.uri).content().decode(self.encoding)
+	html = HTTPCache(self.uri, self.headers).content().decode(self.encoding)
 	# resolve relative URIs
 	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding)
 	# search for the regex
