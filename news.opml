@@ -51,6 +51,7 @@
 			<outline text="Russell Beattie" nick="russell" type="rss" xmlUrl="http://www.russellbeattie.com/notebook/rss.jsp"/>
 			<outline text="Jeffrey Zeldman" nick="zeldman" type="rss" xmlUrl="http://www.zeldman.com/feed/zeldman.xml"/>
 			<outline text="Mark Nottingham" nick="mnot" type="rss" xmlUrl="http://www.mnot.net/blog/index.rdf"/>
+			<outline text="Wes Felter" nick="wmf" type="rss" xmlUrl="http://wmf.editthispage.com/xml/rss.xml"/>
 		</outline>
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-bb-html" link="http://www.dilbert.com/"
