@@ -108,8 +108,12 @@ from its content.
 Example:
 
 literal.. <pre>&lt;outline text="Linux Weekly News" nick="lwn" type="rss"
-    link="http://lwn.net/" xmlUrl="http://lwn.net/headlines/rss"/&gt;
+    htmlUrl="http://lwn.net/" xmlUrl="http://lwn.net/headlines/rss"/&gt;
 </pre>
+
+p. The @htmlUrl@ attribute is not used by @plagg@ itself, but by @opml.xsl@, which
+I use to generate my "blogroll":http://www.drbeat.li/news/news.html.
+
 
 h3. 3.3. HTML scraping
 
@@ -168,8 +172,14 @@ empty, the item link itself.
 
 h2. 4. History
 
-* Version 1.0, 2004-10-29: Initial public release
-* Version 1.1, 2004-11-11: Added HTTP caching, thanks to Joe Gregorio's "httpcache.py":http://bitworking.org/projects/httpcache
+* Version 1.0, 2004-10-29:
+** Initial public release
+* Version 1.1, 2004-11-11:
+** Added HTTP caching, thanks to Joe Gregorio's "httpcache.py":http://bitworking.org/projects/httpcache
+* Version 1.2, 2004-11-25:
+** Print an exception trace only at log level 2 and above
+** Generate a feed title attribute with the tagline
+** Send the correct User-Agent string which was lost by using httpcache.py (patch sent to Joe)
 
 
 h2. 5. TODO

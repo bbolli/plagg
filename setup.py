@@ -14,10 +14,10 @@ if sys.hexversion < 0x02020300:
 
 setup(
     name="plagg",
-    version="1.1",
+    version='1.2.' + re.sub(r'\D', '', '$Rev$'),
     description="plagg is an RSS/Atom feed aggregator",
     author="Beat Bolli",
-    author_email="bbolli@ewanet.ch",
+    author_email="me+plagg@drbeat.li",
     license="GPL2, see file 'COPYING'",
     url="http://www.drbeat.li/py/plagg/",
     download_url="http://www.drbeat.li/py/plagg/plagg.tar.gz",
