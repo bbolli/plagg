@@ -14,12 +14,16 @@
 			<outline text="Heise" type="rss" xmlUrl="http://www.heise.de/newsticker/heise.rdf"/>
 			<outline text="Linux Weekly News" nick="lwn" type="rss" xmlUrl="http://lwn.net/headlines/rss"/>
 			<outline text="The Register" nick="reg" type="rss" xmlUrl="http://www.theregister.co.uk/feeds/latest.rdf"/>
-			<outline text="Symlink" nick="sym" type="rss" xmlUrl="http://www.symlink.ch/symlinkch.rdf"/>
+			<outline text="Symlink" type="rss" xmlUrl="http://www.symlink.ch/symlinkch.rss"/>
 			<outline text="WiFi Network News" nick="wifi" type="rss" xmlUrl="http://wifinetnews.com/xml/rss.xml"/>
 			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
 			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://stuff.vandervossen.net/feeds/dailypython.rss"/>
 			<outline text="SecurityFocus" nick="bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/news.xml"/>
 			<outline text="NTK" type="rss" xmlUrl="http://www.ntk.net/rss.php3"/>
+		</outline>
+		<outline text="Mobile">
+			<outline text="MobileTracker" type="rss" xmlUrl="http://www.mobiletracker.net/index.rdf"/>
+			<outline text="MobileWhack" type="rss" xmlUrl="http://www.mobilewhack.com/index.rss"/>
 		</outline>
 		<outline text="Science">
 			<outline text="Christian Science Monitor" nick="cs" type="rss" xmlUrl="http://www.csmonitor.com/rss/scitech.rss"/>
