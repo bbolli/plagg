@@ -20,6 +20,7 @@
 			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
 			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://www.pythonware.com/daily/rss2.xml"/>
 			<outline text="SecurityFocus" nick="bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/news.xml"/>
+			<outline text="Crypto-Gram" type="rss" link="http://www.schneier.com/crypto-gram.html" xmlUrl="http://www.schneier.com/crypto-gram-rss.xml"/>
 		</outline>
 		<outline text="Mobile">
 			<outline text="MobileTracker" type="rss" link="http://www.mobiletracker.net/" xmlUrl="http://www.mobiletracker.net/index.rdf"/>
@@ -27,14 +28,14 @@
 		</outline>
 		<outline text="Science">
 			<outline text="Astronomy Picture of the Day" nick="apod" type="x-bb-html" link="http://antwrp.gsfc.nasa.gov/apod/"
-				regex="(?is)&lt;IMG SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; (?P&lt;title&gt;.*?) &lt;/b&gt; &lt;br /&gt;.*?Explanation: &lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; &lt;center&gt;"
+				regex="(?is)&lt;IMG SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; ?(?P&lt;title&gt;.*?) ?&lt;/b&gt; &lt;br /&gt;.*?Explanation: &lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; &lt;center&gt;"
 				hours="8-10"
 			/>
 			<outline text="Mars Rover" nick="mars" type="rss" xmlUrl="http://www.markcarey.com/mars/mars-rover-photos.rdf" hours="12"/>
 		</outline>
 		<outline text="Articles">
 			<outline text="Linux Journal" nick="lj" type="rss" link="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
-			<outline0 text="linuxdevcenter" type="rss" link="http://www.oreillynet.com/" xmlUrl="http://www.oreillynet.com/meerkat/?_fl=rss10&amp;t=ALL&amp;c=1112"/>
+			<offline text="linuxdevcenter" type="rss" link="http://www.oreillynet.com/" xmlUrl="http://www.oreillynet.com/meerkat/?_fl=rss10&amp;t=ALL&amp;c=1112"/>
 			<outline text="Groklaw" type="rss" link="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
 		</outline>
 		<outline text="Blogs">
@@ -52,6 +53,7 @@
 			<outline text="Jeffrey Zeldman" nick="zeldman" type="rss" link="http://www.zeldman.com/" xmlUrl="http://www.zeldman.com/feed/zeldman.xml"/>
 			<outline text="Mark Nottingham" nick="mnot" type="rss" link="http://www.mnot.net/blog/" xmlUrl="http://www.mnot.net/blog/index.rdf"/>
 			<outline text="Wes Felter" nick="wmf" type="rss" link="http://wmf.editthispage.com/" xmlUrl="http://wmf.editthispage.com/xml/rss.xml"/>
+			<outline text="Gary Turner" nick="garyturner" type="rss" link="http://weblog.garyturner.net/" xmlUrl="http://weblog.garyturner.net/BLOG.XML"/>
 		</outline>
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-bb-html" link="http://www.dilbert.com/"
