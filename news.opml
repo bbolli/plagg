@@ -54,7 +54,7 @@
 		</outline>
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-bb-html" link="http://www.dilbert.com/"
-				regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.gif)&quot;"
+				regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.[gj][ip][fg])&quot;"
 				hours="8"
 			/>
 			<outline text="Garfield" type="x-bb-html" link="http://garfield.ucomics.com"
