@@ -69,20 +69,17 @@ class Plagg(xml.sax.handler.ContentHandler):
 	if kind == 'rss':
 	    uri = attrs.get('xmlurl')
 	    if not uri: return
-	    feed = Feed.RSSFeed(name, uri)
+	    feed = Feed.RSSFeed(attrs, name, uri)
 	elif kind == 'x-bb-html':
 	    uri, regex = attrs.get('link'), attrs.get('regex')
 	    if not uri or not regex: return
-	    feed = Feed.HTMLFeed(name, uri, regex)
+	    feed = Feed.HTMLFeed(attrs, name, uri, regex)
 	elif kind == 'x-bb-suite':
 	    uri, suite = attrs.get('link'), attrs.get('suite')
 	    if not suite: return
-	    feed = Feed.SuiteFeed(name, uri, suite)
+	    feed = Feed.SuiteFeed(attrs, name, uri, suite)
 	else:
 	    return
-
-	# let the feed object know about the attribute dict
-	feed.attrs = attrs
 
 	# get and process this feed
 	try:

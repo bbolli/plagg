@@ -15,10 +15,10 @@ class Feed:
     """Abstract Feed class.
     Knows its name and URI, <outline> attributes and feedparser dict."""
 
-    def __init__(self, name, uri):
+    def __init__(self, attrs, name, uri):
+	self.attrs = attrs
 	self.name = name
 	self.uri = uri
-	self.attrs = {}
 	self.feed = {}
 
     def getFeed(self):
@@ -26,14 +26,18 @@ class Feed:
 	raise NotImplementedError('Feed.getFeed()')
 
     def replaceLink(self, link, delRepl=0):
-	"""Performs a regex replacement according to the "from" and "to" attributes
+	return self.replaceText(link, 'from', 'to', delRepl)
+
+    def replaceText(self, text, old, new, delRepl=0):
+	"""Performs a regex replacement according to the "old" and "new" attributes
 	of the <outline> element."""
-	old, new = self.attrs.get('from'), self.attrs.get('to')
-	if old and new is not None:
-	    link = re.sub(old, new, link)
-	if old and delRepl:
-	    del self.attrs['from']	# prevent another replacement
-	return link
+	old, new = self.attrs.get(old), self.attrs.get(new)
+	if old:
+	    if new is not None:
+		text = re.sub(old, new, text)
+	    if delRepl:
+		del self.attrs[old]	# prevent another replacement
+	return text
 
 
 class RSSFeed(Feed):
@@ -62,8 +66,8 @@ class SimulatedFeed(Feed):
   </channel>
 </rss>"""
 
-    def __init__(self, name, uri):
-	Feed.__init__(self, name, uri)
+    def __init__(self, attrs, name, uri):
+	Feed.__init__(self, attrs, name, uri)
 	self.itemLink = ''
 	self.itemTitle = ''
 	self.itemBody = ''
@@ -83,8 +87,8 @@ class HTMLFeed(SimulatedFeed):
     third group 'body' returns the entry's body text. All relative links will
     already have been converted to absolute, and img tags will end with " />"."""
 
-    def __init__(self, name, uri, regex):
-	SimulatedFeed.__init__(self, name, uri)
+    def __init__(self, attrs, name, uri, regex):
+	SimulatedFeed.__init__(self, attrs, name, uri)
 	self.regex = re.compile(regex, re.I)
 
     def getLink(self):
@@ -147,8 +151,8 @@ class HTMLFeed(SimulatedFeed):
 class SuiteFeed(HTMLFeed):
     """Builds the itemLink out of an arbitrary Python statement suite."""
 
-    def __init__(self, name, uri, suite):
-	SimulatedFeed.__init__(self, name, uri)
+    def __init__(self, attrs, name, uri, suite):
+	SimulatedFeed.__init__(self, attrs, name, uri)
 	self.suite = suite
 
     def getLink(self):
