@@ -25,19 +25,20 @@ h2. 2. Usage
 
 h3. 2.1. Synopsis
 
-pre. plagg -vVh [opmlfile [destdir [nickname]]]
+pre. plagg -nvVh [opmlfile [destdir [nickname ...]]]
 
 h3. 2.2. Options
 
-dl. -v: Be verbose. May be repeated for additional effect.
--V: Display version information.
--h: Display usage information.
+dl. -n: Write a file @Latest.txt@ that contains the new entries.
+-v: Be verbose. May be repeated for additional effect.
+-V: Display version information and exit.
+-h: Display usage information and exit.
 
 h3. 2.3. Arguments
 
 dl. opmlfile: The OPML file containing the feeds to read and generate news items from.
 destdir: The destination directory where the news items are stored. This should be under your blosxom data directory.
-nickname: If given, updates only the feed with the given nickname (ignoring its @hours@ attribute), otherwise updates all feeds.
+nickname: If given, updates only the feeds with the given nicknames (ignoring their @hours@ attribute), otherwise updates all feeds.
 
 The default arguments for opmlfile and destdir can be set in the @plagg@ script.
 
@@ -180,7 +181,9 @@ h2(#changelog). 4. Changelog
 ** Print an exception trace only at log level 2 and above
 ** Generate a feed title attribute with the tagline
 ** Send the correct User-Agent string which was lost by using httpcache.py (patch sent to Joe Gregorio)
-
+* Version 1.3, ==2004-12-29==:
+** Added the @-n@ option
+** Process feeds only if they have changed
 
 h2. 5. TODO
 

@@ -30,11 +30,12 @@ def _matchHours(hours, currentHour):
 class Plagg(xml.sax.handler.ContentHandler):
     """The application class. Generates entries from each feed in the OPML file."""
 
-    def __init__(self, opmlfile, newspath, nick=None):
+    def __init__(self, opmlfile, newspath, nicks=None):
 	self.opmlfile = opmlfile
 	self.newspath = newspath
-	self.nick = nick
-	self.logging = self.errors = self.entries = 0
+	self.nicks = nicks
+	self.logging = self.errors = 0
+	self.newentries = {}
 	xml.sax.handler.ContentHandler.__init__(self)
 
     def setLogging(self, logging):
@@ -57,11 +58,11 @@ class Plagg(xml.sax.handler.ContentHandler):
 	nick = attrs.get('nick', name.lower())
 
 	# select by nickname
-	if self.nick and nick != self.nick: return
+	if self.nicks and not nick in self.nicks: return
 
-	# observe hours (in UTC!) unless a single feed is requested
+	# observe hours (in UTC!) unless only some feeds are requested
 	hours = attrs.get('hours')
-	if hours and not self.nick and not _matchHours(hours, time.gmtime()[3]):
+	if hours and not self.nicks and not _matchHours(hours, time.gmtime()[3]):
 	    return
 
 	# create a Feed instance based on the OPML type attribute
@@ -95,6 +96,22 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    return
 	if self.logging > 1:
 	    print feed.feed
-	e = Entries.BlosxomEntries(os.path.join(self.newspath, nick))
+	e = Entries.BlosxomEntries(self, os.path.join(self.newspath, nick))
 	e.logging = self.logging
-	self.entries += e.processFeed(feed)
+	e.processFeed(feed)
+
+    def newEntry(self, entry):
+	if entry._title:
+	    self.newentries.setdefault(entry.newKey(), []).append(entry)
+
+    def newEntries(self):
+	body = []
+	for c in self.newentries.keys():
+	    body.append('* ' + c)
+	    for e in self.newentries[c]:
+		body.append('** ' + e.newSummary())
+	if body:
+	    e = Entries.Entry()
+	    e.setEntry('Latest news (%s)' % time.strftime('%H:%M:%S'), u'\n'.join(body))
+	    e.setMeta(markup='textile2')
+	    e.write(self.newspath, '.txt', overwrite=True, fname='Latest')

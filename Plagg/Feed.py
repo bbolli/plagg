@@ -47,8 +47,9 @@ class RSSFeed(Feed):
 
     def getFeed(self):
 	"""Builds an ultra-liberally parsed feed dict from the URL."""
-	rss = HTTPCache(self.uri, self.headers).content()
-	self.feed = feedparser.parse(rss)
+	rss = HTTPCache(self.uri, self.headers)
+	if not rss.fresh():
+	    self.feed = feedparser.parse(rss.content())
 
 
 class SimulatedFeed(Feed):

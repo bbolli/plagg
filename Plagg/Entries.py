@@ -22,15 +22,8 @@ def _unescape(text):
 
 _markup = re.compile(r'<.*?>', re.M + re.S)
 _notword = re.compile(r'\W')
-
-def _filename(title, desc):
-    """Returns a suitable file name for an entry."""
-    fn = _markup.sub('', title)
-    if not fn:	# use first 30 non-markup characters if no title
-	fn = _markup.sub('', desc)[:30]
-    fn = fn.replace('&apos;', "'").replace('&quot;', '"')
-    fn = _notword.sub('_', fn)
-    return fn[:15] + '...' + fn[-5:]
+_idfirst = re.compile('^[a-zA-Z]')
+_idwrong = re.compile('[^0-9a-zA-Z]+')
 
 def _encode(text):
     """Converts a unicode string to its encoded equivalent."""
@@ -45,6 +38,151 @@ def _decode(text):
     return text
 
 
+class Entry:
+    """Blog entry class.
+    Represents one Blosxom blog entry."""
+
+    def __init__(self):
+	self.channel = self.item = None
+	self._title = self._link = self._body = self.body = self.footer = ''
+	self.mdate = self.tm = None
+	self.metas = {}
+
+    def setFromItem(self, feed, channel, item):
+	"""Initializes self from a feed channel and item.
+	The item's title and link are both optional. The following logic
+	determines what goes where:
+	- if there's a title and a link, the title becomes the link.
+	- if there's no title but a link, the link goes into the footer.
+	The footer consists of the date, the item link (if present and no
+	title), an optional comments link, and the channel link."""
+	self.channel = channel
+	self.item = item
+
+	# title and link
+	self._title = _unescape(item.get('title', '').replace('\n', ' ')).strip()
+	self._link = item.get('link')
+	if self._title and self._link:
+	    self.title = _linktag(self._link, self._title)
+	else:
+	    self.title = self._title
+
+	# body
+	self._body = (
+	    item.get('content', [{}])[0].get('value') or
+	    item.get('description') or
+	    item.get('summary', '')
+	).strip()
+	body = feed.replaceText(self._body, 'bodyfrom', 'bodyto')
+	if body and not body.startswith('<'):
+	    body = '<p>' + body + '</p>'
+	self.body = body
+
+	# footer
+	footer = '\n<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
+	if self._link and not self._title:
+	    footer += '\n[%s]' % _linktag(self._link, 'Link')
+	if item.has_key('comments'):
+	    footer += '\n[%s]' % _linktag(item['comments'], 'Comments')
+	footer += '\n[%s]\n</p>\n' % _linktag(
+	    channel['link'], channel['title'], title=channel.get('tagline')
+	)
+	self.footer = footer
+
+	# modification time
+	self.mdate = item.get('date_parsed') or item.get('modified_parsed')
+	if self.mdate:
+	    self.tm = time.mktime(self.mdate)	# convert date/time 9-tuple to timestamp
+
+    def setEntry(self, title, body, footer=''):
+	self._title = self.title = title
+	self._body = self.body = body
+	self.footer = footer
+
+    def setMeta(self, **meta):
+	self.metas.update(meta)
+
+    def makeFilename(self):
+	"""Sets a suitable file name for the current entry."""
+	fn = _markup.sub('', self._title)
+	if not fn:	# use first 30 non-markup characters if no title
+	    fn = _markup.sub('', self.body)[:30]
+	fn = fn.replace('&apos;', "'").replace('&quot;', '"')
+	fn = _notword.sub('_', fn)
+	self.fname = fn[:15] + '...' + fn[-5:]
+	# self.setMeta(fname=self.fname)
+	return self.fname
+
+    def makeId(self):
+	self._id = _idwrong.sub('_', self.fname)
+	if not _idfirst.match(self._id):
+	    self._id = '_' + self._id
+	self.setMeta(entryId=self._id)
+
+    def render(self):
+	"""Renders itself, including any metas, if any."""
+	s = [self.title]
+	if self.metas:	# this needs the Blosxom "meta" plugin!
+	    for m in self.metas.items():
+		s.append('meta-%s: %s' % m)
+	    s.append('')
+	s.append(self.body)
+	s.append(self.footer)
+	return _encode(u'\n'.join(map(_decode, s)))
+
+    def timestamp(self, sep):
+	if not self.mdate:
+	    return ''
+	elif self.tm // 86400 == time.time() // 86400:	# same day?
+	    return time.strftime('%H:%M:%S', self.mdate) + sep
+	else:
+	    return time.asctime(self.mdate) + sep
+
+    def logKey(self):
+	return self.channel['title']
+
+    def logSummary(self):
+	return self.timestamp(': ') + \
+	    _encode(_markup.sub('', self._title) or self.fname)
+
+    def newKey(self):
+	return self.logKey()
+
+    def newSummary(self):
+	"""Returns a one-line summary of itself."""
+	return self.timestamp(': ') + _linktag('#' + self._id, self._title)
+
+    def write(self, destdir, ext, overwrite=False, fname=None):
+	"""Writes the entry out to the filesystem."""
+	if fname:
+	    self.fname = fname
+	elif not self.makeFilename():
+	    return 0
+
+	# ignore entries older than 7 days
+	if self.tm and self.tm + 7 * 86400 < time.time():
+	    return 0
+
+	fname = os.path.join(destdir, self.fname + ext)
+
+	# if the file exists, we have handled this entry in an earlier run
+	if not overwrite and os.path.isfile(fname):
+	    return 0
+
+	self.makeId()
+
+	# write out the entry
+	f = open(fname, 'w')
+	f.write(self.render())
+	f.close()
+
+	# set modification time if present
+	if self.tm:
+	    os.utime(fname, (self.tm, self.tm))
+
+	return 1
+
+
 class Entries:
     """Abstract Entry class.
     Processes blog entries from a feed object."""
@@ -54,18 +192,18 @@ class Entries:
 	Returns the number of new entries."""
 	if not feed.feed: return 0	# skip empty feeds
 	self.feed = feed
-	channel = feed.feed['channel']
-	items = feed.feed['items']
+	self.channel = feed.feed['channel']
+	self.items = feed.feed['items']
 	entries = 0
 	# Process the entries
-	for item in items:
+	for item in self.items:
 	    if item.has_key('link'):
 		item['link'] = feed.replaceLink(item['link'])
-	    if self.processItem(channel, item):
+	    if self.processItem(item):
 		entries += 1
 	return entries
 
-    def processItem(self, channel, item):
+    def processItem(self, item):
 	"""Processes an entry for one RSS item. Subclasses must implement this."""
 	raise NotImplementedError('Entries.processItem()')
 
@@ -73,102 +211,34 @@ class Entries:
 class BlosxomEntries(Entries):
     """Creates Blosxom entries from a feed."""
 
-    def __init__(self, path):
+    def __init__(self, app, path):
+	self.app = app
 	self.fdir = path	# directory where entries go
 	self.fext = '.txt'	# file extension
 	self.logging = 0	# logging of new entries
-	self.lastChannel = None
+	self.oldKey = None
 	# Create the directory if needed
 	if not os.path.isdir(path):
 	    os.makedirs(path)
 
-    def makeEntry(self, channel, item):
-	"""Returns the title, body and footer of one Blosxom entry."""
-
-	# The item's title and link are both optional. The following logic
-	# determines what goes where:
-	# - if there's a title and a link, the title becomes the link.
-	# - if there's no title but a link, the link goes into the footer.
-	# The footer consists of the date, the item link (if present and no
-	# title), and the channel link.
-	title = _unescape(item.get('title', '').replace('\n', ' '))
-	link = item.get('link')
-	if title and link:
-	    title = _linktag(link, title)
-	body = (
-	    item.get('content', [{}])[0].get('value') or
-	    item.get('description') or
-	    item.get('summary', '')
-	).strip()
-	body = self.feed.replaceText(body, 'bodyfrom', 'bodyto')
-	if body and not body.startswith('<'):
-	    body = '<p>' + body + '</p>'
-	footer = '<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
-	if link and not title:
-	    footer += '\n[%s]' % _linktag(link, 'Link')
-	if item.has_key('comments'):
-	    footer += '\n[%s]' % _linktag(item['comments'], 'Comments')
-	footer += '\n[%s]\n</p>\n' % _linktag(channel['link'], channel['title'], title=channel.get('tagline'))
-
-	return title, body, footer
-
-    def processItem(self, channel, item):
+    def processItem(self, item):
 	"""Builds the text of one Blosxom entry, saves it in self.path and 
 	sets its mtime to the timestamp, if present."""
 
-	# get modification time if present
-	mdate = item.get('date_parsed') or item.get('modified_parsed')
-	if mdate:
-	    tm = time.mktime(mdate)	# convert date/time 9-tuple to timestamp
-	    # ignore entries older than 32 days
-	    if tm < time.time() - 32 * 86400:
-		return
-
-	title, body, footer = self.makeEntry(channel, item)
-	entry = u'\n'.join(map(_decode, [title, body, footer]))
-
-	# determine this entry's filename
-	fn = _filename(title, body)
-	if not fn: return
-	fname = os.path.join(self.fdir, fn + self.fext)
-
-	# if the file exists, we have handled this entry in an earlier run
-	if os.path.isfile(fname):
+	entry = Entry()
+	entry.setFromItem(self.feed, self.channel, item)
+	if not entry.write(self.fdir, self.fext):
 	    return
 
-	# write out the entry
-	f = open(fname, 'w')
-	f.write(_encode(entry))
-	f.close()
-
-	# set modification time if present
-	if mdate:
-	    os.utime(fname, (tm, tm))
+	# tell Plagg about the new entry
+	self.app.newEntry(entry)
 
 	# logging
 	if self.logging:
-	    currentChannel = channel['title']
-	    if self.lastChannel != currentChannel:
-		print _encode(currentChannel)
-		self.lastChannel = currentChannel
-	    print '  ' + \
-		(mdate and time.asctime(mdate) + ' ' or '') + \
-		_encode(_markup.sub('', title) or fn)
+	    newKey = entry.logKey()
+	    if self.oldKey != newKey:
+		print _encode(newKey)
+		self.oldKey = newKey
+	    print '  ' + entry.logSummary()
 
 	return 1
-
-def _test():
-    import Feed
-    tests = [
-	(Feed.RSSFeed, 'slashdot', 'http://slashdot.org/slashdot.rss'),
-	(Feed.RSSFeed, 'bblog', 'http://www.drbeat.li/bblog/hardware/index.rss'),
-	(Feed.HTMLFeed, 'dilbert', 'http://www.dilbert.com/', r'<img src="(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\..{3,4})"'),
-	(Feed.HTMLFeed, 'apod', 'http://antwrp.gsfc.nasa.gov/apod/', r'<img SRC="(http://.*/image/(\d{4}/.*?\..*?))"'),
-	(Feed.HTMLSubstituteFeed, 'uf', 'http://www.userfriendly.org/static/', r'<img alt="latest strip" .* src="(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d{6})\.gif)">', "/xuf", "/uf"),
-    ]
-    for t in tests:
-	klass, nick, args = t[0], t[1], t[2:]
-	feed = klass(nick, *args).getFeed()
-	e = BlosxomEntries('test/' + nick)
-	e.logging = 1
-	e.processEntries(feed)

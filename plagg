@@ -5,24 +5,26 @@ corresponding to the items in the feeds."""
 
 # $Id$
 
-import sys, getopt
+import os, sys, getopt
 
 from Plagg import Plagg
 
-OPML = '/home/bb/bblog/news/news.opml'
 PATH = '/home/bb/bblog/news'
+OPML = os.path.join(PATH, 'news.opml')
 
 def usage(rc):
-    print "Usage: plagg [-hVv] [opmlfile [newsdir [nickname]]]"
+    print "Usage: plagg [-nhVv] [opmlfile [newsdir [nickname ...]]]"
     sys.exit(rc)
 
-verbose = 0
+news = verbose = 0
 try:
-    opts, args = getopt.getopt(sys.argv[1:], 'hVv')
+    opts, args = getopt.getopt(sys.argv[1:], 'nhVv')
 except getopt.GetoptError:
     print e
-    sys.exit(3)
+    usage(3)
 for o, v in opts:
+    if o == '-n':
+	news = 1
     if o == '-h':
 	usage(0)
     elif o == '-V':
@@ -37,12 +39,14 @@ elif argc == 1:
     plagg = Plagg.Plagg(args[0], PATH)
 elif argc == 2:
     plagg = Plagg.Plagg(args[0], args[1])
-elif argc == 3:
-    plagg = Plagg.Plagg(args[0], args[1], args[2])
+elif argc >= 3:
+    plagg = Plagg.Plagg(args[0], args[1], args[2:])
 else:
     usage(3)
 
 plagg.setLogging(verbose)
 plagg.startOPML()
+if news:
+    plagg.newEntries()
 
 sys.exit(plagg.errors and 1 or 0)
