@@ -8,6 +8,9 @@ import os, time, xml.sax
 import Feed, Entries
 
 
+ENCODING = 'iso8859_15'	# default character encoding, used by Feed.py and Entries.py
+
+
 def _matchHours(hours, currentHour):
     """Returns true if currentHour is present in hours.
     hours is a comma-separated list of ranges or single hour numbers,

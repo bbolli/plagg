@@ -35,7 +35,7 @@
 		</outline>
 		<outline text="Articles">
 			<outline text="Linux Journal" nick="lj" type="rss" xmlUrl="http://www.linuxjournal.com/news.rss"/>
-			<outline text="linuxdevcenter" type="rss" xmlUrl="http://www.oreillynet.com/meerkat/?_fl=rss10&amp;t=ALL&amp;c=1112"/>
+			<outline0 text="linuxdevcenter" type="rss" xmlUrl="http://www.oreillynet.com/meerkat/?_fl=rss10&amp;t=ALL&amp;c=1112"/>
 			<outline text="Groklaw" type="rss" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
 			<outline text="I, Cringely" nick="cringely" type="rss" xmlUrl="http://cgi.pbs.org/cgi-registry/cringely/cringelyrdf.pl"/>
 		</outline>

@@ -3,7 +3,7 @@
 # $Id$
 
 import os, re, time
-
+import Plagg		# for default encoding
 
 def _linktag(href, text):
     """Returns a HTML link tag."""
@@ -25,18 +25,16 @@ def _filename(title, desc):
     fn = _notword.sub('_', fn)
     return fn[:15] + '...' + fn[-5:]
 
-_encoding = 'iso8859_15'	# default character encoding
-
 def _encode(text):
     """Converts a unicode string to its iso-8859-15 equivalent."""
     if isinstance(text, unicode):
-	text = text.encode(_encoding, 'replace')
+	text = text.encode(Plagg.ENCODING, 'xmlcharrefreplace')
     return text
 
 def _decode(text):
     """Converts a string to its unicode equivalent."""
     if isinstance(text, str):
-	text = unicode(text, _encoding, 'replace')
+	text = unicode(text, Plagg.ENCODING, 'replace')
     return text
 
 

@@ -4,15 +4,11 @@
 
 import sys, re, socket, urllib2
 
-import feedparser
+import feedparser	# use at least version 3 beta 22!
+feedparser.USER_AGENT = 'plagg/$Rev$ ' + feedparser.USER_AGENT
+#feedparser._debug = 1
 
-# hide differences between version 2 and 3 of feedparser
-try:
-    feedparser._resolveRelativeURIs
-except NameError:
-    # version 2
-    feedparser._resolveRelativeURIs = feedparser.resolveRelativeURIs
-
+import Plagg		# for default encoding
 
 class Feed:
     """Abstract Feed class.
@@ -48,7 +44,7 @@ class HTMLFeed(Feed):
     already have been converted to absolute."""
 
     RSS_TEMPLATE = """\
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="%(encoding)s"?>
 
 <rss version="2.0">
   <channel>
@@ -67,16 +63,17 @@ class HTMLFeed(Feed):
 	self.itemLink = ''
 	self.itemTitle = ''
 	self.itemBody = ''
+	self.encoding = Plagg.ENCODING
 
     def getLink(self):
 	"""Reads the HTML page and extracts the link and title."""
 	try:
 	    f = urllib2.urlopen(self.uri)
-	    html = f.read().decode('iso-8859-1')
+	    html = f.read().decode(self.encoding)
 	except socket.timeout:
 	    return
 	# resolve relative URIs
-	html = feedparser._resolveRelativeURIs(html, self.uri)
+	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding)
 	m = self.regex.search(html)
 	if m:
 	    try:
