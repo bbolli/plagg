@@ -79,6 +79,8 @@ class SimulatedFeed(Feed):
 	self.encoding = Plagg.ENCODING
 
     def generateFeed(self):
+	if self.itemBody and not self.itemBody.startswith('<'):
+	    self.itemBody = '<p>' + self.itemBody + '</p>'
 	rss = self.RSS_TEMPLATE % self.__dict__
 	self.feed = feedparser.parse(rss)
 
@@ -105,17 +107,16 @@ class HTMLFeed(SimulatedFeed):
 	m = self.regex.search(html)
 	if m:
 	    try:
-		if m.groupdict():	# new-style group names in regex
+		if m.groupdict():	# new-style named groups regex
 		    self.itemLink = m.group('link')
 		    self.itemTitle = m.group('title')
 		    if m.group('body'):
-			self.itemBody = '<p>' + m.group('body') + '</p>'
 			# strip whitespace inside href attributes (for APOD)
 			self.itemBody = re.sub(r'''(?s)href=(['"]).+?\1''',	# "
 			    lambda m: re.sub(r'\s+', '', m.group(0)),
-			    self.itemBody
+			    m.group('body')
 			)
-		else:
+		else:			# old-style numbered groups
 		    self.itemLink = m.group(1)
 		    self.itemTitle = m.group(2)
 	    except IndexError:
