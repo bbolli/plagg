@@ -5,7 +5,7 @@
 import sys, re, socket, urllib2
 
 import feedparser	# use at least version 3 beta 22!
-feedparser.USER_AGENT = 'plagg/$Rev$ ' + feedparser.USER_AGENT
+feedparser.USER_AGENT = 'plagg/%s ' % re.sub('\D', '', '$Rev$') + feedparser.USER_AGENT
 #feedparser._debug = 1
 
 import Plagg		# for default encoding
