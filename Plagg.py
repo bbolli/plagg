@@ -91,6 +91,8 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    sys.stderr.write("Feed: %s (%s)\n%s\n" % (feed.name, feed.uri, str(e)))
 	    self.errors += 1
 	    return
+	if self.logging > 1:
+	    print feed.feed
 	e = Entries.BlosxomEntries(os.path.join(self.newspath, nick))
 	e.logging = self.logging
 	self.entries += e.processFeed(feed)

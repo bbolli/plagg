@@ -89,11 +89,13 @@ class BlosxomEntries(Entries):
 	link = item.get('link')
 	if title and link:
 	    title = _linktag(link, title)
-	body = item.get('content', [{}])[0].get('value') or item.get('description', '')
+	body = item.get('content', [{}])[0].get('value') \
+	    or item.get('description', '') \
+	    or item.get('summary', '')
 	body = body.strip()
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
-	footer = '<p class="blosxomEntryFoot">' + item.get('date', '')
+	footer = '<p class="blosxomEntryFoot">' + (item.get('date', '') or item.get('modified', ''))
 	if link and not title:
 	    footer += '\n[%s]' % _linktag(link, 'Link')
 	if item.has_key('comments'):
@@ -124,7 +126,7 @@ class BlosxomEntries(Entries):
 	f.close()
 
 	# set modification time if present
-	mdate = item.get('date_parsed')
+	mdate = item.get('date_parsed') or item.get('modified_parsed')
 	if mdate:
 	    mdate = time.mktime(mdate)	# convert date/time 9-tuple to timestamp
 	    os.utime(fname, (mdate, mdate))
