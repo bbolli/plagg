@@ -1,5 +1,7 @@
 "Entries.py -- make blog entries from a feedparser dict"
 
+# $Id$
+
 import os, re, time
 
 

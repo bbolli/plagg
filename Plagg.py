@@ -1,6 +1,8 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
+# $Id$
+
 import os, time, xml.sax
 
 import Feed, Entries

@@ -1,5 +1,7 @@
 # Feed.py -- one configured feed
 
+# $Id$
+
 import sys, re, socket, urllib2
 
 import feedparser
