@@ -7,9 +7,7 @@ corresponding to the items in the feeds."""
 
 import sys, getopt
 
-sys.path.insert(0, '/home/bb/projects/python/plagg')
-
-import Plagg
+from Plagg import Plagg
 
 OPML = '/home/bb/bblog/news/news.opml'
 PATH = '/home/bb/bblog/news'

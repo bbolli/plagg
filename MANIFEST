@@ -1,0 +1,11 @@
+COPYING
+README
+README.html
+news.opml
+opml.xsl
+plagg
+setup.py
+Plagg/Entries.py
+Plagg/Feed.py
+Plagg/Plagg.py
+Plagg/__init__.py
