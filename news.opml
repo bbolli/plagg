@@ -20,7 +20,6 @@
 			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
 			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://stuff.vandervossen.net/feeds/dailypython.rss"/>
 			<outline text="SecurityFocus" nick="bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/news.xml"/>
-			<outline text="NTK" type="rss" xmlUrl="http://www.ntk.net/rss.php3"/>
 		</outline>
 		<outline text="Mobile">
 			<outline text="MobileTracker" type="rss" link="http://www.mobiletracker.net/" xmlUrl="http://www.mobiletracker.net/index.rdf"/>
@@ -40,6 +39,7 @@
 		</outline>
 		<outline text="Blogs">
 			<outline text="Mark Pilgrim" nick="mark" type="rss" link="http://diveintomark.org/" xmlUrl="http://diveintomark.org/xml/atom.xml"/>
+			<outline text="Mark Pilgrim&#8217;s b-links" nick="mark/blinks" type="rss" link="http://diveintomark.org/" xmlUrl="http://diveintomark.org/xml/blink.xml"/>
 			<outline text="Dave Winer" nick="winer" type="rss" link="http://www.scripting.com/" xmlUrl="http://www.scripting.com/rss.xml"/>
 			<outline text="Doc Searls" nick="doc" type="rss" link="doc.weblogs.com/" xmlUrl="http://partners.userland.com/people/docSearls.xml"/>
 			<outline text="The Scobleizer" nick="scoble" type="rss" link="http://radio.weblogs.com/0001011/" xmlUrl="http://radio.weblogs.com/0001011/rss.xml"/>
