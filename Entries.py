@@ -133,7 +133,7 @@ class BlosxomEntries(Entries):
 	if self.logging:
 	    currentChannel = channel['title']
 	    if self.lastChannel != currentChannel:
-		print currentChannel
+		print _encode(currentChannel)
 		self.lastChannel = currentChannel
 	    print '  ' + _encode(_markup.sub('', title) or fn)
 
