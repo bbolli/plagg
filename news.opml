@@ -18,13 +18,14 @@
 			<outline text="WiFi Network News" nick="wifi" type="rss" xmlUrl="http://wifinetnews.com/xml/rss.xml"/>
 			<outline text="Bible Verse" nick="bible" type="rss" xmlUrl="http://www.gnpcb.org/esv/share/rss2.0/daily/"/>
 			<outline text="Daily Python News" nick="dailypy" type="rss" xmlUrl="http://stuff.vandervossen.net/feeds/dailypython.rss"/>
-			<outline text="Bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/vulnerabilities.xml"/>
+			<outline text="SecurityFocus" nick="bugtraq" type="rss" xmlUrl="http://www.securityfocus.com/rss/news.xml"/>
 			<outline text="NTK" type="rss" xmlUrl="http://www.ntk.net/rss.php3"/>
 		</outline>
 		<outline text="Science">
 			<outline text="Christian Science Monitor" nick="cs" type="rss" xmlUrl="http://www.csmonitor.com/rss/scitech.rss"/>
 			<outline text="Astronomy Picture of the Day" nick="apod" type="x-bb-html" link="http://antwrp.gsfc.nasa.gov/apod/"
-				regex="(?is)&lt;img SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; (?P&lt;title&gt;.*?) &lt;/b&gt; &lt;br /&gt;.*?Explanation: &lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; &lt;center&gt;" hours="8"
+				regex="(?is)&lt;IMG SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; (?P&lt;title&gt;.*?) &lt;/b&gt; &lt;br /&gt;.*?Explanation: &lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; &lt;center&gt;"
+				hours="8"
 			/>
 			<outline text="Mars Rover" nick="mars" type="rss" xmlUrl="http://www.markcarey.com/mars/mars-rover-photos.rdf"/>
 		</outline>
@@ -49,16 +50,20 @@
 		</outline>
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-bb-html" link="http://www.dilbert.com/"
-				regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.gif)&quot;" hours="8"
+				regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.gif)&quot;"
+				hours="8"
 			/>
 			<outline text="Garfield" type="x-bb-html" link="http://garfield.ucomics.com"
-				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ga/\d{4}/ga(\d{6})\.gif)&quot;" hours="8"
+				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ga/\d{4}/ga(\d{6})\.gif)&quot;"
+				hours="8"
 			/>
 			<outline text="Userfriendly" nick="uf" type="x-bb-html" link="http://www.userfriendly.org/static/"
-				regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d{6})\.gif)&quot;&gt;" from="/x-uf" to="/uf" hours="99"
+				regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d{6})\.gif)&quot;&gt;" from="/x-uf" to="/uf"
+				hours="99"
 			/>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-bb-html" link="http://www.ucomics.com/calvinandhobbes/"
-				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ch/\d{4}/ch(\d{6})\.gif)&quot;" hours="8"
+				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ch/\d{4}/ch(\d{6})\.gif)&quot;"
+				hours="8"
 			/>
 		</outline>
 	</body>
