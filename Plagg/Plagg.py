@@ -93,7 +93,13 @@ class Plagg(xml.sax.handler.ContentHandler):
 		self.errors += 1
 	    else:
 		e_str = str(e).lower()
-		if e_str.find('timed out') < 0 and e_str.find('connection refused') < 0:
+		for msg in (
+		    'timed out', 'connection refused', 'reset by peer',
+		    'name resolution', 'no route'
+		):
+		    if e_str.find(msg) >= 0:
+			break
+		else:
 		    sys.stderr.write("Feed: %s (%s)\n%s\n" % (feed.name.encode(ENCODING, 'replace'), feed.uri, e))
 		    self.errors += 1
 	    return
@@ -112,7 +118,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	for c in self.newentries.keys():
 	    body.append('* ' + c)
 	    for e in self.newentries[c]:
-		body.append('** ' + e.newSummary())
+		body.append('** %s"#%s":%s' % (e.timestamp(': '), e._id, e._title))
 	if body:
 	    e = Entries.Entry()
 	    e.setEntry('Latest news (%s)' % time.strftime('%H:%M:%S'), u'\n'.join(body))

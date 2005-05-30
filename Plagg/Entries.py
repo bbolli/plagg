@@ -81,7 +81,7 @@ class Entry:
 	body = feed.replaceText(self._body, 'bodyfrom', 'bodyto')
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
-	self.body = body
+	self.body = self.tidy(body)
 
 	# footer
 	footer = '\n<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
@@ -97,9 +97,8 @@ class Entry:
 	# modification time
 	self.mdate = item.get('date_parsed') or item.get('modified_parsed')
 	if self.mdate:
-	    self.tm = time.mktime(self.mdate) - tz	# convert date/time 9-tuple to timestamp
-	    self.mdate = time.localtime(self.tm)
-	    print self.mdate, time.ctime(self.tm)
+	    self.tm = time.mktime(self.mdate[:8] + (-1, )) - tz	# convert date/time 9-tuple in UTC to timestamp
+	    self.mdate = time.localtime(self.tm)	# convert timestamp to local 9-tuple
 
     def setEntry(self, title, body, footer=''):
 	self._title = self.title = title
@@ -117,7 +116,6 @@ class Entry:
 	fn = fn.replace('&apos;', "'").replace('&quot;', '"')
 	fn = _notword.sub('_', fn)
 	self.fname = fn[:15] + '...' + fn[-5:]
-	# self.setMeta(fname=self.fname)
 	return self.fname
 
     def makeId(self):
@@ -137,13 +135,10 @@ class Entry:
 	s.append(self.footer)
 	return _encode(u'\n'.join(map(_decode, s)))
 
-    def timestamp(self, sep):
+    def timestamp(self, suffix):
 	if not self.mdate:
 	    return ''
-	elif self.tm // 86400 == time.time() // 86400:	# same day?
-	    return time.strftime('%H:%M:%S', self.mdate) + sep
-	else:
-	    return time.asctime(self.mdate) + sep
+	return time.strftime('%H:%M:%S', self.mdate) + suffix
 
     def logKey(self):
 	return self.channel['title']
@@ -154,10 +149,6 @@ class Entry:
 
     def newKey(self):
 	return self.logKey()
-
-    def newSummary(self):
-	"""Returns a one-line summary of itself."""
-	return self.timestamp(': ') + _linktag('#' + self._id, self._title)
 
     def write(self, destdir, ext, overwrite=False, fname=None):
 	"""Writes the entry out to the filesystem."""
@@ -188,6 +179,18 @@ class Entry:
 	    os.utime(fname, (self.tm, self.tm))
 
 	return 1
+
+    def tidy(self, body):
+	ch_in, ch_out = os.popen2(['/usr/bin/tidy', '-asxhtml', '-latin1', '-f', '/dev/null', '-wrap', '78'])
+	ch_in.write(body)
+	ch_in.close()
+	r = ch_out.readlines()
+	ch_out.close()
+	while r and r[0].strip() != '<body>':
+	    del r[0]
+	while r and r[-1].strip() != '</body>':
+	    del r[-1]
+	return ''.join(r[1:-1])
 
 
 class Entries:
