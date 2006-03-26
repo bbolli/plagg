@@ -66,7 +66,7 @@ class Entry:
 	    item.get('description') or
 	    item.get('summary', '')
 	).strip()
-	body = feed.replaceText(self._body, 'bodyfrom', 'bodyto')
+	body = feed.replaceBody(self._body)
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
 	self.body = self.tidy(body)

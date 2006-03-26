@@ -49,6 +49,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	self.nicks = nicks
 	self.logging = self.errors = 0
 	self.newentries = {}
+	self.feed = None
 	xml.sax.handler.ContentHandler.__init__(self)
 
     def setLogging(self, logging):
@@ -61,9 +62,26 @@ class Plagg(xml.sax.handler.ContentHandler):
 	if name == 'outline':
 	    # Normalize attribute names to lower case
 	    self.outline(dict([(k.lower(), v) for k, v in attrs.items()]))
+	elif self.feed:
+	    if name == 'replaceBody':
+		self.feed.addBodyReplacement(attrs.get('from'), attrs.get('to', ''))
+	    elif name == 'replaceLink':
+		self.feed.addLinkReplacement(attrs.get('from'), attrs.get('to', ''))
+
+    def endElement(self, name):
+	"""Ends one outline element by processing the feed."""
+	if name != 'outline' or not self.feed: return
+
+	# process the feed
+	e = Entries.BlosxomEntries(self, self.path)
+	e.logging = self.logging
+	e.processFeed(self.feed)
 
     def outline(self, attrs):
 	"""Handles one OPML outline element."""
+
+	# reset the feed dict
+	self.feed = None
 
 	# get common attributes
 	name = attrs.get('text') or attrs.get('title')
@@ -95,7 +113,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	else:
 	    return
 
-	# get and process this feed
+	# get this feed
 	try:
 	    feed.getFeed()
 	except Exception, e:
@@ -116,13 +134,14 @@ class Plagg(xml.sax.handler.ContentHandler):
 		    sys.stderr.write(("Feed: %s (%s)\n%s\n" % (feed.name, feed.uri, e)).encode(ENCODING, 'replace'))
 		    self.errors += 1
 	    return
+
 	if self.logging > 1:
 	    print feed.feed
 	    if 'bozo_exception' in feed.feed:
 		print feed.feed['bozo_exception']
-	e = Entries.BlosxomEntries(self, os.path.join(self.newspath, nick))
-	e.logging = self.logging
-	e.processFeed(feed)
+
+	self.feed = feed
+	self.path = os.path.join(self.newspath, nick)
 
     def newEntry(self, entry):
 	if entry._title:

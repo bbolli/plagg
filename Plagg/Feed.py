@@ -23,23 +23,31 @@ class Feed:
 	self.uri = uri
 	self.headers = {'User-Agent': USER_AGENT}
 	self.feed = {}
+	self.linkReplacements = []	# lists of (re, new) tuples
+	self.bodyReplacements = []
 
     def getFeed(self):
 	"""Sets self.feed to a feedparser dictionary. Subclasses must implement this."""
 	raise NotImplementedError('Feed.getFeed()')
 
-    def replaceLink(self, link, delRepl=0):
-	return self.replaceText(link, 'linkfrom', 'linkto', delRepl)
+    def addLinkReplacement(self, old, new):
+	if old:
+	    self.linkReplacements.append((re.compile(old), new))
 
-    def replaceText(self, text, old, new, delRepl=0):
-	"""Performs a regex replacement according to the "old" and "new" attributes
-	of the <outline> element."""
-	oldtext, newtext = self.attrs.get(old), self.attrs.get(new)
-	if oldtext:
-	    if newtext is not None:
-		text = re.sub(oldtext, newtext, text)
-	    if delRepl:
-		del self.attrs[old]	# prevent another replacement
+    def addBodyReplacement(self, old, new):
+	if old:
+	    self.bodyReplacements.append((re.compile(old), new))
+
+    def replaceLink(self, link):
+	return self.replaceText(link, self.linkReplacements)
+
+    def replaceBody(self, body):
+	return self.replaceText(body, self.bodyReplacements)
+
+    def replaceText(self, text, repl):
+	"""Performs a regex replacement according to the repl list."""
+	for pattern, new in repl:
+	    text = pattern.sub(new, text)
 	return text
 
 
@@ -138,7 +146,8 @@ class HTMLFeed(SimulatedFeed):
 	# point to the local copy. Allow to fake the referrer
 	# while getting the remote file.
 	if self.attrs.get('savepath') and self.attrs.get('saveurl'):
-	    link = self.replaceLink(self.itemLink, delRepl=1)
+	    link = self.replaceLink(self.itemLink)
+	    self.linkReplacements = []
 	    basename = re.search('([^/]+)$', link).group(1)
 	    localfile = os.path.join(self.attrs['savepath'], basename)
 	    # only get and save the file if it doesn't exist yet
