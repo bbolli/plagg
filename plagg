@@ -3,13 +3,13 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
-# $Id$
+__version__ = "1.4 ($Id$)"
 
 import os, sys, getopt
 
 from Plagg import Plagg
 
-PATH = '/home/bb/bblog/news'
+PATH = os.path.join(os.getenv('HOME'), 'bblog', 'news')
 OPML = os.path.join(PATH, 'news.opml')
 
 def usage(rc):
@@ -28,7 +28,7 @@ for o, v in opts:
     if o == '-h':
 	usage(0)
     elif o == '-V':
-	print "$Id$"
+	print __version__
 	sys.exit(0)
     elif o == '-v':
 	verbose += 1

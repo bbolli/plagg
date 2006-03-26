@@ -8,18 +8,30 @@ plagg is a weblog/news aggregator that works in conjunction with
 It can be easily extended to support other blogging tools.
 
 plagg reads an OPML file containing a list of RSS or Atom feeds, and
-generates blosxom blog entries from these feeds. You can see
-examples of plagg's output "on my news page":http://www.drbeat.li/news.
+generates blosxom blog entries from these feeds. The items of each feed
+are generated into their own directory/blosxom category, which allows to
+read the news all at once or per feed.
 
+You can see examples of plagg's output "on my news page":http://www.drbeat.li/news.
+
+h3. Contents
+
+# "Installation":#install
+# "Usage":#usage
+# "The OPML file":#opml
+# "Changelog":#changelog
+# "To do":#todo
+# "Author":#author
 
 h2(#install). 1. Installation
 
-# Download and install "Mark Pilgrim's":http://diveintomark.org "Ultra-liberal Feed Parser 3.3":http://feedparser.org/
+# Download and install the "Universal Feed Parser 4":http://feedparser.org/ or later
 # Download "plagg":plagg.tar.gz
 # Untar the distribution file to a directory of your choice
-# Run @su -c "python setup.py install"@
+# Run @python setup.py install@ as root
 # Set up an "OPML":#opml file containing the feeds you'd like to read
-# Run @plagg@ _opmlfile_ _newsdir_ as often as you like from a cron job
+# Run @plagg@ _opmlfile_ _newsdir_ as often as you like from a cron job, where _newsdir_ is somewhere within your blosxom data directory
+# Enjoy your personalized news feed!
 
 
 h2(#usage). 2. Usage
@@ -50,61 +62,7 @@ The distribution contains my OPML file as an example.
 
 The basic OMPL syntax is defined in the "OPML specification":http://www.opml.org/spec.
 
-I have added a few attributes to the @<outline>@ element to allow
-for some interesting features:
-
-h3. 3.1. General attributes
-
-These are attributes that work for each kind of feed type.
-
-h4. 3.1.1. Body replacements
-
-*@bodyFrom@="regex", @bodyTo@="string"*
-
-Defines a replacement inside the item's body. Use this to remove ads from an item,
-for example (cf. Engadget).
-
-Example:
-
-literal. <pre>bodyFrom="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" bodyTo=""</pre>
-
-This deletes every @<div>@ that immediately begins with a @<span>@.
-
-Please keep in mind that in the actual OPML file, the "less than", "greater than"
-and "quote" signs have to be escaped as @&amp;lt;@, @&amp;gt;@ and @&amp;quot;@,
-respectively.
-
-h4. 3.1.2. Link replacements
-
-*@linkFrom@="regex", @linkTo@="string"*
-
-Allows to replace the link to the news item. I use this to have the link
-point to the printable page of an item (cf. the Register).
-
-Example: @linkFrom="/$" linkTo="/print.html"@
-
-This appends "print.html" to the end of the link.
-
-h4. 3.1.3. Time restrictions
-
-*@hours@="string"*
-
-Defines a set of hours of the day. The feed is read only during these hours.
-Values are in 24-hour format relative to GMT. Ranges may be given as @from-to@;
-separate simple values or ranges with a comma.
-
-Example: @hours="8-10,15,22"@
-
-h4. 3.1.4. Overriding the directory name
-
-*@nick@="string"*
-
-Sets the "nickname" of a feed. The nickname is used as directory name under
-_newsdir_ and when selectively updating with the _nickname_ command line
-argument. The default nickname of an outline element is the lowercase
-@text@ attribute.
-
-h3. 3.2. RSS/Atom feeds
+h3. 3.1. RSS/Atom feeds
 
 Set the @type@ attribute to @"rss"@. This is the default feed type.
 Plagg reads the feed given by the @xmlUrl@ attribute and generates news items
@@ -119,12 +77,11 @@ literal.. <pre>&lt;outline text="Linux Weekly News" nick="lwn" type="rss"
 p. The @htmlUrl@ attribute is not used by @plagg@ itself, but by @opml.xsl@, which
 I use to generate my "blogroll":http://www.drbeat.li/news/news.opml.
 
-If you need support for Atom 1.0 feeds, please apply the patch from
-http://fucoder.com/wp-content/feedparser/feedparser-atom10.patch to your
-feedparser.py file.
+If you need support for Atom 1.0 feeds and have installed a feedparser older
+than version 4, please apply the patch from
+http://fucoder.com/wp-content/feedparser/feedparser-atom10.patch.
 
-
-h3. 3.3. HTML scraping
+h3. 3.2. HTML scraping
 
 Set the @type@ to @"x-plagg-html"@. In this case, plagg reads the HTML page
 whose URL is in the @htmlUrl@ attribute. It then uses the @regex@ attribute
@@ -133,7 +90,7 @@ I use this type to grab a few comics off sites that don't provide an RSS feed.
 
 There are two ways to specify the regex:
 
-dl. Using named groups ("@(?P<name>...)@" regex syntax): This requires you to include in the regex three named groups called @link@, @title@ and @body@, which are use as their name indicates (cf. APOD). If you want to scrape an item body, you must use this kind of regex.
+dl. Using named groups ("@(?P<name>...)@" regex syntax): This requires you to define the regex using three named groups called @link@, @title@ and @body@, which are used as their name indicates (cf. APOD). If you want to scrape an item body, you must use this kind of regex.
 Using numbered groups ("@(...)@" regex syntax): The first group defines the link, the second one defines the title (cf. Dilbert).
 
 In each case, at the moment the regex is matched against the page's HTML source,
@@ -147,7 +104,7 @@ literal.. <pre>&lt;outline text="Dilbert" type="x-plagg-html" htmlUrl="http://ww
     hours="8-10"/&gt;
 </pre>
 
-h3. 3.4. Computed items
+h3. 3.3. Computed items
 
 Set @type@ to @"x-plagg-computed"@, and set the @commands@ attribute to the
 Python commands that should be executed. These commands should set @self.itemLink@
@@ -163,7 +120,7 @@ literal.. <pre>&lt;outline text="Garfield" type="x-plagg-computed" link="http://
 Please keep in mind that in the actual OPML file, the linefeeds have to be
 escaped as <code>&amp;#10;</code>.
 
-h3. 3.5. Saving scraped bits
+h3. 3.4. Saving scraped bits
 
 This feature is available for HTML-scraped and computed items.
 
@@ -177,6 +134,73 @@ Example: @savepath="/home/myself/www/news/uf" saveurl="/news/uf"@
 If necessary, you can define the @referrer@ attribute which will be passed in
 the HTTP request. The default referrer is either the @link@ attribute, or, if
 empty, the item link itself.
+
+h3. 3.5. OPML extensions
+
+I have added two @<outline>@ attributes and two optional, repeatable
+child elements of @<outline>@.
+
+h4. 3.5.1. Time restrictions
+
+This is a new attribute of @<outline>@.
+
+*@hours@="string"*
+
+Defines a set of hours of the day. The feed is read only during these hours.
+Values are in 24-hour format relative to UTC:http://en.wikipedia.org/wiki/Coordinated_Universal_Time.
+Ranges may be given as @from-to@; separate simple values or ranges with a comma.
+The range includes both @from@ and @to@ values.
+
+Example: @hours="8-10,15,22"@
+
+h4. 3.5.2. Overriding a feed's directory name
+
+This is a new attribute of @<outline>@.
+
+*@nick@="string"*
+
+Sets the "nickname" of a feed. The nickname is used as directory name under
+_newsdir_ and when selectively updating with the _nickname_ command line
+argument. The default nickname of an outline element is the lowercase
+@text@ attribute.
+
+h4. 3.5.3 Body replacements: @<replaceBody>@
+
+This is a new, repeatable child element of @<outline>@.
+
+literal. <pre>&lt;replaceBody from="regex" to="string"/&gt;</pre>
+
+Defines a replacement inside the item's body. Use this to remove ads from an item,
+for example (cf. Engadget).
+
+Example:
+
+literal. <pre>&lt;replaceBody from="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" to=""/&gt;</pre>
+
+This deletes every @<div>@ that immediately begins with a @<span>@.
+
+The @to@ attribute is optional. If omitted, the text matched by the @from@ regex is deleted.
+
+Please keep in mind that in the actual OPML file, the "less than", "greater than"
+and "quote" signs have to be escaped as @&amp;lt;@, @&amp;gt;@ and @&amp;quot;@,
+respectively.
+
+h3. 3.5.4. Link replacements: @<replaceLink>@
+
+This is a new, repeatable child element of @<outline>@.
+
+literal. <pre>&lt;replaceLink from="regex" to="string"/&gt;</pre>
+
+Allows to replace the link to the news item. I use this to have the link
+point to the printable page of an item (cf. the Register).
+
+Example:
+
+literal. <pre>&lt;replaceLink from="/$" to="/print.html"/&gt;</pre>
+
+This appends "print.html" to the end of the link.
+
+The @to@ attribute is optional. If omitted, the text matched by the @from@ regex is deleted.
 
 h3. 3.6. Rendering the OPML file as XHTML
 
@@ -199,18 +223,22 @@ h2(#changelog). 4. Changelog
 ** Added HTTP caching, thanks to Joe Gregorio's "httpcache.py":http://bitworking.org/projects/httpcache
 * Version 1.2, ==2004-11-25==:
 ** Print an exception trace only at log level 2 and above
-** Generate a feed title attribute with the tagline
+** Generate a feed title attribute with the feed's tagline
 ** Send the correct User-Agent string which was lost by using httpcache.py (patch sent to and "accepted by":http://bitworking.org/news/httpcache_py_1_0_2 Joe Gregorio)
 * Version 1.3, ==2004-12-29==:
 ** Added the @-n@ option
 ** Process feeds only if they have changed
 ** Allow more than one nickname on the command line
+* Version 1.4, ==2006-03-26==
+** Allow multiple link and body replacements
+** Improved "Unicode":http://www.unicode.org support
 
 
 h2(#todo). 5. TODO
 
 * Should support @skipHours@ from the RSS feed instead of using @hours@
 * Support RSS enclosures
+* Use a proper "XML namespace":http://www.w3.org/TR/REC-xml-names/ for my OPML extensions
 
 
 h2(#author). 6. Author
