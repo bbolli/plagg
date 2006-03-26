@@ -57,7 +57,7 @@ class SimulatedFeed(Feed):
     one entry. Is used by subclasses which know how to get an item from
     a website."""
 
-    RSS_TEMPLATE = """\
+    RSS_TEMPLATE = u"""\
 <?xml version="1.0" encoding="%(encoding)s"?>
 
 <rss version="2.0">
@@ -81,7 +81,9 @@ class SimulatedFeed(Feed):
     def generateFeed(self):
 	if self.itemBody and not self.itemBody.startswith('<'):
 	    self.itemBody = '<p>' + self.itemBody + '</p>'
+	self.itemBody = Plagg.decode(self.itemBody)
 	rss = self.RSS_TEMPLATE % self.__dict__
+	rss = Plagg.encode(rss)
 	self.feed = feedparser.parse(rss)
 
 

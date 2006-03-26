@@ -14,7 +14,7 @@ def _escape(text):
 def _linktag(href, text, **attrs):
     """Returns a HTML link tag."""
     a = ''.join([' %s="%s"' % (k, _escape(v)) for k, v in attrs.items() if v])
-    return u'<a href="%s"%s>%s</a>' % (href, a, _decode(text))
+    return u'<a href="%s"%s>%s</a>' % (href, a, Plagg.decode(text))
 
 def _unescape(text):
     """Replaces the three common HTML character entities."""
@@ -24,18 +24,6 @@ _markup = re.compile(r'<.*?>', re.M + re.S)
 _notword = re.compile(r'\W')
 _idfirst = re.compile('^[a-zA-Z]')
 _idwrong = re.compile('[^0-9a-zA-Z]+')
-
-def _encode(text):
-    """Converts a unicode string to its encoded equivalent."""
-    if isinstance(text, unicode):
-	return text.encode(Plagg.ENCODING, 'xmlcharrefreplace')
-    return text
-
-def _decode(text):
-    """Converts a string to its unicode equivalent."""
-    if isinstance(text, str):
-	text = unicode(text, Plagg.ENCODING, 'replace')
-    return text
 
 if time.localtime()[8]:
     tz = time.altzone
@@ -133,7 +121,7 @@ class Entry:
 	    s.append('')
 	s.append(self.body)
 	s.append(self.footer)
-	return _encode(u'\n'.join(map(_decode, s)))
+	return Plagg.encode(u'\n'.join(map(Plagg.decode, s)))
 
     def timestamp(self, suffix):
 	if not self.mdate:
@@ -145,10 +133,14 @@ class Entry:
 
     def logSummary(self):
 	return self.timestamp(': ') + \
-	    _encode(_markup.sub('', self._title) or self.fname)
+	    Plagg.encode(_markup.sub('', self._title) or self.fname)
 
     def newKey(self):
 	return self.logKey()
+
+    def newSummary(self):
+	return self.timestamp(': ') + \
+	    _linktag('#' + self._id, self._title)
 
     def write(self, destdir, ext, overwrite=False, fname=None):
 	"""Writes the entry out to the filesystem."""
@@ -181,16 +173,20 @@ class Entry:
 	return 1
 
     def tidy(self, body):
-	ch_in, ch_out = os.popen2(['/usr/bin/tidy', '-asxhtml', '-latin1', '-f', '/dev/null', '-wrap', '78'])
-	ch_in.write(body)
+	ch_in, ch_out = os.popen2([
+	    '/usr/bin/tidy', '-asxhtml', '-latin1', '-f', '/dev/null', '-wrap', '78'
+	])
+	ch_in.write(Plagg.encode(body))
 	ch_in.close()
 	r = ch_out.readlines()
 	ch_out.close()
-	while r and r[0].strip() != '<body>':
-	    del r[0]
-	while r and r[-1].strip() != '</body>':
-	    del r[-1]
-	return ''.join(r[1:-1])
+	# Keep the lines between <body> and </body>
+	l, l0, l1 = len(r), 0, len(r) - 1
+	while l0 < l and r[l0].strip() != '<body>':
+	    l0 += 1
+	while l1 > l0 and r[l1].strip() != '</body>':
+	    l1 -= 1
+	return Plagg.decode(''.join(r[l0+1:l1]))
 
 
 class Entries:
@@ -247,7 +243,7 @@ class BlosxomEntries(Entries):
 	if self.logging:
 	    newKey = entry.logKey()
 	    if self.oldKey != newKey:
-		print _encode(newKey)
+		print Plagg.encode(newKey)
 		self.oldKey = newKey
 	    print '  ' + entry.logSummary()
 

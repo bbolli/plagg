@@ -11,6 +11,19 @@ import Feed, Entries
 ENCODING = 'iso8859_15'	# default character encoding, used by Feed.py and Entries.py
 
 
+def encode(text):
+    """Converts a unicode string to its encoded equivalent."""
+    if isinstance(text, unicode):
+	return text.encode(ENCODING, 'xmlcharrefreplace')
+    return text
+
+def decode(text):
+    """Converts a string to its unicode equivalent."""
+    if isinstance(text, str):
+	text = unicode(text, ENCODING, 'replace')
+    return text
+
+
 def _matchHours(hours, currentHour):
     """Returns true if currentHour is present in hours.
     hours is a comma-separated list of ranges or single hour numbers,
@@ -89,7 +102,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    import traceback
 	    if self.logging > 1:
 		sys.stderr.write("Feed: %s (%s)\n" % (feed.name.encode(ENCODING, 'replace'), feed.uri))
-		traceback.print_exc(file=sys.stderr)
+		traceback.print_exc()
 		self.errors += 1
 	    else:
 		e_str = str(e).lower()
@@ -100,11 +113,13 @@ class Plagg(xml.sax.handler.ContentHandler):
 		    if e_str.find(msg) >= 0:
 			break
 		else:
-		    sys.stderr.write("Feed: %s (%s)\n%s\n" % (feed.name.encode(ENCODING, 'replace'), feed.uri, e))
+		    sys.stderr.write(("Feed: %s (%s)\n%s\n" % (feed.name, feed.uri, e)).encode(ENCODING, 'replace'))
 		    self.errors += 1
 	    return
 	if self.logging > 1:
 	    print feed.feed
+	    if 'bozo_exception' in feed.feed:
+		print feed.feed['bozo_exception']
 	e = Entries.BlosxomEntries(self, os.path.join(self.newspath, nick))
 	e.logging = self.logging
 	e.processFeed(feed)
@@ -118,7 +133,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	for c in self.newentries.keys():
 	    body.append('* ' + c)
 	    for e in self.newentries[c]:
-		body.append('** %s"#%s":%s' % (e.timestamp(': '), e._id, e._title))
+		body.append('** %s' % e.newSummary())
 	if body:
 	    e = Entries.Entry()
 	    e.setEntry('Latest news (%s)' % time.strftime('%H:%M:%S'), u'\n'.join(body))
