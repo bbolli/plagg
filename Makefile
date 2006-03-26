@@ -19,5 +19,5 @@ README: README.html
 dist: ${source}
 	python setup.py sdist
 
-install:
+install: plagg.tar.gz
 	su -c "python setup.py install"
