@@ -47,8 +47,9 @@
       <xsl:value-of select="@text"/>
     </xsl:otherwise>
   </xsl:choose>
+  <xsl:if test='@xmlUrl != ""'> (<a href="{@xmlUrl}">RSS</a>)</xsl:if>
   <xsl:choose>
-    <xsl:when test='@type = "rss"'> (<a href="{@xmlUrl}">RSS</a>)</xsl:when>
+    <xsl:when test='@type = "rss"'/>
     <xsl:when test='@type = "x-plagg-html"'/>
     <xsl:when test='@type = "x-plagg-computed"'/>
     <xsl:otherwise>
