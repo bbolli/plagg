@@ -119,6 +119,10 @@ literal.. <pre>&lt;outline text="Linux Weekly News" nick="lwn" type="rss"
 p. The @htmlUrl@ attribute is not used by @plagg@ itself, but by @opml.xsl@, which
 I use to generate my "blogroll":http://www.drbeat.li/news/news.opml.
 
+If you need support for Atom 1.0 feeds, please apply the patch from
+http://fucoder.com/wp-content/feedparser/feedparser-atom10.patch to your
+feedparser.py file.
+
 
 h3. 3.3. HTML scraping
 
@@ -205,7 +209,7 @@ h2(#changelog). 4. Changelog
 
 h2(#todo). 5. TODO
 
-* Should use @skipHours@ from the RSS feed instead of using @hours@
+* Should support @skipHours@ from the RSS feed instead of using @hours@
 * Support RSS enclosures
 
 
