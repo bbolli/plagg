@@ -26,7 +26,7 @@
 			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
 			<outline text="Engadget" type="rss" htmlUrl="http://www.engadget.com/" xmlUrl="http://www.engadget.com/rss.xml">
 				<replaceBody from="(?is)&lt;hr /&gt;.+?&lt;font.+?jump\.asp.+?/font&gt;"/>
-				<replaceBody from="(?i)(\.jpg)|(\.png)|(\.gif)\?[0-9.]+?" to="\1"/>
+				<replaceBody from="(?i)((\.jpg)|(\.png)|(\.gif))\?[0-9.]+?" to="\1"/>
 			</outline>
 			<outline text="Linuxdevices" type="rss" htmlUrl="http://www.linuxdevices.com/" xmlUrl="http://www.linuxdevices.com/backend/headlines5.rdf"/>
 			<outline text="SwissQual News" nick="sqnews" type="rss" htmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=swissqual&amp;btnG=Search+News" xmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=swissqual&amp;output=rss"/>
