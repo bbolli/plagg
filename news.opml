@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="opml.xsl" type="text/xsl" media="screen"?>
 
 <opml version="1.0">
@@ -48,13 +48,14 @@
 			<outline text="Linux Journal" nick="lj" type="rss" htmlUrl="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
 			<outline text="Groklaw" type="rss" htmlUrl="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
 			<outline text="A List apart" nick="ala" type="rss" htmlUrl="http://alistapart.textdrive.com/" xmlUrl="http://alistapart.textdrive.com/rss.xml"/>
+			<outline text="Kernel Traffic" nick="ktraffic" type="rss" htmlUrl="http://www.kerneltraffic.org/kernel-traffic/latest.html" xmlUrl="http://www.kerneltraffic.org/kernel-traffic/rss.rdf"/>
 			<outline text="ars technica" nick="arstech" type="rss" htmlUrl="http://www.arstechnica.com/" xmlUrl="http://feeds.feedburner.com/arstechnica/BAaf"/>
 			<outline text="hackaday" type="rss" htmlUrl="http://www.hackaday.com/" xmlUrl="http://www.hackaday.com/rss.xml" hours="17"/>
 			<outline text="RootPrompt" type="rss" htmlUrl="http://rootprompt.org/" xmlUrl="http://rootprompt.org/rss/"/>
 		</outline>
 		<outline text="Blogs">
-			<outline text="Ändu Weber" nick="aendu" type="rss" htmlUrl="http://3w.homedns.org/log/" xmlUrl="http://3w.homedns.org/log/index.php/feed"/>
-			<outline text="Bärni" nick="baerni" type="rss" htmlUrl="http://www.nostromo.ch/" xmlUrl="http://www.nostromo.ch/joomla/component/option,com_rss/feed,RSS2.0/no_html,1/" hours="6"/>
+			<outline text="Ã„ndu Weber" nick="aendu" type="rss" htmlUrl="http://3w.homedns.org/log/" xmlUrl="http://3w.homedns.org/log/index.php/feed"/>
+			<outline text="BÃ¤rni" nick="baerni" type="rss" htmlUrl="http://www.nostromo.ch/" xmlUrl="http://www.nostromo.ch/joomla/component/option,com_rss/feed,RSS2.0/no_html,1/" hours="6"/>
 			<outline text="Mark Pilgrim" nick="mark" type="rss" htmlUrl="http://diveintomark.org/" xmlUrl="http://diveintomark.org/feed/"/>
 			<outline text="Dave Winer" nick="winer" type="rss" htmlUrl="http://www.scripting.com/" xmlUrl="http://www.scripting.com/rss.xml"/>
 			<outline text="Doc Searls" nick="doc" type="rss" htmlUrl="doc.weblogs.com/" xmlUrl="http://partners.userland.com/people/docSearls.xml"/>
