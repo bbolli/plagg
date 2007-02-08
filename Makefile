@@ -1,8 +1,8 @@
 ALL: plagg.tar.gz README.inc
 
-.PHONY: dist install
+.PHONY: dist install test clean
 
-source := MANIFEST $(shell cat MANIFEST)
+source := $(shell cat MANIFEST)
 
 plagg.tar.gz: ${source}
 	tar -czf $@ $^
@@ -11,7 +11,7 @@ README.inc: README.t
 	textile -o1 <$^ >$@
 
 README.html: README.t
-	-textile <$^ | tidy -latin1 -asxml -i -n -wrap 76 >$@
+	-textile <$^ | tidy -utf8 -asxml -i -n -wrap 76 >$@
 
 README: README.html
 	lynx -dump $^ >$@
@@ -21,3 +21,9 @@ dist: ${source}
 
 install: plagg.tar.gz
 	su -c "python setup.py install"
+
+test: clean
+	./plagg -vvv news.opml t ongoing init7 >log
+
+clean:
+	-rm -rf .cache build dist t log

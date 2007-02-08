@@ -232,7 +232,8 @@ h2(#changelog). 4. Changelog
 * Version 1.4, ==2006-03-26==
 ** Allow multiple link and body replacements
 ** Improved "Unicode":http://www.unicode.org support
-
+* Version 1.5, ==2007-02-08==
+** Moved to UTF-8 encoding
 
 h2(#todo). 5. TODO
 

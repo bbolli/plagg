@@ -61,10 +61,13 @@ class HTTPCache:
             f = file(self.cacheFullPath_, "r")
             self.info_ = rfc822.Message(f)
             f.seek(0)
-            self.content_ = f.read().split('\n\n', 1)[1]
+            try:
+                self.content_ = f.read().split('\n\n', 1)[1]
+            except IndexError:
+                self.content_ = ''
             f.close()
             request = urllib2.Request(url, None, self.headers_)
-            if self.info_.has_key('ETag'):
+            if self.content_ and self.info_.has_key('ETag'):
                 request.add_header("If-None-Match", self.info_['ETag'])
             
             try:
@@ -233,12 +236,3 @@ if __name__ == '__main__':
             self.assertEqual(info['content-encoding'], 'gzip')
 
     unittest.main()		
-    
-    
-
-
-
-
-
-
-

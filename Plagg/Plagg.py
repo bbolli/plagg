@@ -8,8 +8,9 @@ import os, sys, time, xml.sax
 import Feed, Entries
 
 
-ENCODING = 'iso8859_15'	# default character encoding, used by Feed.py and Entries.py
+ENCODING = 'utf-8'	# default character encoding, used by Feed.py and Entries.py
 
+VERBOSE = 0             # will be set by Plagg.setLogging()
 
 def encode(text):
     """Converts a unicode string to its encoded equivalent."""
@@ -53,7 +54,8 @@ class Plagg(xml.sax.handler.ContentHandler):
 	xml.sax.handler.ContentHandler.__init__(self)
 
     def setLogging(self, logging):
-	self.logging = logging
+        global VERBOSE
+        VERBOSE = logging
 
     def startOPML(self):
 	xml.sax.parse(self.opmlfile, self)
@@ -74,7 +76,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 
 	# process the feed
 	e = Entries.BlosxomEntries(self, self.path)
-	e.logging = self.logging
+	e.logging = VERBOSE
 	e.processFeed(self.feed)
 
     def outline(self, attrs):
@@ -118,7 +120,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    feed.getFeed()
 	except Exception, e:
 	    import traceback
-	    if self.logging > 1:
+	    if VERBOSE > 1:
 		sys.stderr.write("Feed: %s (%s)\n" % (feed.name.encode(ENCODING, 'replace'), feed.uri))
 		traceback.print_exc()
 		self.errors += 1
@@ -135,8 +137,9 @@ class Plagg(xml.sax.handler.ContentHandler):
 		    self.errors += 1
 	    return
 
-	if self.logging > 1:
-	    print feed.feed
+	if VERBOSE > 1:
+            import pprint
+	    pprint.pprint(feed.feed)
 	    if 'bozo_exception' in feed.feed:
 		print feed.feed['bozo_exception']
 

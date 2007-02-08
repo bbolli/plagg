@@ -3,9 +3,9 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
-__version__ = "1.4 ($Id$)"
+__version__ = "1.5 ($Id$)"
 
-import os, sys, getopt
+import os, sys, getopt, signal
 
 from Plagg import Plagg
 
@@ -13,13 +13,13 @@ PATH = os.path.join(os.getenv('HOME'), 'bblog', 'news')
 OPML = os.path.join(PATH, 'news.opml')
 
 def usage(rc):
-    print "Usage: plagg [-nhVv] [opmlfile [newsdir [nickname ...]]]"
+    print "Usage: plagg [-nhVv] [-t timeout] [opmlfile [newsdir [nickname ...]]]"
     sys.exit(rc)
 
-news = verbose = 0
+news = verbose = timeout = 0
 try:
-    opts, args = getopt.getopt(sys.argv[1:], 'nhVv')
-except getopt.GetoptError:
+    opts, args = getopt.getopt(sys.argv[1:], 'nhVvt:')
+except getopt.GetoptError, e:
     print e
     usage(3)
 for o, v in opts:
@@ -32,6 +32,13 @@ for o, v in opts:
 	sys.exit(0)
     elif o == '-v':
 	verbose += 1
+    elif o == '-t':
+        timeout = int(v)
+
+if timeout and hasattr(signal, 'alarm'):
+    signal.signal(signal.SIGALRM, signal.default_int_handler)
+    signal.alarm(timeout)
+
 argc = len(args)
 if argc == 0:
     plagg = Plagg.Plagg(OPML, PATH)
@@ -45,7 +52,10 @@ else:
     usage(3)
 
 plagg.setLogging(verbose)
-plagg.startOPML()
+try:
+    plagg.startOPML()
+except KeyboardInterrupt:
+    pass
 if news:
     plagg.newEntries()
 

@@ -84,7 +84,6 @@ class SimulatedFeed(Feed):
 	self.itemLink = ''
 	self.itemTitle = ''
 	self.itemBody = ''
-	self.encoding = Plagg.ENCODING
 
     def generateFeed(self):
 	if self.itemBody and not self.itemBody.startswith('<'):
@@ -110,7 +109,7 @@ class HTMLFeed(SimulatedFeed):
 
     def getLink(self):
 	"""Reads the HTML page and extracts the link and title."""
-	html = HTTPCache(self.uri, self.headers).content().decode(self.encoding)
+	html = HTTPCache(self.uri, self.headers).content()#.decode(self.encoding)
 	# resolve relative URIs
 	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding)
 	# search for the regex

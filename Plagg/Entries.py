@@ -69,7 +69,11 @@ class Entry:
 	body = feed.replaceBody(self._body)
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
+        if Plagg.VERBOSE > 2:
+            print 'before tidy:', Plagg.encode(body)
 	self.body = self.tidy(body)
+        if Plagg.VERBOSE > 2:
+            print 'after tidy:', Plagg.encode(self.body)
 
 	# footer
 	footer = '\n<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
@@ -87,6 +91,11 @@ class Entry:
 	if self.mdate:
 	    self.tm = time.mktime(self.mdate[:8] + (-1, )) - tz	# convert date/time 9-tuple in UTC to timestamp
 	    self.mdate = time.localtime(self.tm)	# convert timestamp to local 9-tuple
+
+        if Plagg.VERBOSE > 1:
+            import pprint
+            print 'item:',
+            pprint.pprint(self.__dict__)
 
     def setEntry(self, title, body, footer=''):
 	self._title = self.title = title
@@ -174,7 +183,7 @@ class Entry:
 
     def tidy(self, body):
 	ch_in, ch_out = os.popen2([
-	    '/usr/bin/tidy', '-asxhtml', '-latin1', '-f', '/dev/null', '-wrap', '78'
+	    '/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null', '-wrap', '78'
 	])
 	ch_in.write(Plagg.encode(body))
 	ch_in.close()
