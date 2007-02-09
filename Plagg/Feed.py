@@ -25,6 +25,7 @@ class Feed:
 	self.feed = {}
 	self.linkReplacements = []	# lists of (re, new) tuples
 	self.bodyReplacements = []
+        self.encoding = Plagg.ENCODING
 
     def getFeed(self):
 	"""Sets self.feed to a feedparser dictionary. Subclasses must implement this."""

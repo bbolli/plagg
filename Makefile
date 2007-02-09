@@ -23,7 +23,7 @@ install: plagg.tar.gz
 	su -c "python setup.py install"
 
 test: clean
-	./plagg -vvv news.opml t ongoing init7 >log
+	./plagg -vvv news.opml t ongoing dilbert uf >log
 
 clean:
-	-rm -rf .cache build dist t log
+	-rm -rf .cache t log

@@ -234,6 +234,8 @@ h2(#changelog). 4. Changelog
 ** Improved "Unicode":http://www.unicode.org support
 * Version 1.5, ==2007-02-08==
 ** Moved to UTF-8 encoding
+* Version 1.5a, ==2007-02-09==
+** Bugfix for HTML-scraped feeds
 
 h2(#todo). 5. TODO
 
