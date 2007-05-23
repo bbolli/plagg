@@ -236,6 +236,8 @@ h2(#changelog). 4. Changelog
 ** Moved to UTF-8 encoding
 * Version 1.5a, ==2007-02-09==
 ** Bugfix for HTML-scraped feeds
+* Version 1.6, ==2007-05-23==
+** Ignore entries from the future
 
 h2(#todo). 5. TODO
 

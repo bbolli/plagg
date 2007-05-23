@@ -158,9 +158,11 @@ class Entry:
 	elif not self.makeFilename():
 	    return 0
 
-	# ignore entries older than 7 days
-	if self.tm and self.tm + 7 * 86400 < time.time():
-	    return 0
+	# ignore entries in the future or older than 7 days
+	if self.tm:
+            now = time.time()
+            if self.tm + 7 * 86400 < now or self.tm > now:
+		return 0
 
 	fname = os.path.join(destdir, self.fname + ext)
 

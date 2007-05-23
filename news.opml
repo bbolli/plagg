@@ -32,6 +32,7 @@
 			<outline text="Spirent News" nick="spnews" type="rss" htmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=spirent&amp;btnG=Search+News" xmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=spirent&amp;output=rss"/>
 		</outline>
 		<outline text="Mobile">
+                        <outline text="OpenMoko" type="rss" htmlUrl="http://www.openmoko.org/" xmlUrl="http://planet.openmoko.org/rss20.xml"/>
 			<outline text="MobileTracker" type="rss" htmlUrl="http://www.mobiletracker.net/" xmlUrl="http://www.mobiletracker.net/index.rdf">
 				<replaceBody from=".p..a href=.http://feeds.feedburner.com/.+?img src=.+? border=.0. /../a../p."/>
 				<replaceBody from="(?is)&lt;br /&gt;\[thanks to dozens.*?see the full story\.\)"/>
@@ -54,7 +55,7 @@
 			<outline text="RootPrompt" type="rss" htmlUrl="http://rootprompt.org/" xmlUrl="http://rootprompt.org/rss/"/>
 		</outline>
 		<outline text="Blogs">
-			<outline text="Ändu Weber" nick="aendu" type="rss" htmlUrl="http://3w.homedns.org/log/" xmlUrl="http://3w.homedns.org/log/index.php/feed"/>
+			<!-- outline text="Ändu Weber" nick="aendu" type="rss" htmlUrl="http://3w.homedns.org/log/" xmlUrl="http://3w.homedns.org/log/index.php/feed"/-->
 			<outline text="Bärni" nick="baerni" type="rss" htmlUrl="http://www.nostromo.ch/" xmlUrl="http://www.nostromo.ch/joomla/component/option,com_rss/feed,RSS2.0/no_html,1/" hours="6"/>
 			<outline text="Mark Pilgrim" nick="mark" type="rss" htmlUrl="http://diveintomark.org/" xmlUrl="http://diveintomark.org/feed/"/>
 			<outline text="Dave Winer" nick="winer" type="rss" htmlUrl="http://www.scripting.com/" xmlUrl="http://www.scripting.com/rss.xml"/>
@@ -111,9 +112,11 @@
 			<!--outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.ucomics.com/calvinandhobbes/"
 				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ch/\d{4}/ch(\d{6})\.gif)&quot;"
 				hours="7-10"/-->
-			<outline text="Joy of Tech" nick="joyoftech" type="x-plagg-html" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/joyoftech.xml"
-				regex="(?si)&lt;img src=&quot;(http://www\.joyoftech\.com/joyoftech/joyimages/(\d+?.?)\.(?:gif|jpe?g|png))&quot;"
-				hours="7-10"/>
+			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
+				hours="7-10">
+                                <replaceBody from="thumb\." to="."/>
+                                <replaceBody from=" width=.79. height=.82."/>
+                        </outline>
 			<outline text="The 5th wave" nick="5thwave" type="x-plagg-html" htmlUrl="http://www.ucomics.com/thefifthwave/"
 				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/fw/\d{4}/fw(\d{6})\.gif)&quot;"
 				hours="7-10"/>

@@ -4,6 +4,9 @@ ALL: plagg.tar.gz README.inc
 
 source := $(shell cat MANIFEST)
 
+perlexp := 'm{"(.*) \(.*?([0-9]+?) } && print "$1.$2";'
+version := $(shell grep '$Id' plagg | perl -ne ${perlexp})
+
 plagg.tar.gz: ${source}
 	tar -czf $@ $^
 

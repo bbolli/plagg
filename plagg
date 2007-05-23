@@ -3,7 +3,7 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
-__version__ = "1.5a ($Id$)"
+__version__ = "1.6 ($Id$)"
 
 import os, sys, getopt, signal
 
