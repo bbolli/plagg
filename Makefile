@@ -4,9 +4,6 @@ ALL: plagg.tar.gz README.inc
 
 source := $(shell cat MANIFEST)
 
-perlexp := 'm{"(.*) \(.*?([0-9]+?) } && print "$1.$2";'
-version := $(shell grep '$Id' plagg | perl -ne ${perlexp})
-
 plagg.tar.gz: ${source}
 	tar -czf $@ $^
 
@@ -17,7 +14,7 @@ README.html: README.t
 	-textile <$^ | tidy -utf8 -asxml -i -n >$@
 
 README: README.html
-	lynx -dump $^ >$@
+	lynx -dump -assume-charset=utf-8 $^ >$@
 
 dist: ${source}
 	python setup.py sdist
