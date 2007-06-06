@@ -12,9 +12,11 @@ if sys.hexversion < 0x02020300:
     DistributionMetadata.classifiers = None
     DistributionMetadata.download_url = None
 
+from Plagg import Plagg
+
 setup(
     name="plagg",
-    version='1.7.' + re.sub(r'\D', '', '$Rev$'),
+    version=Plagg.__tarversion__,
     description="plagg is an RSS/Atom feed aggregator",
     author="Beat Bolli",
     author_email="me+plagg@drbeat.li",

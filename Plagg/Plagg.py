@@ -5,8 +5,12 @@ corresponding to the items in the feeds."""
 
 import os, sys, time, xml.sax
 
-import Feed, Entries
+__version__ = "1.7a ($Id$)"
+w = __version__.split()
+__tarversion__ = w[0] + '.' + w[3]
+del w
 
+import Feed, Entries
 
 ENCODING = 'utf-8'	# default character encoding, used by Feed.py and Entries.py
 

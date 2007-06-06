@@ -239,8 +239,10 @@ h2(#changelog). 4. Changelog
 * Version 1.6, ==2007-05-23==
 ** Ignore entries from the future
 * Version 1.7, ==2007-06-06==
-** Added the attribute @ignoredate@ which can be set to $yes$ for ignoring an entry's date and instead use the current time
+** Added the attribute @ignoredate@ which can be set to @yes@ for ignoring an entry's date and instead use the current time
 ** Verbose levels of 3 and higher turn on feedparser's debugging output
+* Version 1.7a, ==2007-06-06==
+** Fixed a stupid untested last-minute change
 
 h2(#todo). 5. TODO
 

@@ -14,7 +14,7 @@ README.inc: README.t
 	textile -o1 <$^ >$@
 
 README.html: README.t
-	-textile <$^ | tidy -utf8 -asxml -i -n -wrap 76 >$@
+	-textile <$^ | tidy -utf8 -asxml -i -n >$@
 
 README: README.html
 	lynx -dump $^ >$@
@@ -26,7 +26,7 @@ install: plagg.tar.gz
 	su -c "python setup.py install"
 
 test: clean
-	./plagg -vvv news.opml t ongoing dilbert uf >log
+	./plagg -vvv news.opml t ongoing dilbert uf joyoftech >log 2>&1
 
 clean:
 	-rm -rf .cache t log

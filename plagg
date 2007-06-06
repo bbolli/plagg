@@ -3,7 +3,7 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
-__version__ = "1.6 ($Id$)"
+# $Id$
 
 import os, sys, getopt, signal
 
@@ -28,7 +28,7 @@ for o, v in opts:
     if o == '-h':
 	usage(0)
     elif o == '-V':
-	print __version__
+	print Plagg.__version__
 	sys.exit(0)
     elif o == '-v':
 	verbose += 1

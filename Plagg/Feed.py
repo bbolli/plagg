@@ -8,11 +8,7 @@ import Plagg		# for default encoding
 
 from httpcache import HTTPCache
 
-USER_AGENT = 'plagg/%s (+http://www.drbeat.li/py/plagg/)' % re.sub('\D', '', '$Rev$')
-
-# enable feedparser debugging
-if Plagg.VERBOSE > 2:
-    feedparser._debug = 1
+USER_AGENT = 'plagg/%s (+http://www.drbeat.li/py/plagg/)' % Plagg.__tarversion__
 
 
 class Feed:
@@ -28,6 +24,10 @@ class Feed:
 	self.linkReplacements = []	# lists of (re, new) tuples
 	self.bodyReplacements = []
         self.encoding = Plagg.ENCODING
+
+	# enable feedparser debugging
+	if Plagg.VERBOSE > 2:
+	    feedparser._debug = 1
 
     def getFeed(self):
 	"""Sets self.feed to a feedparser dictionary. Subclasses must implement this."""
