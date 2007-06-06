@@ -49,7 +49,7 @@
 			<outline text="Linux Journal" nick="lj" type="rss" htmlUrl="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
 			<outline text="Groklaw" type="rss" htmlUrl="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
 			<outline text="A List apart" nick="ala" type="rss" htmlUrl="http://alistapart.textdrive.com/" xmlUrl="http://alistapart.textdrive.com/rss.xml"/>
-			<outline text="Kernel Traffic" nick="ktraffic" type="rss" htmlUrl="http://www.kerneltraffic.org/kernel-traffic/latest.html" xmlUrl="http://www.kerneltraffic.org/kernel-traffic/rss.rdf"/>
+			<!-- outline text="Kernel Traffic" nick="ktraffic" type="rss" htmlUrl="http://www.kerneltraffic.org/kernel-traffic/latest.html" xmlUrl="http://www.kerneltraffic.org/kernel-traffic/rss.rdf"/ -->
 			<outline text="ars technica" nick="arstech" type="rss" htmlUrl="http://www.arstechnica.com/" xmlUrl="http://feeds.feedburner.com/arstechnica/BAaf"/>
 			<outline text="hackaday" type="rss" htmlUrl="http://www.hackaday.com/" xmlUrl="http://www.hackaday.com/rss.xml" hours="17"/>
 			<outline text="RootPrompt" type="rss" htmlUrl="http://rootprompt.org/" xmlUrl="http://rootprompt.org/rss/"/>
@@ -112,8 +112,11 @@
 			<!--outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.ucomics.com/calvinandhobbes/"
 				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ch/\d{4}/ch(\d{6})\.gif)&quot;"
 				hours="7-10"/-->
+                        <!--outline text="Joy of Tech" nick="joyoftech" type="x-plagg-html" htmlUrl="http://www.joyoftech.com/joyoftech/"
+                                regex="(?si)&lt;img src=&quot;(http://www\.joyoftech\.com/joyoftech/joyimages/(\d+?.?)\.(?:gif|jpe?g|png))&quot;"
+                                hours="7-10"/-->
 			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
-				hours="7-10">
+				hours="7-10" ignoredate='yes'>
                                 <replaceBody from="thumb\." to="."/>
                                 <replaceBody from=" width=.79. height=.82."/>
                         </outline>

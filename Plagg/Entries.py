@@ -87,10 +87,11 @@ class Entry:
 	self.footer = footer
 
 	# modification time
-	self.mdate = item.get('date_parsed') or item.get('modified_parsed')
-	if self.mdate:
-	    self.tm = time.mktime(self.mdate[:8] + (-1, )) - tz	# convert date/time 9-tuple in UTC to timestamp
-	    self.mdate = time.localtime(self.tm)	# convert timestamp to local 9-tuple
+	if feed.attrs.get('ignoredate', 'no') != 'yes':
+	    self.mdate = item.get('date_parsed') or item.get('modified_parsed')
+	    if self.mdate:
+		self.tm = time.mktime(self.mdate[:8] + (-1, )) - tz	# convert date/time 9-tuple in UTC to timestamp
+		self.mdate = time.localtime(self.tm)	# convert timestamp to local 9-tuple
 
         if Plagg.VERBOSE > 1:
             import pprint
@@ -185,7 +186,7 @@ class Entry:
 
     def tidy(self, body):
 	ch_in, ch_out = os.popen2([
-	    '/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null', '-wrap', '78'
+	    '/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null'
 	])
 	ch_in.write(Plagg.encode(body))
 	ch_in.close()

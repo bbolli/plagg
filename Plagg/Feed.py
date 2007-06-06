@@ -10,7 +10,9 @@ from httpcache import HTTPCache
 
 USER_AGENT = 'plagg/%s (+http://www.drbeat.li/py/plagg/)' % re.sub('\D', '', '$Rev$')
 
-#feedparser._debug = 1
+# enable feedparser debugging
+if Plagg.VERBOSE > 2:
+    feedparser._debug = 1
 
 
 class Feed:

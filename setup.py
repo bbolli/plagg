@@ -14,7 +14,7 @@ if sys.hexversion < 0x02020300:
 
 setup(
     name="plagg",
-    version='1.6.' + re.sub(r'\D', '', '$Rev$'),
+    version='1.7.' + re.sub(r'\D', '', '$Rev$'),
     description="plagg is an RSS/Atom feed aggregator",
     author="Beat Bolli",
     author_email="me+plagg@drbeat.li",
