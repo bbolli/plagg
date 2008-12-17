@@ -2,13 +2,16 @@
 
 # $Id$
 
-import sys, os, re, urllib2
+import sys, os, re, socket, urllib2
 import feedparser	# needs at least version 3 beta 22!
 import Plagg		# for default encoding
 
 from httpcache import HTTPCache
 
 USER_AGENT = 'plagg/%s (+http://www.drbeat.li/py/plagg/)' % Plagg.__tarversion__
+
+# set a global socket timeout of 20s
+socket.setdefaulttimeout(20)
 
 
 class Feed:
