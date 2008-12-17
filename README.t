@@ -243,6 +243,8 @@ h2(#changelog). 4. Changelog
 ** Verbose levels of 3 and higher turn on feedparser's debugging output
 * Version 1.7a, ==2007-06-06==
 ** Fixed a stupid untested last-minute change
+* Version 1.8, ==2008-12-17==
+** Implemented a timeout for TCP/IP socket operations
 
 h2(#todo). 5. TODO
 

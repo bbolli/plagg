@@ -5,7 +5,7 @@ corresponding to the items in the feeds."""
 
 import os, sys, time, xml.sax
 
-__version__ = "1.7a ($Id$)"
+__version__ = "1.8 ($Id$)"
 w = __version__.split()
 __tarversion__ = w[0] + '.' + w[3]
 del w

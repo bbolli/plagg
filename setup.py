@@ -21,8 +21,8 @@ setup(
     author="Beat Bolli",
     author_email="me+plagg@drbeat.li",
     license="GPL2, see file 'COPYING'",
-    url="http://www.drbeat.li/py/plagg/",
-    download_url="http://www.drbeat.li/py/plagg/plagg.tar.gz",
+    url="http://drbeat.li/py/plagg/",
+    download_url="http://drbeat.li/py/plagg/plagg.tar.gz",
     packages=['Plagg'],
     scripts=['plagg'],
     classifiers = [
