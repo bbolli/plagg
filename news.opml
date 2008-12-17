@@ -33,29 +33,19 @@
 			<outline text="SwissQual News" nick="sqnews" type="rss" htmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=swissqual&amp;btnG=Search+News" xmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=swissqual&amp;output=rss"/>
 			<outline text="FSF Europa News" nick="fsfenews" type="rss" htmlUrl="http://www.germany.fsfeurope.org/" xmlUrl="http://www.germany.fsfeurope.org/news/news.de.rss"/>
 		</outline>
-		<outline text="Mobile">
-                        <outline text="OpenMoko" type="rss" htmlUrl="http://www.openmoko.org/" xmlUrl="http://planet.openmoko.org/rss20.xml"/>
-			<outline text="MobileTracker" type="rss" htmlUrl="http://www.mobiletracker.net/" xmlUrl="http://www.mobiletracker.net/index.rdf">
-				<replaceBody from=".p..a href=.http://feeds.feedburner.com/.+?img src=.+? border=.0. /../a../p."/>
-				<replaceBody from="(?is)&lt;br /&gt;\[thanks to dozens.*?see the full story\.\)"/>
-			</outline>
-		</outline>
 		<outline text="Science">
 			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="http://antwrp.gsfc.nasa.gov/apod/"
 				regex="(?is)&lt;IMG SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; ?(?P&lt;title&gt;.*?) ?&lt;/b&gt; &lt;br /&gt;.*?Explanation: *?&lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; *?&lt;center&gt;"
 				savepath="/home/bb/public_html/news/apod" saveurl="/news/apod"
 				hours="8-10"/>
-			<x-outline text="Mars Rover" nick="mars" type="rss" htmlUrl="http://www.markcarey.com/mars/" xmlUrl="http://www.markcarey.com/mars/index.rdf" hours="6"/>
 		</outline>
 		<outline text="Articles">
 			<outline text="Linux Journal" nick="lj" type="rss" htmlUrl="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
 			<outline text="Groklaw" type="rss" htmlUrl="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/>
 			<outline text="A List apart" nick="ala" type="rss" htmlUrl="http://alistapart.textdrive.com/" xmlUrl="http://alistapart.textdrive.com/rss.xml"/>
-			<!-- outline text="Kernel Traffic" nick="ktraffic" type="rss" htmlUrl="http://www.kerneltraffic.org/kernel-traffic/latest.html" xmlUrl="http://www.kerneltraffic.org/kernel-traffic/rss.rdf"/ -->
 			<outline text="ars technica" nick="arstech" type="rss" htmlUrl="http://www.arstechnica.com/" xmlUrl="http://feeds.feedburner.com/arstechnica/BAaf"/>
-			<outline text="hackaday" type="rss" htmlUrl="http://www.hackaday.com/" xmlUrl="http://www.hackaday.com/rss.xml" hours="17" ignoredate="yes"/>
-			<outline text="RootPrompt" type="rss" htmlUrl="http://rootprompt.org/" xmlUrl="http://rootprompt.org/rss/"/>
-			<outline text="WTF" type="rss" htmlUrl="http://worsethanfailure.com/" xmlUrl="http://syndication.thedailywtf.com/TheDailyWtf"/>
+			<outline text="WTF" type="rss" htmlUrl="http://thedailywtf.com/" xmlUrl="http://syndication.thedailywtf.com/TheDailyWtf"/>
+			<outline text="This week in Django" nick="twid" type="rss" htmlUrl="http://thisweekindjango.com/" xmlUrl="http://thisweekindjango.com/feeds/netcast/twid/"/>
 		</outline>
 		<outline text="Blogs">
 			<!-- outline text="Ändu Weber" nick="aendu" type="rss" htmlUrl="http://3w.homedns.org/log/" xmlUrl="http://3w.homedns.org/log/index.php/feed"/-->
@@ -66,7 +56,7 @@
 			<outline text="Doc Searls" nick="doc" type="rss" htmlUrl="http://blogs.law.harvard.edu/docsearls/" xmlUrl="http://blogs.law.harvard.edu/docsearls/feed/"/>
 			<!--outline text="My blog&apos;s cosmos" nick="bblog-cosmos" type="rss" htmlUrl="http://www.technorati.com/cosmos/search.html?url=http://www.drbeat.li" xmlUrl="http://www.technorati.com/watchlists/rss.html?wid=26807"/-->
 			<outline text="The Scobleizer" nick="scoble" type="rss" htmlUrl="http://scobleizer.wordpress.com/" xmlUrl="http://scobleizer.wordpress.com/feed/"/>
-			<outline text="Paul Boutin" nick="boutin" type="rss" htmlUrl="http://paulboutin.weblogger.com/" xmlUrl="http://paulboutin.weblogger.com/xml/rss.xml"/>
+			<!--outline text="Paul Boutin" nick="boutin" type="rss" htmlUrl="http://paulboutin.weblogger.com/" xmlUrl="http://paulboutin.weblogger.com/xml/rss.xml"/-->
 			<outline text="Simon Willison" nick="simon" type="rss" htmlUrl="http://simonwillison.net/" xmlUrl="http://feeds.simonwillison.net/swn-everything"/>
 			<outline text="Steve Gillmor" nick="sgillmor" type="rss" htmlUrl="http://blogs.zdnet.com/Gillmor/" xmlUrl="http://blogs.zdnet.com/Gillmor/wp-rss2.php"/>
 			<outline text="Tim Bray" nick="ongoing" type="rss" htmlUrl="http://www.tbray.org/ongoing/" xmlUrl="http://www.tbray.org/ongoing/ongoing.rss"/>
@@ -79,11 +69,13 @@
 			<outline text="Fredy (init7)" nick="init7" type="rss" htmlUrl="http://www.blogg.ch/blogs/chisp.html" xmlUrl="http://www.blogg.ch/index.php?/feeds/index.rss2"/>
 			<outline text="Fredy (zattoo)" nick="zattoo" type="rss" htmlUrl="http://www.bgp-and-beyond.com/" xmlUrl="http://feeds.feedburner.com/bgp-and-beyond/com"/>
 			<outline text="Ramon (Cyberlink)" nick="cyberlink" type="rss" htmlUrl="http://www.blogisch.ch/" xmlUrl="http://www.blogisch.ch/index.php?/feeds/atom10.xml"/>
+			<outline text="Genotec" type="rss" xmlUrl="http://www.genotec.ch/contentXXL/services/newsexport/Service1.asmx/GetRSSNewsByTabId?tabid=219"/>
 			<outline text="Mac">
 				<outline text="Daring Fireball" nick="fireball" type="rss" htmlUrl="http://daringfireball.net/" xmlUrl="http://daringfireball.net/index.xml"/>
 				<outline text="DrunkenBlog" type="rss" htmlUrl="http://www.drunkenblog.com/" xmlUrl="http://www.drunkenblog.com/index.rdf"/>
 				<outline text="kernelthread" type="rss" htmlUrl="http://www.kernelthread.com/blog/" xmlUrl="http://www.kernelthread.com/blog/index.rdf"/>
 				<outline text="Fake Steve" type="rss" nick="fakesteve" htmlUrl="http://fakesteve.blogspot.com/" xmlUrl="http://fakesteve.blogspot.com/feeds/posts/default"/>
+				<outline text="Real Dan Lyons" type="rss" nick="realdan" htmlUrl="http://realdanlyons.com/blog/" xmlUrl="http://realdanlyons.com/feed/"/>
 				<outline text="Webkit" type="rss" htmlUrl="http://webkit.org/blog/" xmlUrl="http://webkit.org/blog/feed/atom/"/>
 			</outline>
 			<outline text="Mozilla &amp;c">
@@ -96,6 +88,7 @@
 			<outline text="DVD Jon" nick="dvdjon" type="rss" htmlUrl="http://nanocr.eu/" xmlUrl="http://nanocr.eu/feed/"/>
 			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
 			<outline text="Cringely" type="rss" htmlUrl="http://www.pbs.org/cringely/" xmlUrl="http://www.pbs.org/cringely/pulpit/rss2.xml"/>
+			<outline text="PPC-1" type="rss" htmlUrl="http://www.pipeinternational.com/index.php?option=com_myblog&amp;Itemid=65" xmlUrl="http://www.pipeinternational.com/index.php?option=com_myblog&amp;task=rss&amp;Itemid=65"/>
 		</outline>
                 <outline text="Music">
                         <outline text="Toto" type="rss" htmlUrl="http://www.toto99.com/" xmlUrl="http://www.toto99.com/blog/news.php?/feeds/index.rss"/>
@@ -105,7 +98,7 @@
 		</outline>
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/"
-				regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.[gj][ip][fg])&quot;"
+			        regex="src=&quot;(http://www\.dilbert\.com/dyn/str_strip/[0-9/]+/(\d+)\.strip\.(sunday\.)?\w+?)&quot; border=&quot;0"
 				hours="7-10"/>
 			<outline text="Garfield" type="x-plagg-computed" htmlUrl="http://garfield.ucomics.com"
 				commands="import time&#10;tm = time.gmtime()&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.itemLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
@@ -118,16 +111,10 @@
 			<!--outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.ucomics.com/calvinandhobbes/"
 				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/ch/\d{4}/ch(\d{6})\.gif)&quot;"
 				hours="7-10"/-->
-                        <!--outline text="Joy of Tech" nick="joyoftech" type="x-plagg-html" htmlUrl="http://www.joyoftech.com/joyoftech/"
-                                regex="(?si)&lt;img src=&quot;(http://www\.joyoftech\.com/joyoftech/joyimages/(\d+?.?)\.(?:gif|jpe?g|png))&quot;"
-                                hours="7-10"/-->
 			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
-				hours="7-10" ignoredate='yes'>
-                                <replaceBody from="thumb\." to="."/>
-                                <replaceBody from=" width=.79. height=.82."/>
-                        </outline>
+				hours="7-10" ignoredate='yes'/>
 			<outline text="The 5th wave" nick="5thwave" type="x-plagg-html" htmlUrl="http://www.ucomics.com/thefifthwave/"
-				regex="&lt;img src=&quot;(http://images.ucomics.com/comics/fw/\d{4}/fw(\d{6})\.gif)&quot;"
+				regex="&lt;img .*?src=&quot;(http://picayune\.uclick\.com/comics/fw/\d{4}/fw(\d{6})\.gif)&quot;"
 				hours="7-10"/>
 			<outline text="xkcd" type="rss" htmlUrl="http://xkcd.com/" xmlUrl="http://xkcd.com/rss.xml"/>
 		</outline>
