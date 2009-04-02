@@ -1455,7 +1455,7 @@ class _BaseHTMLProcessor(sgmllib.SGMLParser):
         # thanks to Kevin Marks for this breathtaking hack to deal with (valid) high-bit attribute values in UTF-8 feeds
         for key, value in attrs:
             if type(value) != type(u''):
-                value = unicode(value, self.encoding)
+                value = unicode(value, self.encoding, 'replace')
             uattrs.append((unicode(key, self.encoding), value))
         strattrs = u''.join([u' %s="%s"' % (key, value) for key, value in uattrs]).encode(self.encoding)
         if tag in self.elements_no_end_tag:
@@ -1474,6 +1474,14 @@ class _BaseHTMLProcessor(sgmllib.SGMLParser):
         # Reconstruct the original character reference.
         self.pieces.append('&#%(ref)s;' % locals())
         
+    def convert_charref(self, ref):
+        # Convert character reference.
+        if ref[0] in ['x', 'X']:
+            data = unichr(int(ref[1:], 16)).encode(self.encoding)
+        else:
+            data = unichr(int(ref)).encode(self.encoding)
+        return data
+
     def handle_entityref(self, ref):
         # called for each entity reference, e.g. for '&copy;', ref will be 'copy'
         # Reconstruct the original entity reference.
