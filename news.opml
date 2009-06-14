@@ -79,15 +79,17 @@
 				<!-- name not known! outline text="Blake Ross" nick="blaker" type="rss" htmlUrl="http://blakeross.com/" xmlUrl="http://blakeross.com/wp-rss2.php"/ -->
 				<outline text="Gerv Markham" nick="gerv" type="rss" htmlUrl="http://weblogs.mozillazine.org/gerv/" xmlUrl="http://weblogs.mozillazine.org/gerv/index.rdf"/>
 				<outline text="Robert O&apos;Callahan" nick="roc" type="rss" htmlUrl="http://weblogs.mozillazine.org/roc/" xmlUrl="http://weblogs.mozillazine.org/roc/atom.xml"/>
+				<outline text="Mozilla WebDev" nick="webdev" type="rss" htmlUrl="http://blog.mozilla.com/webdev/" xmlUrl="http://blog.mozilla.com/webdev/feed/"/>
 			</outline>
 			<outline text="DVD Jon" nick="dvdjon" type="rss" htmlUrl="http://nanocr.eu/" xmlUrl="http://nanocr.eu/feed/"/>
-			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://www.schneier.com/blog/index.rdf"/>
+			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://feeds2.feedburner.com/schneier/fulltext"/>
 			<outline text="Cringely" type="rss" htmlUrl="http://www.pbs.org/cringely/" xmlUrl="http://www.pbs.org/cringely/pulpit/rss2.xml"/>
 			<outline text="PPC-1" type="rss" htmlUrl="http://www.pipeinternational.com/index.php?option=com_myblog&amp;Itemid=65" xmlUrl="http://www.pipeinternational.com/index.php?option=com_myblog&amp;task=rss&amp;Itemid=65"/>
 		</outline>
 		<outline text="Photoblogs">
 			<outline text="tfx" type="rss" htmlUrl="http://www.tfx.ch/blog/" xmlUrl="http://www.tfx.ch/blog/index.php?x=rss"/>
 			<outline text="bolley" type="rss" htmlUrl="http://bolley.ch" xmlUrl="http://www.bolli.us/fpblog.php"/>
+			<outline text="duncan" type="rss" htmlUrl="http://blog.duncandavidson.com/" xmlUrl="http://blog.duncandavidson.com/atom.xml"/>
 		</outline>
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/"
