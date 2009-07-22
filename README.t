@@ -12,7 +12,7 @@ generates blosxom blog entries from these feeds. The items of each feed
 are generated into their own directory/blosxom category, which allows to
 read the news all at once or per feed.
 
-You can see examples of plagg's output "on my news page":http://www.drbeat.li/news.
+You can see examples of plagg's output "on my news page":http://drbeat.li/news.
 
 h3. Contents
 
@@ -75,7 +75,7 @@ literal.. <pre>&lt;outline text="Linux Weekly News" nick="lwn" type="rss"
 </pre>
 
 p. The @htmlUrl@ attribute is not used by @plagg@ itself, but by @opml.xsl@, which
-I use to generate my "blogroll":http://www.drbeat.li/news/news.opml.
+I use to generate my "blogroll":http://drbeat.li/news/news.opml.
 
 If you need support for Atom 1.0 feeds and have installed a feedparser older
 than version 4, please apply the patch from
@@ -100,7 +100,7 @@ that you can't simply copy a regex from a page's HTML source.
 Example:
 
 literal.. <pre>&lt;outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/"
-    regex="&lt;img src=&quot;(http://www.dilbert.com/comics/dilbert/archive/images/dilbert(\d+)\.[gj][ip][fg])&quot;"
+    regex="&lt;img src=&quot;(http://www\.dilbert\.com/comics/dilbert/archive/images/dilbert(\d+)\.[gj][ip][fg])&quot;"
     hours="8-10"/&gt;
 </pre>
 
@@ -147,7 +147,7 @@ This is a new attribute of @<outline>@.
 *@hours@="string"*
 
 Defines a set of hours of the day. The feed is read only during these hours.
-Values are in 24-hour format relative to UTC:http://en.wikipedia.org/wiki/Coordinated_Universal_Time.
+Values are in 24-hour format relative to "UTC":http://en.wikipedia.org/wiki/Coordinated_Universal_Time.
 Ranges may be given as @from-to@; separate simple values or ranges with a comma.
 The range includes both @from@ and @to@ values.
 
@@ -255,7 +255,7 @@ h2(#todo). 5. TODO
 
 h2(#author). 6. Author
 
-Beat Bolli @<me&#43;plagg&#64;drbeat&#46;li>@, http://www.drbeat.li/py/plagg
+Beat Bolli @<me&#43;plagg&#64;drbeat&#46;li>@, http://drbeat.li/py/plagg
 
 &nbsp;
 
