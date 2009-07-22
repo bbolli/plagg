@@ -28,7 +28,7 @@
 				<replaceBody from="(?i)(\.(jpg)|(png)|(gif))\?[0-9.]+?" to="\1"/>
 				<!-- replaceBody from="(&lt;img[^>]+? src=([&apos;&quot;]))(.+?)\2" to="\1/php/resize.php?image=\3&amp;width=400\2"/ -->
 			</outline>
-			<outline text="Linuxdevices" type="rss" htmlUrl="http://www.linuxdevices.com/" xmlUrl="http://www.linuxdevices.com/backend/headlines5.rdf"/>
+			<outline text="Linuxdevices" type="rss" htmlUrl="http://www.linuxfordevices.com/" xmlUrl="http://www.linuxfordevices.com/rss.xml"/>
 			<outline text="SwissQual News" nick="sqnews" type="rss" htmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=swissqual&amp;btnG=Search+News" xmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=swissqual&amp;output=rss"/>
 			<outline text="FSF Europa News" nick="fsfenews" type="rss" htmlUrl="http://www.germany.fsfeurope.org/" xmlUrl="http://www.germany.fsfeurope.org/news/news.de.rss"/>
 		</outline>
@@ -65,26 +65,26 @@
 			<outline text="Mark Nottingham" nick="mnot" type="rss" htmlUrl="http://www.mnot.net/blog/" xmlUrl="http://www.mnot.net/blog/index.rdf"/>
 			<outline text="Wes Felter" nick="wmf" type="rss" htmlUrl="http://wmf.editthispage.com/" xmlUrl="http://wmf.editthispage.com/xml/rss.xml"/>
 			<!-- 502ed on 2007-09-04 outline text="Gary Turner" nick="garyturner" type="rss" htmlUrl="http://weblog.garyturner.net/" xmlUrl="http://weblog.garyturner.net/?feed=rss2"/ -->
-			<outline text="Fredy (init7)" nick="init7" type="rss" htmlUrl="http://www.blogg.ch/blogs/chisp.html" xmlUrl="http://www.blogg.ch/index.php?/feeds/index.rss2"/>
-			<outline text="Fredy (zattoo)" nick="zattoo" type="rss" htmlUrl="http://www.bgp-and-beyond.com/" xmlUrl="http://feeds.feedburner.com/bgp-and-beyond/com"/>
-			<outline text="Ramon (Cyberlink)" nick="cyberlink" type="rss" htmlUrl="http://www.blogisch.ch/" xmlUrl="http://www.blogisch.ch/index.php?/feeds/atom10.xml"/>
-			<outline text="Genotec" type="rss" xmlUrl="http://www.genotec.ch/contentXXL/services/newsexport/Service1.asmx/GetRSSNewsByTabId?tabid=219"/>
+			<outline text="Fredy (init7)" nick="init7" type="rss" htmlUrl="http://www.blogg.ch/" xmlUrl="http://www.blogg.ch/index.php?/feeds/index.rss2"/>
+			<!-- timeout 2009-07-22 outline text="Ramon (Cyberlink)" nick="cyberlink" type="rss" htmlUrl="http://www.blogisch.ch/" xmlUrl="http://www.blogisch.ch/index.php?/feeds/atom10.xml"/ -->
+			<outline text="Genotec" type="rss" htmlUrl="http://www.genotec.ch/" xmlUrl="http://www.genotec.ch/contentXXL/services/newsexport/Service1.asmx/GetRSSNewsByTabId?tabid=219"/>
 			<outline text="Mac">
 				<outline text="Daring Fireball" nick="fireball" type="rss" htmlUrl="http://daringfireball.net/" xmlUrl="http://daringfireball.net/index.xml"/>
 				<outline text="Webkit" type="rss" htmlUrl="http://webkit.org/blog/" xmlUrl="http://webkit.org/blog/feed/atom/"/>
 			</outline>
 			<outline text="Mozilla &amp;c">
-				<outline text="Asa Dotzler" nick="asad" type="rss" htmlUrl="http://weblogs.mozillazine.org/asa/" xmlUrl="http://weblogs.mozillazine.org/asa/atom.xml"/>
+				<outline text="Asa Dotzler" nick="asad" type="rss" htmlUrl="http://weblogs.mozillazine.org/asa/" xmlUrl="http://weblogs.mozillazine.org/asa/index.rdf"/>
 				<!-- throws an exception! outline text="Ben Goodger" nick="beng" type="rss" htmlUrl="http://weblogs.mozillazine.org/ben/" xmlUrl="http://weblogs.mozillazine.org/ben/index.rdf"/ -->
 				<!-- name not known! outline text="Blake Ross" nick="blaker" type="rss" htmlUrl="http://blakeross.com/" xmlUrl="http://blakeross.com/wp-rss2.php"/ -->
 				<outline text="Gerv Markham" nick="gerv" type="rss" htmlUrl="http://weblogs.mozillazine.org/gerv/" xmlUrl="http://weblogs.mozillazine.org/gerv/index.rdf"/>
-				<outline text="Robert O&apos;Callahan" nick="roc" type="rss" htmlUrl="http://weblogs.mozillazine.org/roc/" xmlUrl="http://weblogs.mozillazine.org/roc/atom.xml"/>
+				<outline text="Robert O&apos;Callahan" nick="roc" type="rss" htmlUrl="http://weblogs.mozillazine.org/roc/" xmlUrl="http://weblogs.mozillazine.org/roc/index.rdf"/>
 				<outline text="Mozilla WebDev" nick="webdev" type="rss" htmlUrl="http://blog.mozilla.com/webdev/" xmlUrl="http://blog.mozilla.com/webdev/feed/"/>
 			</outline>
 			<outline text="DVD Jon" nick="dvdjon" type="rss" htmlUrl="http://nanocr.eu/" xmlUrl="http://nanocr.eu/feed/"/>
 			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://feeds2.feedburner.com/schneier/fulltext"/>
 			<outline text="Cringely" type="rss" htmlUrl="http://www.pbs.org/cringely/" xmlUrl="http://www.pbs.org/cringely/pulpit/rss2.xml"/>
 			<outline text="PPC-1" type="rss" htmlUrl="http://www.pipeinternational.com/index.php?option=com_myblog&amp;Itemid=65" xmlUrl="http://www.pipeinternational.com/index.php?option=com_myblog&amp;task=rss&amp;Itemid=65"/>
+			<outline text="fakesteve" type="rss" htmlUrl="" xmlUrl="http://feeds.feedburner.com/thesecretdiaryofstevejobs"/>
 		</outline>
 		<outline text="Photoblogs">
 			<outline text="tfx" type="rss" htmlUrl="http://www.tfx.ch/blog/" xmlUrl="http://www.tfx.ch/blog/index.php?x=rss"/>
