@@ -3,7 +3,7 @@ corresponding to the items in the feeds."""
 
 # $Id$
 
-import os, sys, time, xml.sax
+import os, sys, time, xml.sax, httplib
 
 __version__ = "1.8 ($Id$)"
 w = __version__.split()
@@ -122,6 +122,8 @@ class Plagg(xml.sax.handler.ContentHandler):
 	# get this feed
 	try:
 	    feed.getFeed()
+	except httplib.HTTPException, e:
+	    sys.stderr.write(("Feed: %s (%s): %s\n" % (feed.name, feed.uri, e.__class__.__name__)).encode(ENCODING, 'replace'))
 	except Exception, e:
 	    import traceback
 	    if VERBOSE > 1:
@@ -137,12 +139,12 @@ class Plagg(xml.sax.handler.ContentHandler):
 		    if e_str.find(msg) >= 0:
 			break
 		else:
-		    sys.stderr.write(("Feed: %s (%s)\n%s\n" % (feed.name, feed.uri, e)).encode(ENCODING, 'replace'))
+		    sys.stderr.write(("Feed: %s (%s)\n%s: %s\n" % (feed.name, feed.uri, e.__class__.__name__, e)).encode(ENCODING, 'replace'))
 		    self.errors += 1
 	    return
 
-	if VERBOSE > 1:
-            import pprint
+	if VERBOSE > 2:
+	    import pprint
 	    pprint.pprint(feed.feed)
 	    if 'bozo_exception' in feed.feed:
 		print feed.feed['bozo_exception']
