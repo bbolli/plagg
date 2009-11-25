@@ -2,13 +2,14 @@
 
 # $Id$
 
-import sys, os, re, socket, urllib2
+import sys, os, re, socket, urllib2, pickle, md5
 import feedparser	# needs at least version 3 beta 22!
 import Plagg		# for default encoding
 
-from httpcache import HTTPCache
+import httpcache
 
-USER_AGENT = 'plagg/%s (+http://www.drbeat.li/py/plagg/)' % Plagg.__tarversion__
+USER_AGENT = 'plagg/%s (+http://drbeat.li/py/plagg/)' % Plagg.__tarversion__
+CACHE_DIR = httpcache.cacheSubDir__
 
 # set a global socket timeout of 20s
 socket.setdefaulttimeout(20)
@@ -61,9 +62,26 @@ class RSSFeed(Feed):
 
     def getFeed(self):
 	"""Builds an ultra-liberally parsed feed dict from the URL."""
-	rss = HTTPCache(self.uri, self.headers)
-	if not rss.fresh():
-	    self.feed = feedparser.parse(rss.content())
+	digest = md5.new(self.uri).digest()
+	cachefile = os.path.join(CACHE_DIR, "".join(["%02x" % (ord(c),) for c in digest]))
+	try:
+	    em = pickle.load(open(cachefile))
+	except Exception, e:
+	    em = (None, None, None)
+	feed = feedparser.parse(self.uri, modified=em[1], etag=em[2], agent=USER_AGENT)
+	if feed.get('status') == 304:
+	    # feed not modified
+	    return
+	self.feed = feed
+	try:
+	    if not os.path.isdir(CACHE_DIR):
+		os.makedirs(CACHE_DIR)
+	    pickle.dump((self.uri, feed.get('modified'), feed.get('etag')), open(cachefile, 'w'))
+	except Exception, e:
+	    try:
+		os.unlink(cacheFile)
+	    except:
+		pass
 
 
 class SimulatedFeed(Feed):
@@ -115,7 +133,7 @@ class HTMLFeed(SimulatedFeed):
 
     def getLink(self):
 	"""Reads the HTML page and extracts the link and title."""
-	html = HTTPCache(self.uri, self.headers).content()#.decode(self.encoding)
+	html = httpcache.HTTPCache(self.uri, self.headers).content()#.decode(self.encoding)
 	# resolve relative URIs
 	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding)
 	# search for the regex
