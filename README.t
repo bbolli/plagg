@@ -245,6 +245,9 @@ h2(#changelog). 4. Changelog
 ** Fixed a stupid untested last-minute change
 * Version 1.8, ==2008-12-17==
 ** Implemented a timeout for TCP/IP socket operations
+* Version 1.9, ==2009-11-25==
+** Use feedparser's own ETag/Modified handling for RSS feeds. This gets us the correct base URI handling for feeds that contain relative URIs. This was broken by using HTTPCache.
+
 
 h2(#todo). 5. TODO
 
