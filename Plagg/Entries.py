@@ -88,15 +88,14 @@ class Entry:
 
 	# modification time
 	if feed.attrs.get('ignoredate', 'no') != 'yes':
-	    self.mdate = item.get('date_parsed') or item.get('modified_parsed')
+	    self.mdate = item.get('date_parsed') or item.get('modified_parsed') or item.get('updated_parsed')
 	    if self.mdate:
 		self.tm = time.mktime(self.mdate[:8] + (-1, )) - tz	# convert date/time 9-tuple in UTC to timestamp
 		self.mdate = time.localtime(self.tm)	# convert timestamp to local 9-tuple
 
         if Plagg.VERBOSE > 1:
             import pprint
-            print 'item:',
-            pprint.pprint(self.__dict__)
+            pprint.pprint(('new item', self.__dict__))
 
     def setEntry(self, title, body, footer=''):
 	self._title = self.title = title
