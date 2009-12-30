@@ -53,7 +53,8 @@ class Entry:
 	self.item = item
 
 	# title and link
-	self._title = _unescape(item.get('title', '').replace('\n', ' ')).strip()
+	title = _unescape(item.get('title', '').replace('\n', ' ')).strip()
+        self._title = feed.replaceTitle(title)
 	self._link = item.get('link')
 	if self._title and self._link:
 	    self.title = _linktag(self._link, self._title)

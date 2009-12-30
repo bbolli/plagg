@@ -202,6 +202,16 @@ This appends "print.html" to the end of the link.
 
 The @to@ attribute is optional. If omitted, the text matched by the @from@ regex is deleted.
 
+h3. 3.5.5. Title replacements: @<replaceTitle>@
+
+This is a new, repeatable child element of @<outline>@.
+
+literal. <pre>&lt;replaceTitle from="regex" to="string"/&gt;</pre>
+
+Allows to replace the title of the news item (cf. NotInventedHere).
+
+The @to@ attribute is optional. If omitted, the text matched by the @from@ regex is deleted.
+
 h3. 3.6. Rendering the OPML file as XHTML
 
 The distribution tar file contains the XSL style sheet @opml.xsl@ that transforms
@@ -247,7 +257,8 @@ h2(#changelog). 4. Changelog
 ** Implemented a timeout for TCP/IP socket operations
 * Version 1.9, ==2009-11-25==
 ** Use feedparser's own ETag/Modified handling for RSS feeds. This gets us the correct base URI handling for feeds that contain relative URIs. This was broken by using HTTPCache.
-
+* Version 1.10, ==2009-12-30==
+** Add @replaceTitle@ handling
 
 h2(#todo). 5. TODO
 

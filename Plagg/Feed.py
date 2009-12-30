@@ -27,6 +27,7 @@ class Feed:
 	self.feed = {}
 	self.linkReplacements = []	# lists of (re, new) tuples
 	self.bodyReplacements = []
+	self.titleReplacements = []
         self.encoding = Plagg.ENCODING
 
 	# enable feedparser debugging
@@ -45,11 +46,18 @@ class Feed:
 	if old:
 	    self.bodyReplacements.append((re.compile(old), new))
 
+    def addTitleReplacement(self, old, new):
+	if old:
+	    self.titleReplacements.append((re.compile(old), new))
+
     def replaceLink(self, link):
 	return self.replaceText(link, self.linkReplacements)
 
     def replaceBody(self, body):
 	return self.replaceText(body, self.bodyReplacements)
+
+    def replaceTitle(self, title):
+	return self.replaceText(title, self.titleReplacements)
 
     def replaceText(self, text, repl):
 	"""Performs a regex replacement according to the repl list."""

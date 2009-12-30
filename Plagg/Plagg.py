@@ -5,7 +5,7 @@ corresponding to the items in the feeds."""
 
 import os, sys, time, xml.sax, httplib
 
-__version__ = "1.9 ($Id$)"
+__version__ = "1.10 ($Id$)"
 w = __version__.split()
 __tarversion__ = w[0] + '.' + w[3]
 del w
@@ -73,6 +73,8 @@ class Plagg(xml.sax.handler.ContentHandler):
 		self.feed.addBodyReplacement(attrs.get('from'), attrs.get('to', ''))
 	    elif name == 'replaceLink':
 		self.feed.addLinkReplacement(attrs.get('from'), attrs.get('to', ''))
+	    elif name == 'replaceTitle':
+		self.feed.addTitleReplacement(attrs.get('from'), attrs.get('to', ''))
 
     def endElement(self, name):
 	"""Ends one outline element by processing the feed."""

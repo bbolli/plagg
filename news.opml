@@ -82,6 +82,7 @@
 			<outline text="fakesteve" type="rss" htmlUrl="" xmlUrl="http://feeds.feedburner.com/thesecretdiaryofstevejobs"/>
 			<outline text="Django" type="rss" htmlUrl="http://www.djangoproject.com/weblog/" xmlUrl="http://www.djangoproject.com/rss/weblog/"/>
 			<outline text="JanSchenk" type="rss" htmlUrl="http://curryujanufreise.blogspot.com/" xmlUrl="http://curryujanufreise.blogspot.com/feeds/posts/default"/>
+			<outline text="Uli &amp; Lise" type="rss" htmlUrl="http://blog.uli-und-lise.de" xmlUrl="http://uli-und-lise.blogspot.com/feeds/posts/default"/>
 		</outline>
 		<outline text="Photoblogs">
 			<outline text="tfx" type="rss" htmlUrl="http://www.tfx.ch/blog/" xmlUrl="http://www.tfx.ch/blog/index.php?x=rss"/>
@@ -109,7 +110,9 @@
 				regex="&lt;img .*?src=&quot;(http://picayune\.uclick\.com/comics/fw/\d{4}/fw(\d{6})\.gif)&quot;"
 				hours="7-10"/-->
 			<outline text="xkcd" type="rss" htmlUrl="http://xkcd.com/" xmlUrl="http://xkcd.com/rss.xml"/>
-			<outline text="Not Invented Here" nick="nih" type="rss" htmlUrl="http://notinventedhe.re/" xmlUrl="http://feeds.feedburner.com/NotInventedHere"/>
+			<outline text="Not Invented Here" nick="nih" type="rss" htmlUrl="http://notinventedhe.re/" xmlUrl="http://feeds.feedburner.com/NotInventedHere">
+                                <replaceTitle from="^This strip was Not Invented Here on \w+, "/>
+                        </outline>
 		</outline>
 	</body>
 </opml>
