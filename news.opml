@@ -13,15 +13,15 @@
 			<outline text="slashdot" type="rss" htmlUrl="http://slashdot.org/" xmlUrl="http://slashdot.org/slashdot.rss"/>
 			<outline text="Heise" type="rss" htmlUrl="http://www.heise.de/" xmlUrl="http://www.heise.de/newsticker/heise-atom.xml"/>
 			<outline text="Linux Weekly News" nick="lwn" type="rss" htmlUrl="http://lwn.net/" xmlUrl="http://lwn.net/headlines/rss">
-				<replaceLink from="rss$" to=""/>
+				<replace what="link" from="rss$" to=""/>
 			</outline>
 			<outline text="The Register" nick="reg" type="rss" htmlUrl="http://www.theregister.co.uk/" xmlUrl="http://www.theregister.co.uk/headlines.atom">
-				<replaceLink from="go.theregister.com/feed/www\." to="m."/>
+				<replace what="link" from="go.theregister.com/feed/www\." to="m."/>
 			</outline>
 			<outline text="symlink" type="rss" htmlUrl="http://www.symlink.ch/" xmlUrl="http://www.symlink.ch/symlinkch.rss"/>
 			<outline text="Engadget" type="rss" htmlUrl="http://www.engadget.com/" xmlUrl="http://www.engadget.com/rss.xml">
-				<replaceBody from="(?is)&lt;hr.+?&lt;/div&gt;"/>
-				<replaceBody from="(?i)(\.(jpg)|(png)|(gif))\?[0-9.]+?" to="\1"/>
+				<replace what="body" from="(?is)&lt;hr.+?&lt;/div&gt;"/>
+				<replace what="body" from="(?i)(\.(jpg)|(png)|(gif))\?[0-9.]+?" to="\1"/>
 			</outline>
 			<outline text="Linuxdevices" type="rss" htmlUrl="http://www.linuxfordevices.com/" xmlUrl="http://www.linuxfordevices.com/rss.xml"/>
 			<outline text="SwissQual News" nick="sqnews" type="rss" htmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=swissqual&amp;btnG=Search+News" xmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=swissqual&amp;output=rss"/>
@@ -42,9 +42,13 @@
 			<outline text="WTF" type="rss" htmlUrl="http://thedailywtf.com/" xmlUrl="http://syndication.thedailywtf.com/TheDailyWtf"/>
 		</outline>
 		<outline text="Blogs">
-			<outline text="Ändu Weber" nick="aendu" type="rss" htmlUrl="http://worldwideweber.ch/log/" xmlUrl="http://worldwideweber.ch/log/feed"/>
-			<outline text="Bärni" nick="baerni" type="rss" htmlUrl="http://blog.nostromo.ch/" xmlUrl="http://blog.nostromo.ch/3b/atom.xml"/>
-			<outline text="Chris" type="rss" htmlUrl="http://www.chrisbuergi.ch/" xmlUrl="http://www.chrisbuergi.ch/blog/?feed=rss2" hours="6"/>
+		        <outline text="Fröinde">
+				<outline text="Ändu Weber" nick="aendu" type="rss" htmlUrl="http://worldwideweber.ch/log/" xmlUrl="http://worldwideweber.ch/log/feed"/>
+				<outline text="Bärni" nick="baerni" type="rss" htmlUrl="http://blog.nostromo.ch/" xmlUrl="http://blog.nostromo.ch/3b/atom.xml"/>
+				<outline text="Chris" type="rss" htmlUrl="http://www.chrisbuergi.ch/" xmlUrl="http://www.chrisbuergi.ch/blog/?feed=rss2" hours="6"/>
+				<outline text="Jan Schenk" type="rss" htmlUrl="http://curryujanufreise.blogspot.com/" xmlUrl="http://curryujanufreise.blogspot.com/feeds/posts/default"/>
+				<outline text="Uli &amp; Lise" type="rss" htmlUrl="http://blog.uli-und-lise.de" xmlUrl="http://uli-und-lise.blogspot.com/feeds/posts/default"/>
+			</outline>
 			<outline text="Mark Pilgrim" nick="mark" type="rss" htmlUrl="http://diveintomark.org/" xmlUrl="http://diveintomark.org/feed/"/>
 			<outline text="Dave Winer" nick="winer" type="rss" htmlUrl="http://www.scripting.com/" xmlUrl="http://www.scripting.com/rss.xml"/>
 			<outline text="Doc Searls" nick="doc" type="rss" htmlUrl="http://blogs.law.harvard.edu/doc/" xmlUrl="http://blogs.law.harvard.edu/doc/feed/"/>
@@ -58,14 +62,20 @@
 			<outline text="Joe Gregorio" nick="joegregorio" htmlUrl="http://bitworking.org/news/" xmlUrl="http://bitworking.org/news/feed/"/>
 			<outline text="Jeffrey Zeldman" nick="zeldman" type="rss" htmlUrl="http://www.zeldman.com/" xmlUrl="http://www.zeldman.com/feed/zeldman.xml"/>
 			<outline text="Mark Nottingham" nick="mnot" type="rss" htmlUrl="http://www.mnot.net/blog/" xmlUrl="http://www.mnot.net/blog/index.rdf"/>
-			<outline text="Wes Felter" nick="wmf" type="rss" htmlUrl="http://wmf.editthispage.com/" xmlUrl="http://wmf.editthispage.com/xml/rss.xml"/>
+			<outline text="Wes Felter" nick="wmf" type="rss" htmlUrl="http://blog.felter.org/" xmlUrl="http://blog.felter.org/rss"/>
 			<!-- 502ed on 2007-09-04 outline text="Gary Turner" nick="garyturner" type="rss" htmlUrl="http://weblog.garyturner.net/" xmlUrl="http://weblog.garyturner.net/?feed=rss2"/ -->
 			<outline text="Fredy (init7)" nick="init7" type="rss" htmlUrl="http://www.blogg.ch/" xmlUrl="http://www.blogg.ch/index.php?/feeds/index.rss2"/>
 			<!-- timeout 2009-07-22 outline text="Ramon (Cyberlink)" nick="cyberlink" type="rss" htmlUrl="http://www.blogisch.ch/" xmlUrl="http://www.blogisch.ch/index.php?/feeds/atom10.xml"/ -->
+			<outline text="DVD Jon" nick="dvdjon" type="rss" htmlUrl="http://nanocr.eu/" xmlUrl="http://nanocr.eu/feed/"/>
+			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://feeds2.feedburner.com/schneier/fulltext"/>
+			<outline text="Cringely" type="rss" htmlUrl="http://www.pbs.org/cringely/" xmlUrl="http://www.pbs.org/cringely/pulpit/rss2.xml"/>
+			<outline text="PPC-1" type="rss" htmlUrl="http://www.pipeinternational.com/index.php?option=com_myblog&amp;Itemid=65" xmlUrl="http://www.pipeinternational.com/index.php?option=com_myblog&amp;task=rss&amp;Itemid=65"/>
+			<outline text="Django" type="rss" htmlUrl="http://www.djangoproject.com/weblog/" xmlUrl="http://www.djangoproject.com/rss/weblog/"/>
 			<outline text="Genotec" type="rss" htmlUrl="http://www.genotec.ch/" xmlUrl="http://www.genotec.ch/contentXXL/services/newsexport/Service1.asmx/GetRSSNewsByTabId?tabid=219"/>
 			<outline text="Mac">
 				<outline text="Daring Fireball" nick="fireball" type="rss" htmlUrl="http://daringfireball.net/" xmlUrl="http://daringfireball.net/index.xml"/>
 				<outline text="Webkit" type="rss" htmlUrl="http://webkit.org/blog/" xmlUrl="http://webkit.org/blog/feed/atom/"/>
+				<outline text="fakesteve" type="rss" htmlUrl="http://www.fakesteve.net/" xmlUrl="http://feeds.feedburner.com/TheSecretDiaryOfSteveJobs"/>
 			</outline>
 			<outline text="Mozilla &amp;c">
 				<outline text="Asa Dotzler" nick="asad" type="rss" htmlUrl="http://weblogs.mozillazine.org/asa/" xmlUrl="http://weblogs.mozillazine.org/asa/index.rdf"/>
@@ -75,16 +85,9 @@
 				<outline text="Robert O&apos;Callahan" nick="roc" type="rss" htmlUrl="http://weblogs.mozillazine.org/roc/" xmlUrl="http://weblogs.mozillazine.org/roc/index.rdf"/>
 				<outline text="Mozilla WebDev" nick="webdev" type="rss" htmlUrl="http://blog.mozilla.com/webdev/" xmlUrl="http://blog.mozilla.com/webdev/feed/"/>
 			</outline>
-			<outline text="DVD Jon" nick="dvdjon" type="rss" htmlUrl="http://nanocr.eu/" xmlUrl="http://nanocr.eu/feed/"/>
-			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://feeds2.feedburner.com/schneier/fulltext"/>
-			<outline text="Cringely" type="rss" htmlUrl="http://www.pbs.org/cringely/" xmlUrl="http://www.pbs.org/cringely/pulpit/rss2.xml"/>
-			<outline text="PPC-1" type="rss" htmlUrl="http://www.pipeinternational.com/index.php?option=com_myblog&amp;Itemid=65" xmlUrl="http://www.pipeinternational.com/index.php?option=com_myblog&amp;task=rss&amp;Itemid=65"/>
-			<outline text="fakesteve" type="rss" htmlUrl="" xmlUrl="http://feeds.feedburner.com/thesecretdiaryofstevejobs"/>
-			<outline text="Django" type="rss" htmlUrl="http://www.djangoproject.com/weblog/" xmlUrl="http://www.djangoproject.com/rss/weblog/"/>
-			<outline text="JanSchenk" type="rss" htmlUrl="http://curryujanufreise.blogspot.com/" xmlUrl="http://curryujanufreise.blogspot.com/feeds/posts/default"/>
-			<outline text="Uli &amp; Lise" type="rss" htmlUrl="http://blog.uli-und-lise.de" xmlUrl="http://uli-und-lise.blogspot.com/feeds/posts/default"/>
 		</outline>
 		<outline text="Photoblogs">
+			<outline text="bolli.us" type="rss" htmlUrl="http://bolli.us" xmlUrl="http://www.bolli.us/fpblog.xml"/>
 			<outline text="tfx" type="rss" htmlUrl="http://www.tfx.ch/blog/" xmlUrl="http://www.tfx.ch/blog/index.php?x=rss"/>
 			<!-- 404 outline text="bolley" type="rss" htmlUrl="http://bolley.ch" xmlUrl="http://www.bolli.us/fpblog.php"/ -->
 			<outline text="duncan" type="rss" htmlUrl="http://blog.duncandavidson.com/" xmlUrl="http://blog.duncandavidson.com/atom.xml"/>
@@ -98,11 +101,13 @@
 				hours="7-8"/>
 			<outline text="Userfriendly" nick="uf" type="x-plagg-html" htmlUrl="http://www.userfriendly.org/static/"
 				regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d{6})\.gif)&quot; /&gt;"
-				linkFrom="/xuf" linkTo="/uf"
 				savepath="/home/bb/public_html/news/uf" saveurl="/news/uf"
-				hours="7-10"/>
+				hours="7-10"
+			>
+				<replace what="body" from="/xuf" to="/uf"/>
+			</outline>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/"
-				regex="rel=.image_src. href=&quot;(http://imgsrv\.gocomics\.com/dim/\?fh=[0-9a-f]{32})&quot;"
+				regex="rel=.image_src. href=&quot;(?P&lt;link&gt;http://imgsrv\.gocomics\.com/dim/\?fh=(?P&lt;title&gt;[0-9a-f]+))&quot;"
 				hours="7-10"/>
 			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
 				hours="7-10" ignoredate='yes'/>
@@ -111,7 +116,7 @@
 				hours="7-10"/-->
 			<outline text="xkcd" type="rss" htmlUrl="http://xkcd.com/" xmlUrl="http://xkcd.com/rss.xml"/>
 			<outline text="Not Invented Here" nick="nih" type="rss" htmlUrl="http://notinventedhe.re/" xmlUrl="http://feeds.feedburner.com/NotInventedHere">
-                                <replaceTitle from="^This strip was Not Invented Here on \w+, "/>
+                                <replace what="title" from="^This strip was Not Invented Here on \w+, "/>
                         </outline>
 		</outline>
 	</body>

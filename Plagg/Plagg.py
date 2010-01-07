@@ -5,7 +5,7 @@ corresponding to the items in the feeds."""
 
 import os, sys, time, xml.sax, httplib
 
-__version__ = "1.10 ($Id$)"
+__version__ = "1.11 ($Id$)"
 w = __version__.split()
 __tarversion__ = w[0] + '.' + w[3]
 del w
@@ -68,13 +68,8 @@ class Plagg(xml.sax.handler.ContentHandler):
 	if name == 'outline':
 	    # Normalize attribute names to lower case
 	    self.outline(dict([(k.lower(), v) for k, v in attrs.items()]))
-	elif self.feed:
-	    if name == 'replaceBody':
-		self.feed.addBodyReplacement(attrs.get('from'), attrs.get('to', ''))
-	    elif name == 'replaceLink':
-		self.feed.addLinkReplacement(attrs.get('from'), attrs.get('to', ''))
-	    elif name == 'replaceTitle':
-		self.feed.addTitleReplacement(attrs.get('from'), attrs.get('to', ''))
+	elif self.feed and name == 'replace':
+	    self.feed.addReplacement(attrs.get('what'), attrs.get('from'), attrs.get('to', ''))
 
     def endElement(self, name):
 	"""Ends one outline element by processing the feed."""

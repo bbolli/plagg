@@ -54,7 +54,7 @@ class Entry:
 
 	# title and link
 	title = _unescape(item.get('title', '').replace('\n', ' ')).strip()
-        self._title = feed.replaceTitle(title)
+	self._title = feed.replaceText('title', title)
 	self._link = item.get('link')
 	if self._title and self._link:
 	    self.title = _linktag(self._link, self._title)
@@ -67,7 +67,7 @@ class Entry:
 	    item.get('description') or
 	    item.get('summary', '')
 	).strip()
-	body = feed.replaceBody(self._body)
+	body = feed.replaceText('body', self._body)
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
         if Plagg.VERBOSE > 2:
@@ -216,7 +216,7 @@ class Entries:
 	# Process the entries
 	for item in self.items:
 	    if item.has_key('link'):
-		item['link'] = feed.replaceLink(item['link'])
+		item['link'] = feed.replaceText('link', item['link'])
 	    if self.processItem(item):
 		entries += 1
 	return entries

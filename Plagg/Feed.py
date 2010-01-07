@@ -4,15 +4,14 @@
 
 import sys, os, re, socket, urllib2, pickle, md5
 import feedparser	# needs at least version 3 beta 22!
-import Plagg		# for default encoding
-
-import httpcache
+import Plagg
 
 USER_AGENT = 'plagg/%s (+http://drbeat.li/py/plagg/)' % Plagg.__tarversion__
-CACHE_DIR = httpcache.cacheSubDir__
+CACHE_DIR = '.cache'
 
 # set a global socket timeout of 20s
-socket.setdefaulttimeout(20)
+if hasattr(socket, 'setdefaulttimeout'):
+    socket.setdefaulttimeout(20)
 
 
 class Feed:
@@ -25,10 +24,13 @@ class Feed:
 	self.uri = uri
 	self.headers = {'User-Agent': USER_AGENT}
 	self.feed = {}
-	self.linkReplacements = []	# lists of (re, new) tuples
-	self.bodyReplacements = []
-	self.titleReplacements = []
-        self.encoding = Plagg.ENCODING
+	self.replacements = []	# list of (what, re, new) tuples
+	self.encoding = Plagg.ENCODING
+
+	digest = md5.new(self.uri).digest()
+	self.cachefile = os.path.join(CACHE_DIR, "".join(["%02x" % ord(c) for c in digest]))
+	self.etag = None
+	self.modified = None
 
 	# enable feedparser debugging
 	if Plagg.VERBOSE > 2:
@@ -38,58 +40,46 @@ class Feed:
 	"""Sets self.feed to a feedparser dictionary. Subclasses must implement this."""
 	raise NotImplementedError('Feed.getFeed()')
 
-    def addLinkReplacement(self, old, new):
-	if old:
-	    self.linkReplacements.append((re.compile(old), new))
+    def addReplacement(self, what, old, new):
+	if what and old:
+	    self.replacements.append((what, re.compile(old), new))
 
-    def addBodyReplacement(self, old, new):
-	if old:
-	    self.bodyReplacements.append((re.compile(old), new))
-
-    def addTitleReplacement(self, old, new):
-	if old:
-	    self.titleReplacements.append((re.compile(old), new))
-
-    def replaceLink(self, link):
-	return self.replaceText(link, self.linkReplacements)
-
-    def replaceBody(self, body):
-	return self.replaceText(body, self.bodyReplacements)
-
-    def replaceTitle(self, title):
-	return self.replaceText(title, self.titleReplacements)
-
-    def replaceText(self, text, repl):
-	"""Performs a regex replacement according to the repl list."""
-	for pattern, new in repl:
+    def replaceText(self, what, text):
+	"""Performs a regex replacement according to the list."""
+	for pattern, new in [r[1:] for r in self.replacements if r[0] == what]:
 	    text = pattern.sub(new, text)
 	return text
+
+    def loadCache(self):
+	try:
+	    _uri, self.etag, self.modified = pickle.load(open(self.cachefile))
+	except Exception, e:
+	    self.etag = self.modified = None
+
+    def saveCache(self, etag, mod):
+	try:
+	    if not os.path.isdir(CACHE_DIR):
+		os.makedirs(CACHE_DIR)
+	    # the URI is saved just for reference
+	    pickle.dump((self.uri, etag, mod), open(self.cachefile, 'w'))
+	except Exception, e:
+	    try:
+		os.unlink(self.cacheFile)
+	    except:
+		pass
 
 
 class RSSFeed(Feed):
 
     def getFeed(self):
 	"""Builds an ultra-liberally parsed feed dict from the URL."""
-	digest = md5.new(self.uri).digest()
-	cachefile = os.path.join(CACHE_DIR, "".join(["%02x" % (ord(c),) for c in digest]))
-	try:
-	    em = pickle.load(open(cachefile))
-	except Exception, e:
-	    em = (None, None, None)
-	feed = feedparser.parse(self.uri, modified=em[1], etag=em[2], agent=USER_AGENT)
+	self.loadCache()
+	feed = feedparser.parse(self.uri, etag=self.etag, modified=self.modified, agent=USER_AGENT)
 	if feed.get('status') == 304:
 	    # feed not modified
 	    return
 	self.feed = feed
-	try:
-	    if not os.path.isdir(CACHE_DIR):
-		os.makedirs(CACHE_DIR)
-	    pickle.dump((self.uri, feed.get('modified'), feed.get('etag')), open(cachefile, 'w'))
-	except Exception, e:
-	    try:
-		os.unlink(cacheFile)
-	    except:
-		pass
+	self.saveCache(feed.get('etag'), feed.get('modified'))
 
 
 class SimulatedFeed(Feed):
@@ -141,9 +131,47 @@ class HTMLFeed(SimulatedFeed):
 
     def getLink(self):
 	"""Reads the HTML page and extracts the link and title."""
-	html = httpcache.HTTPCache(self.uri, self.headers).content()#.decode(self.encoding)
+	self.loadCache()
+	try:
+	    f = feedparser._open_resource(self.uri, self.etag, self.modified, USER_AGENT, None, [])
+	    html = f.read()
+	except Exception, e:
+	    sys.stderr.write('Getting page %s: %s\n' % (self.uri, e))
+	    return
+
+	if hasattr(f, 'status') and f.status == 304 \
+	or not html:	# not modified or empty page
+	    return
+
+	# save HTTP headers
+	if hasattr(f, 'info'):
+	    info = f.info()
+	    etag = info.getheader('ETag')
+	    modified = info.getheader('Last-Modified')
+	    if modified:
+		modified = feedparser._parse_date(modified)
+	    self.saveCache(etag, modified)
+
+	    # if the page is compressed, decompress it
+	    ce = info.getheader('Content-Encoding', '')
+	    if ce == 'gzip':
+		try:
+		    import gzip, StringIO
+		    html = gzip.GzipFile(fileobj=StringIO.StringIO(html)).read()
+		except Exception, e:
+		    sys.stderr.write('Unzipping page %s: %s\n' % (self.uri, e))
+		    return
+	    elif ce == 'deflate':
+		try:
+		    import zlib
+		    html = zlib.decompress(html, -zlib.MAX_WBITS)
+		except Exception, e:
+		    sys.stderr.write('Inflating page %s: %s\n' % (self.uri, e))
+		    return
+
 	# resolve relative URIs
 	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding)
+
 	# search for the regex
 	m = self.regex.search(html)
 	if m:
@@ -163,8 +191,8 @@ class HTMLFeed(SimulatedFeed):
 	    except IndexError:
 		pass
 	else:
-	    sys.stderr.write("Regex '%s' not found in page:\n\n----\n%s----\n" % (
-		self.regex.pattern, html
+	    sys.stderr.write("Regex '%s' not found at %s:\n\n----\n%s----\n" % (
+		self.regex.pattern, self.uri, html
 	    ))
 
     def getFeed(self):
@@ -177,14 +205,14 @@ class HTMLFeed(SimulatedFeed):
 	# point to the local copy. Allow to fake the referrer
 	# while getting the remote file.
 	if self.attrs.get('savepath') and self.attrs.get('saveurl'):
-	    link = self.replaceLink(self.itemLink)
-	    self.linkReplacements = []
+	    link = self.replaceText('link', self.itemLink)
+	    self.replacements = [r for r in self.replacements if r[0] != 'link']
 	    basename = re.search('([^/]+)$', link).group(1)
 	    localfile = os.path.join(self.attrs['savepath'], basename)
 	    # only get and save the file if it doesn't exist yet
 	    if not os.path.isfile(localfile):
 		req = urllib2.Request(link)
-		req.add_header('Referer', self.attrs.get('referrer') or self.uri or link)
+		req.add_header('Referer', self.attrs.get('referrer') or self.uri or self.itemLink)
 		image = urllib2.urlopen(req).read()
 		f = file(localfile, 'wb')
 		f.write(image)
@@ -211,4 +239,4 @@ class ComputedFeed(HTMLFeed):
 	    self.itemLink = ''
 	    return
 	if not self.itemTitle:
-	    self.itemTitle = re.search('([^/]+)(?:\.\w+)$', self.itemLink).group(1)
+	    self.itemTitle = re.search('([^/]+)(?:\.\w+)?$', self.itemLink).group(1)

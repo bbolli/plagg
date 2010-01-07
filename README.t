@@ -164,18 +164,18 @@ _newsdir_ and when selectively updating with the _nickname_ command line
 argument. The default nickname of an outline element is the lowercase
 @text@ attribute.
 
-h4. 3.5.3 Body replacements: @<replaceBody>@
+h4. 3.5.3 Replacements: @<replace>@
 
 This is a new, repeatable child element of @<outline>@.
 
-literal. <pre>&lt;replaceBody from="regex" to="string"/&gt;</pre>
+literal. <pre>&lt;replace what="body" from="regex" to="string"/&gt;</pre>
 
-Defines a replacement inside the item's body. Use this to remove ads from an item,
-for example (cf. Engadget).
+Defines a replacement inside an item's element. Use this to remove ads from an item,
+for example (cf. Engadget). The allowed values for @what@ are "body", "link" and "title".
 
 Example:
 
-literal. <pre>&lt;replaceBody from="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" to=""/&gt;</pre>
+literal. <pre>&lt;replace what="body" from="(?s)&lt;div&gt;&lt;span&gt;.*?&lt;/span&gt;.*?&lt;/div&gt;" to=""/&gt;</pre>
 
 This deletes every @<div>@ that immediately begins with a @<span>@.
 
@@ -184,33 +184,6 @@ The @to@ attribute is optional. If omitted, the text matched by the @from@ regex
 Please keep in mind that in the actual OPML file, the "less than", "greater than"
 and "quote" signs have to be escaped as @&amp;lt;@, @&amp;gt;@ and @&amp;quot;@,
 respectively.
-
-h3. 3.5.4. Link replacements: @<replaceLink>@
-
-This is a new, repeatable child element of @<outline>@.
-
-literal. <pre>&lt;replaceLink from="regex" to="string"/&gt;</pre>
-
-Allows to replace the link to the news item. I use this to have the link
-point to the printable page of an item (cf. the Register).
-
-Example:
-
-literal. <pre>&lt;replaceLink from="/$" to="/print.html"/&gt;</pre>
-
-This appends "print.html" to the end of the link.
-
-The @to@ attribute is optional. If omitted, the text matched by the @from@ regex is deleted.
-
-h3. 3.5.5. Title replacements: @<replaceTitle>@
-
-This is a new, repeatable child element of @<outline>@.
-
-literal. <pre>&lt;replaceTitle from="regex" to="string"/&gt;</pre>
-
-Allows to replace the title of the news item (cf. NotInventedHere).
-
-The @to@ attribute is optional. If omitted, the text matched by the @from@ regex is deleted.
 
 h3. 3.6. Rendering the OPML file as XHTML
 
@@ -259,6 +232,9 @@ h2(#changelog). 4. Changelog
 ** Use feedparser's own ETag/Modified handling for RSS feeds. This gets us the correct base URI handling for feeds that contain relative URIs. This was broken by using HTTPCache.
 * Version 1.10, ==2009-12-30==
 ** Add @replaceTitle@ handling
+* Version 1.11, ==2010-01-07==
+** *Backwards-incompatible change:* unify the body, link and title replacements into one tag. This requires changes to your OPML file.
+** Handle ETag and Last-Modified HTTP headers of scraped HTML pages myself, eliminating the need for @httpcache.py@.
 
 h2(#todo). 5. TODO
 
