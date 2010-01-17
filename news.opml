@@ -104,7 +104,7 @@
 				savepath="/home/bb/public_html/news/uf" saveurl="/news/uf"
 				hours="7-10"
 			>
-				<replace what="body" from="/xuf" to="/uf"/>
+				<replace what="link" from="/xuf" to="/uf"/>
 			</outline>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/"
 				regex="rel=.image_src. href=&quot;(?P&lt;link&gt;http://imgsrv\.gocomics\.com/dim/\?fh=(?P&lt;title&gt;[0-9a-f]+))&quot;"
@@ -118,6 +118,7 @@
 			<outline text="Not Invented Here" nick="nih" type="rss" htmlUrl="http://notinventedhe.re/" xmlUrl="http://feeds.feedburner.com/NotInventedHere">
                                 <replace what="title" from="^This strip was Not Invented Here on \w+, "/>
                         </outline>
+			<outline text="geekandpoke" type="rss" htmlUrl="http://geekandpoke.typepad.com/geekandpoke/" xmlUrl="http://feeds.feedburner.com/GeekAndPoke"/>
 		</outline>
 	</body>
 </opml>
