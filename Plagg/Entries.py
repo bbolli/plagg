@@ -2,7 +2,7 @@
 
 # $Id: Entries.py 1074 2010-01-07 19:42:21Z bb $
 
-import os, re, time
+import os, re, time, subprocess
 import Plagg		# for default encoding
 
 
@@ -20,10 +20,11 @@ def _unescape(text):
     """Replaces the three common HTML character entities."""
     return text.replace('&gt;', '>').replace('&lt;', '<').replace('&amp;', '&')
 
-_markup = re.compile(r'<.*?>', re.M + re.S)
+_markup = re.compile(r'<.*?>', re.DOTALL)
 _notword = re.compile(r'\W')
 _idfirst = re.compile('^[a-zA-Z]')
 _idwrong = re.compile('[^0-9a-zA-Z]+')
+_body = re.compile('<body>(.*?)</body>', re.IGNORECASE + re.DOTALL)
 
 if time.localtime()[8]:
     tz = time.altzone
@@ -185,20 +186,14 @@ class Entry:
 	return 1
 
     def tidy(self, body):
-	ch_in, ch_out = os.popen2([
+	r = subprocess.Popen([
 	    '/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null'
-	])
-	ch_in.write(Plagg.encode(body))
-	ch_in.close()
-	r = ch_out.readlines()
-	ch_out.close()
-	# Keep the lines between <body> and </body>
-	l, l0, l1 = len(r), 0, len(r) - 1
-	while l0 < l and r[l0].strip() != '<body>':
-	    l0 += 1
-	while l1 > l0 and r[l1].strip() != '</body>':
-	    l1 -= 1
-	return Plagg.decode(''.join(r[l0+1:l1]))
+	], stdin=subprocess.PIPE, stdout=subprocess.PIPE).communicate(
+	    Plagg.encode(body)
+	)[0]
+	# Keep the part between <body> and </body>
+	m = _body.search(r)
+	return Plagg.decode(m.group(1) if m else r)
 
 
 class Entries:

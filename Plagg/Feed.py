@@ -2,7 +2,7 @@
 
 # $Id: Feed.py 1074 2010-01-07 19:42:21Z bb $
 
-import sys, os, re, socket, urllib2, pickle, md5
+import sys, os, re, socket, urllib2, pickle, hashlib
 import feedparser	# needs at least version 3 beta 22!
 import Plagg
 
@@ -27,8 +27,8 @@ class Feed:
 	self.replacements = []	# list of (what, re, new) tuples
 	self.encoding = Plagg.ENCODING
 
-	digest = md5.new(self.uri).digest()
-	self.cachefile = os.path.join(CACHE_DIR, "".join(["%02x" % ord(c) for c in digest]))
+	digest = hashlib.md5(self.uri).hexdigest()
+	self.cachefile = os.path.join(CACHE_DIR, digest)
 	self.etag = None
 	self.modified = None
 
