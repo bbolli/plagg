@@ -49,6 +49,7 @@
 				<outline text="Chris" type="rss" htmlUrl="http://www.chrisbuergi.ch/" xmlUrl="http://www.chrisbuergi.ch/blog/?feed=rss2" hours="6"/>
 				<outline text="Jan Schenk" type="rss" htmlUrl="http://curryujanufreise.blogspot.com/" xmlUrl="http://curryujanufreise.blogspot.com/feeds/posts/default"/>
 				<outline text="Uli &amp; Lise" type="rss" htmlUrl="http://blog.uli-und-lise.de" xmlUrl="http://uli-und-lise.blogspot.com/feeds/posts/default"/>
+				<outline text="Michi" type="rss" htmlUrl="http://blog.bolli.us/" xmlUrl="http://blog.bolli.us/feed/0"/>
 			</outline>
 			<outline text="Mark Pilgrim" nick="mark" type="rss" htmlUrl="http://diveintomark.org/" xmlUrl="http://diveintomark.org/feed/"/>
 			<outline text="Dave Winer" nick="winer" type="rss" htmlUrl="http://www.scripting.com/" xmlUrl="http://www.scripting.com/rss.xml"/>
