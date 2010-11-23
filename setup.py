@@ -23,7 +23,7 @@ setup(
     license="GPL2, see file 'COPYING'",
     url="http://drbeat.li/py/plagg/",
     download_url="http://drbeat.li/py/plagg/plagg.tar.gz",
-    packages=['Plagg'],
+    packages=['plagglib'],
     scripts=['plagg'],
     classifiers = [
 	'Development Status :: 5 - Production/Stable',

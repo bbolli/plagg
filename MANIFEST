@@ -6,7 +6,7 @@ news.opml
 opml.xsl
 plagg
 setup.py
-Plagg/Entries.py
-Plagg/Feed.py
-Plagg/Plagg.py
-Plagg/__init__.py
+plagglib/Entries.py
+plagglib/Feed.py
+plagglib/Plagg.py
+plagglib/__init__.py

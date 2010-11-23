@@ -7,7 +7,7 @@ corresponding to the items in the feeds."""
 
 import os, sys, getopt, signal
 
-from Plagg import Plagg
+from plagglib import Plagg
 
 PATH = os.path.join(os.getenv('HOME'), 'bblog', 'news')
 OPML = os.path.join(PATH, 'news.opml')
