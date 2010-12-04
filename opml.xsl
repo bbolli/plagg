@@ -34,7 +34,6 @@
 <xsl:template match="body">
   <div id="main">
   <ul><xsl:apply-templates/></ul>
-  <p><code><xsl:value-of select="../head/x-svn-id"/></code></p>
   </div>
 </xsl:template>
 
