@@ -9,7 +9,9 @@
 	</head>
 	<body>
 		<outline text="News">
-			<outline text="slashdot" type="rss" htmlUrl="http://slashdot.org/" xmlUrl="http://rss.slashdot.org/Slashdot/slashdot"/>
+			<outline text="slashdot" type="rss" htmlUrl="http://slashdot.org/" xmlUrl="http://rss.slashdot.org/Slashdot/slashdot">
+			    <replace what="body" from="&lt;a href=.http://www\.facebook\.com/sharer\.php.*$" to=""/>
+			</outline>
 			<outline text="Heise" type="rss" htmlUrl="http://www.heise.de/" xmlUrl="http://www.heise.de/newsticker/heise-atom.xml"/>
 			<outline text="Linux Weekly News" nick="lwn" type="rss" htmlUrl="http://lwn.net/" xmlUrl="http://lwn.net/headlines/rss">
 				<replace what="link" from="rss$" to=""/>
@@ -32,6 +34,7 @@
 				savepath="/home/bb/public_html/news/apod" saveurl="/news/apod"
 				hours="8-10"/>
 			<outline text="Bad Astronomy" nick="badastro" type="rss" htmlUrl="http://blogs.discovermagazine.com/badastronomy/" xmlUrl="http://blogs.discovermagazine.com/badastronomy/feed/"/>
+			<outline text="The Big Picture Hubble 2010 Advent Calendar" nick="hubble2010" type="rss" htmlUrl="http://www.boston.com/bigpicture/2010/12/2010_hubble_space_telescope_ad.html" xmlUrl="http://www.boston.com/universal/bigpicture/2010hubblecal.xml"/>
 		</outline>
 		<outline text="Articles">
 			<outline text="A List Apart" type="rss" htmlUrl="http://www.alistapart.com/" xmlUrl="http://www.alistapart.com/site/rss"/>
