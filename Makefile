@@ -14,7 +14,7 @@ README.html: README.t
 	-textile <$^ | tidy -utf8 -asxml -i -n >$@
 
 README: README.html
-	lynx -dump -assume-charset=utf-8 $^ >$@
+	w3m -dump $^ >$@
 
 dist: ${source}
 	python setup.py sdist
