@@ -172,6 +172,17 @@ class HTMLFeed(SimulatedFeed):
 	# resolve relative URIs
 	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding)
 
+        if hasattr(f, 'headers'):
+            charsets = [c for c in feedparser._getCharacterEncoding(f.headers, html) if c]
+        else:
+            charsets = [self.encoding]
+        for charset in charsets:
+            try:
+                html = html.decode(charset)
+                break
+            except LookupError:
+                pass
+
 	# search for the regex
 	m = self.regex.search(html)
 	if m:
@@ -191,9 +202,9 @@ class HTMLFeed(SimulatedFeed):
 	    except IndexError:
 		pass
 	else:
-	    sys.stderr.write("Regex '%s' not found at %s:\n\n----\n%s----\n" % (
+	    sys.stderr.write((u"Regex '%s' not found at %s:\n\n----\n%s----\n" % (
 		self.regex.pattern, self.uri, html
-	    ))
+	    )).encode(self.encoding))
 
     def getFeed(self):
 	self.getLink()
