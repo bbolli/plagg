@@ -31,7 +31,6 @@
 		<outline text="Science">
 			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="http://antwrp.gsfc.nasa.gov/apod/"
 				regex="(?is)&lt;IMG SRC=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; ?(?P&lt;title&gt;.*?) ?&lt;/b&gt; &lt;br /&gt;.*?Explanation: *?&lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt; *?&lt;center&gt;"
-				savepath="/home/bb/public_html/news/apod" saveurl="/news/apod"
 				hours="8-10"/>
 			<outline text="Bad Astronomy" nick="badastro" type="rss" htmlUrl="http://blogs.discovermagazine.com/badastronomy/" xmlUrl="http://blogs.discovermagazine.com/badastronomy/feed/"/>
 			<outline text="The Big Picture Hubble 2010 Advent Calendar" nick="hubble2010" type="rss" htmlUrl="http://www.boston.com/bigpicture/2010/12/2010_hubble_space_telescope_ad.html" xmlUrl="http://www.boston.com/universal/bigpicture/2010hubblecal.xml"/>
@@ -40,7 +39,6 @@
 			<outline text="A List Apart" type="rss" htmlUrl="http://www.alistapart.com/" xmlUrl="http://www.alistapart.com/site/rss"/>
 			<outline text="Linux Journal" nick="lj" type="rss" htmlUrl="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
 			<!--outline text="Groklaw" type="rss" htmlUrl="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/-->
-			<outline text="A List apart" nick="ala" type="rss" htmlUrl="http://alistapart.textdrive.com/" xmlUrl="http://alistapart.textdrive.com/rss.xml"/>
 			<outline text="ars technica" nick="arstech" type="rss" htmlUrl="http://www.arstechnica.com/" xmlUrl="http://feeds.arstechnica.com/arstechnica/index"/>
 			<outline text="WTF" type="rss" htmlUrl="http://thedailywtf.com/" xmlUrl="http://syndication.thedailywtf.com/TheDailyWtf"/>
 		</outline>
@@ -86,15 +84,14 @@
 			<outline text="duncan" type="rss" htmlUrl="http://duncandavidson.com/blog" xmlUrl="http://duncandavidson.com/feed/atom"/>
 		</outline>
 		<outline text="Comics">
-			<outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/"
-			        regex="src=&quot;(http://www\.dilbert\.com/dyn/str_strip/[0-9/]+/(\d+)\.strip\.(sunday\.)?\w+?)&quot; border=&quot;0"
+                        <outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/fast/"
+                                regex="src=&quot;(http://www\.dilbert\.com/dyn/str_strip[\d/]+/(\d+)\.strip\.[\w/.]+)&quot;"
 				hours="7-10"/>
 			<outline text="Garfield" type="x-plagg-computed" htmlUrl="http://garfield.ucomics.com"
 				commands="import time&#10;tm = time.gmtime()&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.itemLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
 				hours="7-8"/>
 			<outline text="Userfriendly" nick="uf" type="x-plagg-html" htmlUrl="http://www.userfriendly.org/static/"
 				regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)&quot; /&gt;"
-				savepath="/home/bb/public_html/news/uf" saveurl="/news/uf"
 				hours="7-10"
 			>
 				<replace what="link" from="/xuf" to="/uf"/>
@@ -103,7 +100,7 @@
 				regex="rel=.image_src. href=&quot;(?P&lt;link&gt;http://imgsrv\.gocomics\.com/dim/\?fh=(?P&lt;title&gt;[0-9a-f]+))&quot;"
 				hours="7-10"/>
 			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
-				hours="7-10" ignoredate='yes'/>
+				hours="7-10"/>
 			<!--outline text="The 5th wave" nick="5thwave" type="x-plagg-html" htmlUrl="http://www.ucomics.com/thefifthwave/"
 				regex="&lt;img .*?src=&quot;(http://picayune\.uclick\.com/comics/fw/\d{4}/fw(\d{6})\.gif)&quot;"
 				hours="7-10"/-->
