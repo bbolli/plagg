@@ -1,2 +1,10 @@
 .cache/
 build/
+dist/
+t/
+log
+README
+README.html
+README.inc
+*.tar.gz
+*.pyc
