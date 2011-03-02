@@ -7,10 +7,10 @@ source := $(shell cat MANIFEST)
 plagg.tar.gz: ${source}
 	tar -czf $@ $^
 
-README.inc: README.t
+README.inc: README.textile
 	textile -o1 <$^ >$@
 
-README.html: README.t
+README.html: README.textile
 	-textile <$^ | tidy -utf8 -asxml -i -n >$@
 
 README: README.html
