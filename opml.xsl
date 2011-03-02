@@ -13,11 +13,10 @@
 />
 
 <xsl:template match="/">
-  <!-- not supported by IE6: xsl:processing-instruction name="xml-stylesheet">href="/bb.css" type="text/css" title="2b style"</xsl:processing-instruction-->
+  <xsl:processing-instruction name="xml-stylesheet">href="/bb.css" type="text/css" title="2b style"</xsl:processing-instruction>
   <html>
   <head>
   <title><xsl:value-of select="opml/head/title"/></title>
-  <link rel="stylesheet" type="text/css" href="/bb.css" title="2b style" />
   </head>
   <body><div id="body">
   <xsl:apply-templates/>
