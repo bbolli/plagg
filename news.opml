@@ -101,7 +101,7 @@
 				<replace what="link" from="/xuf" to="/uf"/>
 			</outline>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/"
-				regex="rel=.image_src. href=&quot;(?P&lt;link&gt;http://imgsrv\.gocomics\.com/dim/\?fh=(?P&lt;title&gt;[0-9a-f]+))&quot;"
+				regex="class=.strip.*src=&quot;(?P&lt;link&gt;http://cdn.svcs.c2.uclick.com/c2/(?P&lt;title&gt;[0-9a-f]+))&quot;"
 				hours="7-10"/>
 			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
 				hours="7-10"/>
