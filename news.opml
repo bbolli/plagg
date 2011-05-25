@@ -26,7 +26,7 @@
 			</outline-->
 			<outline text="Linuxdevices" type="rss" htmlUrl="http://www.linuxfordevices.com/" xmlUrl="http://www.linuxfordevices.com/rss.xml"/>
 			<outline text="SwissQual News" nick="sqnews" type="rss" htmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=swissqual&amp;btnG=Search+News" xmlUrl="http://news.google.com/news?hl=en&amp;ned=us&amp;q=swissqual&amp;output=rss"/>
-			<outline text="FSF Europa News" nick="fsfenews" type="rss" htmlUrl="http://www.germany.fsfeurope.org/" xmlUrl="http://www.germany.fsfeurope.org/news/news.de.rss"/>
+			<outline text="FSF Europa News" nick="fsfenews" type="rss" htmlUrl="http://fsfe.org/" xmlUrl="http://fsfe.org/news/news.de.rss"/>
 		</outline>
 		<outline text="Science">
 			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="http://antwrp.gsfc.nasa.gov/apod/"
