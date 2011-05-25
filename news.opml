@@ -69,6 +69,10 @@
 				<outline text="Daring Fireball" nick="fireball" type="rss" htmlUrl="http://daringfireball.net/" xmlUrl="http://daringfireball.net/index.xml"/>
 				<outline text="Webkit" type="rss" htmlUrl="http://webkit.org/blog/" xmlUrl="http://webkit.org/blog/feed/atom/"/>
 				<outline text="fakesteve" type="rss" htmlUrl="http://www.fakesteve.net/" xmlUrl="http://feeds.feedburner.com/TheSecretDiaryOfSteveJobs"/>
+				<outline text="rentzsch" type="rss" htmlUrl="http://rentzsch.tumblr.com/" xmlUrl="http://rentzsch.tumblr.com/rss"/>
+				<outline text="siracusa" type="rss" htmlUrl="http://siracusa.tumblr.com/" xmlUrl="http://siracusa.tumblr.com/rss"/>
+				<outline text="marco" type="rss" htmlUrl="http://marco.tumblr.com/" xmlUrl="http://marco.tumblr.com/rss"/>
+				<outline text="chipotle" type="rss" htmlUrl="http://chipotle.tumblr.com/" xmlUrl="http://chipotle.tumblr.com/rss"/>
 			</outline>
 			<outline text="Mozilla &amp;c">
 				<outline text="Asa Dotzler" nick="asad" type="rss" htmlUrl="http://weblogs.mozillazine.org/asa/" xmlUrl="http://weblogs.mozillazine.org/asa/index.rdf"/>
