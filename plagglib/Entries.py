@@ -79,7 +79,7 @@ class Entry:
 
 	# footer
 	footer = '\n<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
-	if self._link and not self._title:
+	if self._link and len(self.body) > 2500:
 	    footer += '\n[%s]' % _linktag(self._link, 'Link')
 	if item.has_key('comments'):
 	    footer += '\n[%s]' % _linktag(item['comments'], 'Comments')
