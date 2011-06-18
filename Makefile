@@ -7,11 +7,11 @@ source := $(shell cat MANIFEST)
 plagg.tar.gz: ${source}
 	tar -czf $@ $^
 
-README.inc: README.textile
-	textile -o1 <$^ >$@
+README.inc: README.md
+	markdown <$^ | perl -pe's!(</?h)(\d)>!$$1.($$2+1).">"!ge' >$@
 
-README.html: README.textile
-	-textile <$^ | tidy -utf8 -asxml -i -n >$@
+README.html: README.md
+	-markdown <$^ | tidy -utf8 -asxml -i -n >$@
 
 README: README.html
 	w3m -dump $^ >$@
@@ -27,3 +27,5 @@ test: clean
 
 clean:
 	-rm -rf .cache t log
+
+# vim: set noet:
