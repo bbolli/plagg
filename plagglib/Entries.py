@@ -75,6 +75,10 @@ class Entry:
         if Plagg.VERBOSE > 2:
             print 'after tidy:', Plagg.encode(self.body)
 
+	# tags
+	if item.has_key('tags'):
+	    self.setMeta(tags=' '.join(t.term.replace(' ', '+') for t in item.tags))
+
 	# footer
 	footer = '\n<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
 	if self._link and len(self.body) > 2500:
