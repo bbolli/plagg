@@ -7,26 +7,26 @@ import os, sys, getopt, signal
 
 from plagglib import Plagg
 
-PATH = os.path.join(os.getenv('HOME'), 'bblog', 'news')
-OPML = os.path.join(PATH, 'news.opml')
-
 def usage(rc):
-    print "Usage: plagg [-fnhVv] [-t timeout] [opmlfile [newsdir [nickname ...]]]"
+    print "Usage: plagg [-fnhVv] [-d newsdir] [-t timeout] [opmlfile [nickname ...]]]"
     sys.exit(rc)
 
+path = os.path.join(os.getenv('HOME'), 'bblog', 'news')
 news = verbose = timeout = 0
 footer = 1
 try:
-    opts, args = getopt.getopt(sys.argv[1:], 'fnhVvt:')
+    opts, args = getopt.getopt(sys.argv[1:], 'd:fFnhVvt:')
 except getopt.GetoptError, e:
     print e
     usage(3)
 for o, v in opts:
-    if o == '-f':
+    if o == '-d':
+        path = v
+    elif o == '-f':
 	footer = 0
-    if o == '-n':
+    elif o == '-n':
 	news = 1
-    if o == '-h':
+    elif o == '-h':
 	usage(0)
     elif o == '-V':
 	print Plagg.__version__
@@ -42,17 +42,15 @@ if timeout and hasattr(signal, 'alarm'):
 
 argc = len(args)
 if argc == 0:
-    plagg = Plagg.Plagg(OPML, PATH)
+    plagg = Plagg.Plagg(os.path.join(path, 'news.opml'))
 elif argc == 1:
-    plagg = Plagg.Plagg(args[0], PATH)
-elif argc == 2:
-    plagg = Plagg.Plagg(args[0], args[1])
-elif argc >= 3:
-    plagg = Plagg.Plagg(args[0], args[1], args[2:])
+    plagg = Plagg.Plagg(args[0])
+elif argc >= 2:
+    plagg = Plagg.Plagg(args[0], args[1:])
 else:
     usage(3)
 
-plagg.setConfig(verbose, footer)
+plagg.setConfig(path, verbose, footer)
 try:
     plagg.startOPML()
 except KeyboardInterrupt:

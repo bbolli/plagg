@@ -44,16 +44,16 @@ def _matchHours(hours, currentHour):
 class Plagg(xml.sax.handler.ContentHandler):
     """The application class. Generates entries from each feed in the OPML file."""
 
-    def __init__(self, opmlfile, newspath, nicks=None):
+    def __init__(self, opmlfile, nicks=None):
 	self.opmlfile = opmlfile
-	self.newspath = newspath
 	self.nicks = nicks
 	self.logging = self.errors = 0
 	self.newentries = {}
 	self.feed = None
 	xml.sax.handler.ContentHandler.__init__(self)
 
-    def setConfig(self, logging, footer):
+    def setConfig(self, newspath, logging, footer):
+        self.newspath = newspath
         global VERBOSE, FOOTER
         VERBOSE = logging
         FOOTER = footer

@@ -24,7 +24,7 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
 3. Untar the distribution file to a directory of your choice
 4. Run `python setup.py install` as root
 5. Set up an [OPML](#opml) file containing the feeds you'd like to read
-6. Run `plagg` _opmlfile_ _newsdir_ as often as you like from a cron job, where _newsdir_ is somewhere within your blosxom data directory
+6. Run `plagg -d` _newsdir_ _opmlfile_ as often as you like from a cron job, where _newsdir_ is somewhere within your blosxom data directory
 7. Enjoy your personalized news feed!
 
 
@@ -33,23 +33,23 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
 
 ### 2.1. Synopsis
 
-    plagg -fnvVh [opmlfile [newsdir [nickname ...]]]
+    plagg -fnvVh [-d newsdir] [opmlfile [nickname ...]]
 
 ### 2.2. Options
 
--f: Don't write the entry footers. Use this option if your blosxom template includes a footer.
--n: Write a file _newsdir_/`Latest.txt` that contains the new entries
--v: Be verbose. May be repeated for additional effect
--V: Display version information and exit
--h: Display usage information and exit.
+* -f: Don't write the entry footers. Use this option if your blosxom template includes a footer.
+* -n: Write a file _newsdir_/`Latest.txt` that contains the new entries.
+* -v: Be verbose. May be repeated for additional effect.
+* -V: Display version information and exit.
+* -h: Display usage information and exit.
+* -d _newsdir_: The destination directory in subdirectories of which the news items are stored. This should be inside your blosxom data directory so that blosxom can find and display the items.
 
 ### 2.3. Arguments
 
 opmlfile: The OPML file containing the feeds to read and generate news items from.
-newsdir: The destination directory in subdirectories of which the news items are stored. This should be inside your blosxom data directory so that blosxom can find and display the items.
 nickname: If given, updates only the feeds with the given nicknames (ignoring their `hours` attribute), otherwise updates all feeds.
 
-The default arguments for opmlfile and destdir can be set in the `plagg` script.
+The default arguments for _opmlfile_ and _destdir_ can be set in the `plagg` script.
 
 
 3. The OPML file
