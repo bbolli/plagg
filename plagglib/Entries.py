@@ -23,6 +23,7 @@ _notword = re.compile(r'\W')
 _idfirst = re.compile('^[a-zA-Z]')
 _idwrong = re.compile('[^0-9a-zA-Z]+')
 _body = re.compile('<body>(.*?)</body>', re.IGNORECASE + re.DOTALL)
+_tumblr = re.compile(r'\.tumblr\.com/post/(\d+)$', re.IGNORECASE)
 
 if time.localtime()[8]:
     tz = time.altzone
@@ -112,12 +113,16 @@ class Entry:
 
     def makeFilename(self):
 	"""Sets a suitable file name for the current entry."""
-	fn = _markup.sub('', self._title)
-	if not fn:	# use first 30 non-markup characters if no title
-	    fn = _markup.sub('', self.body)[:30]
-	fn = fn.replace('&apos;', "'").replace('&quot;', '"')
-	fn = _notword.sub('_', fn)
-	self.fname = fn[:15] + '...' + fn[-5:]
+	m = _tumblr.search(self._link)
+	if m:
+	    self.fname = m.group(1)
+	else:
+	    fn = _markup.sub('', self._title)
+	    if not fn:	# use first 30 non-markup characters if no title
+		fn = _markup.sub('', self.body)[:30]
+	    fn = fn.replace('&apos;', "'").replace('&quot;', '"')
+	    fn = _notword.sub('_', fn)
+	    self.fname = fn[:15] + '...' + fn[-5:]
 	return self.fname
 
     def makeId(self):
