@@ -78,7 +78,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	e.processFeed(self.feed)
 
     def outline(self, attrs):
-	"""Handles one OPML outline element."""
+	"""Handles the OPML outline start tag."""
 
 	# reset the feed dict
 	self.feed = None
@@ -118,6 +118,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    feed.getFeed()
 	except httplib.HTTPException, e:
 	    sys.stderr.write(("Feed: %s (%s): %s\n" % (feed.name, feed.uri, e.__class__.__name__)).encode(ENCODING, 'replace'))
+	    return
 	except Exception, e:
 	    import traceback
 	    if VERBOSE > 1:
@@ -145,6 +146,11 @@ class Plagg(xml.sax.handler.ContentHandler):
 
 	self.feed = feed
 	self.path = os.path.join(self.newspath, nick)
+
+    def singleFeed(self, url, name):
+        """Handles a single feed URL by simulating an <outline> element"""
+        self.outline({'xmlurl': url, 'text': name})
+        self.endElement('outline')
 
     def newEntry(self, entry):
 	if entry._title:

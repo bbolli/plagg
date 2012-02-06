@@ -8,11 +8,11 @@ import os, sys, getopt, signal
 from plagglib import Plagg
 
 def usage(rc):
-    print "Usage: plagg [-fnhVv] [-d newsdir] [-t timeout] [opmlfile [nickname ...]]]"
+    print "Usage: plagg [-fFnhVv] [-d newsdir] [-t timeout] [opmlfile [nickname ...]]]"
     sys.exit(rc)
 
 path = os.path.join(os.getenv('HOME'), 'bblog', 'news')
-news = verbose = timeout = 0
+news = verbose = timeout = feed = 0
 footer = 1
 try:
     opts, args = getopt.getopt(sys.argv[1:], 'd:fFnhVvt:')
@@ -22,6 +22,8 @@ except getopt.GetoptError, e:
 for o, v in opts:
     if o == '-d':
         path = v
+    elif o == '-F':
+        feed = 1
     elif o == '-f':
 	footer = 0
     elif o == '-n':
@@ -41,6 +43,9 @@ if timeout and hasattr(signal, 'alarm'):
     signal.alarm(timeout)
 
 argc = len(args)
+if feed and argc != 2:
+    print "Usage: plagg -F feed-url nickname"
+    sys.exit(3)
 if argc == 0:
     plagg = Plagg.Plagg(os.path.join(path, 'news.opml'))
 elif argc == 1:
@@ -52,7 +57,10 @@ else:
 
 plagg.setConfig(path, verbose, footer)
 try:
-    plagg.startOPML()
+    if feed:
+        plagg.singleFeed(args[0], args[1])
+    else:
+        plagg.startOPML()
 except KeyboardInterrupt:
     pass
 if news:

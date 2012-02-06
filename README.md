@@ -33,21 +33,30 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
 
 ### 2.1. Synopsis
 
-    plagg -fnvVh [-d newsdir] [opmlfile [nickname ...]]
+    plagg -fFnvVh [-d newsdir] [opmlfile [nickname ...]]
 
 ### 2.2. Options
 
-* -f: Don't write the entry footers. Use this option if your blosxom template includes a footer.
+* -f: Don't write the entry footers. Use this option if your blosxom template
+      includes a footer.
+* -F: Run `plagg` for a single feed whose URL is _opmlfile_. One _nickname_ is
+      mandatory and indicates the name of the folder within _newsdir_ where
+      the entries get written.
 * -n: Write a file _newsdir_/`Latest.txt` that contains the new entries.
 * -v: Be verbose. May be repeated for additional effect.
 * -V: Display version information and exit.
 * -h: Display usage information and exit.
-* -d _newsdir_: The destination directory in subdirectories of which the news items are stored. This should be inside your blosxom data directory so that blosxom can find and display the items.
+* -d _newsdir_: The destination directory in subdirectories of which the
+      news items are stored. This should be inside your blosxom data directory
+      so that blosxom can find and display the items.
 
 ### 2.3. Arguments
 
-opmlfile: The OPML file containing the feeds to read and generate news items from.
-nickname: If given, updates only the feeds with the given nicknames (ignoring their `hours` attribute), otherwise updates all feeds.
+* _opmlfile_: The OPML file containing the feeds to read and generate news
+  items from, or the feed URL if the `-F` option was given.
+* _nickname_: If given, updates only the feeds with the given nicknames
+  (ignoring their `hours` attribute), otherwise updates all feeds. If `-F`
+  was give, the name of the feed.
 
 The default arguments for _opmlfile_ and _destdir_ can be set in the `plagg` script.
 

@@ -23,7 +23,8 @@ install: plagg.tar.gz
 	su -c "python setup.py install"
 
 test: clean
-	./plagg -vvv -d t news.opml ongoing dilbert uf joyoftech >log 2>&1
+	./plagg -vvv -d t news.opml ongoing dilbert uf joyoftech >log 2>&1 && \
+	./plagg -vvv -d t -fF http://staff.tumblr.com/rss tumblr >>log 2>&1
 
 clean:
 	-rm -rf .cache t log
