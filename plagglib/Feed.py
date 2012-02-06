@@ -1,12 +1,10 @@
 # Feed.py -- one configured feed
 
-# $Id: Feed.py 1074 2010-01-07 19:42:21Z bb $
-
 import sys, os, re, socket, urllib2, pickle, hashlib
 import feedparser	# needs at least version 3 beta 22!
 import Plagg
 
-USER_AGENT = 'plagg/%s (+http://drbeat.li/py/plagg/)' % Plagg.__tarversion__
+USER_AGENT = 'plagg/%s (+http://drbeat.li/py/plagg/)' % Plagg.__version__
 CACHE_DIR = '.cache'
 
 # set a global socket timeout of 20s

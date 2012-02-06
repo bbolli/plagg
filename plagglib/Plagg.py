@@ -1,14 +1,9 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
-# $Id: Plagg.py 1074 2010-01-07 19:42:21Z bb $
-
 import os, sys, time, xml.sax, httplib
 
-__version__ = "1.11 ($Id: Plagg.py 1074 2010-01-07 19:42:21Z bb $)"
-w = __version__.split()
-__tarversion__ = w[0] + '.' + w[3]
-del w
+__version__ = "1.11"
 
 import Feed, Entries
 

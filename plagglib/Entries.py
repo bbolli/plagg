@@ -1,7 +1,5 @@
 "Entries.py -- make blog entries from a feed object"
 
-# $Id: Entries.py 1074 2010-01-07 19:42:21Z bb $
-
 import os, re, time, subprocess
 import Plagg		# for default encoding
 

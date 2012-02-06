@@ -1,9 +1,7 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
-
-# $Id: plagg 744 2007-06-06 16:57:59Z bb $
 
 import os, sys, getopt, signal
 
