@@ -246,6 +246,8 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
 * Version 1.12, 2012-02-06
   - Add the -f option to suppress entry footers
   - Use the tumblr.com entry id as file name if present
+* Version 1.12a, 2012-02-06
+  - Fix the tumblr id parsing if the entry has no link
 
 5. TODO
 -------

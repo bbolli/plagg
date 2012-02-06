@@ -3,7 +3,7 @@ corresponding to the items in the feeds."""
 
 import os, sys, time, xml.sax, httplib
 
-__version__ = "1.12"
+__version__ = "1.12a"
 
 import Feed, Entries
 

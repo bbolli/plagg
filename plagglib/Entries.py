@@ -113,7 +113,7 @@ class Entry:
 
     def makeFilename(self):
 	"""Sets a suitable file name for the current entry."""
-	m = _tumblr.search(self._link)
+	m = _tumblr.search(self._link) if self._link else None
 	if m:
 	    self.fname = m.group(1)
 	else:
