@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
-# $Id: setup.py 1003 2008-12-17 13:40:00Z bb $
-
 from distutils.core import setup
-import sys, re
+import sys, re, os, subprocess
 
 # patch distutils if it can't cope with the "classifiers" or
 # "download_url" keywords
@@ -12,11 +10,19 @@ if sys.hexversion < 0x02020300:
     DistributionMetadata.classifiers = None
     DistributionMetadata.download_url = None
 
-from Plagg import Plagg
+from plagglib import Plagg
+version = Plagg.__version__
+
+# try to get the development version if we're in a Git repo
+if os.path.isdir('.git'):
+    try:
+        version = subprocess.check_output(['git', 'describe', '--tags']).strip().lstrip('v')
+    except subprocess.CalledProcessError:
+        pass
 
 setup(
     name="plagg",
-    version=Plagg.__tarversion__,
+    version=version,
     description="plagg is an RSS/Atom feed aggregator",
     author="Beat Bolli",
     author_email="me+plagg@drbeat.li",
@@ -33,5 +39,6 @@ setup(
 	'Operating System :: POSIX',
 	'Programming Language :: Python',
 	'Topic :: Internet :: WWW/HTTP :: Dynamic Content :: News/Diary',
+        'Topic :: Utilities',
     ]
 )
