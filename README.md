@@ -243,6 +243,9 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
     replacements into one tag. This requires changes to your OPML file.
   - Handle ETag and Last-Modified HTTP headers of scraped HTML pages myself,
     eliminating the need for `httpcache.py`.
+* Version 1.12, 2012-02-06
+  - Add the -f option to suppress entry footers
+  - Use the tumblr.com entry id as file name if present
 
 5. TODO
 -------
