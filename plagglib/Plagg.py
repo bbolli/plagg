@@ -9,7 +9,8 @@ import Feed, Entries
 
 ENCODING = 'utf-8'	# default character encoding, used by Feed.py and Entries.py
 
-VERBOSE = 0             # will be set by Plagg.setLogging()
+VERBOSE = 0             # will be set by Plagg.setConfig()
+FOOTER = 1
 
 def encode(text):
     """Converts a unicode string to its encoded equivalent."""
@@ -52,9 +53,10 @@ class Plagg(xml.sax.handler.ContentHandler):
 	self.feed = None
 	xml.sax.handler.ContentHandler.__init__(self)
 
-    def setLogging(self, logging):
-        global VERBOSE
+    def setConfig(self, logging, footer):
+        global VERBOSE, FOOTER
         VERBOSE = logging
+        FOOTER = footer
 
     def startOPML(self):
 	xml.sax.parse(self.opmlfile, self)

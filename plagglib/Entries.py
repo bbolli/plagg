@@ -1,7 +1,7 @@
 "Entries.py -- make blog entries from a feed object"
 
 import os, re, time, subprocess
-import Plagg		# for default encoding
+import Plagg		# for default encoding and config
 
 
 def _escape(text):
@@ -80,15 +80,16 @@ class Entry:
 	    self.setMeta(tags=' '.join(t.term.replace(' ', '+') for t in item.tags))
 
 	# footer
-	footer = '\n<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
-	if self._link and len(self.body) > 2500:
-	    footer += '\n[%s]' % _linktag(self._link, 'Link')
-	if item.has_key('comments'):
-	    footer += '\n[%s]' % _linktag(item['comments'], 'Comments')
-	footer += '\n[%s]\n</p>\n' % _linktag(
-	    channel['link'], channel['title'], title=channel.get('tagline')
-	)
-	self.footer = footer
+	if Plagg.FOOTER:
+	    footer = '\n<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
+	    if self._link and len(self.body) > 2500:
+		footer += '\n[%s]' % _linktag(self._link, 'Link')
+	    if item.has_key('comments'):
+		footer += '\n[%s]' % _linktag(item['comments'], 'Comments')
+	    footer += '\n[%s]\n</p>\n' % _linktag(
+		channel['link'], channel['title'], title=channel.get('tagline')
+	    )
+	    self.footer = footer
 
 	# modification time
 	if feed.attrs.get('ignoredate', 'no') != 'yes':
@@ -237,7 +238,7 @@ class BlosxomEntries(Entries):
 	    os.makedirs(path)
 
     def processItem(self, item):
-	"""Builds the text of one Blosxom entry, saves it in self.path and 
+	"""Builds the text of one Blosxom entry, saves it in self.path and
 	sets its mtime to the timestamp, if present."""
 
 	entry = Entry()

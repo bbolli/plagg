@@ -11,16 +11,19 @@ PATH = os.path.join(os.getenv('HOME'), 'bblog', 'news')
 OPML = os.path.join(PATH, 'news.opml')
 
 def usage(rc):
-    print "Usage: plagg [-nhVv] [-t timeout] [opmlfile [newsdir [nickname ...]]]"
+    print "Usage: plagg [-fnhVv] [-t timeout] [opmlfile [newsdir [nickname ...]]]"
     sys.exit(rc)
 
 news = verbose = timeout = 0
+footer = 1
 try:
-    opts, args = getopt.getopt(sys.argv[1:], 'nhVvt:')
+    opts, args = getopt.getopt(sys.argv[1:], 'fnhVvt:')
 except getopt.GetoptError, e:
     print e
     usage(3)
 for o, v in opts:
+    if o == '-f':
+	footer = 0
     if o == '-n':
 	news = 1
     if o == '-h':
@@ -49,7 +52,7 @@ elif argc >= 3:
 else:
     usage(3)
 
-plagg.setLogging(verbose)
+plagg.setConfig(verbose, footer)
 try:
     plagg.startOPML()
 except KeyboardInterrupt:
