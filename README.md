@@ -257,6 +257,9 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
   - Use the tumblr.com entry id as file name if present
 * Version 1.12a, 2012-02-06
   - Fix the tumblr id parsing if the entry has no link
+* Version 2.0, 2012-02-07
+  - Add option -d to define the newsdir instead of the second non-option argument
+  - Add option -F to generate posts from a single feed URL
 
 5. TODO
 -------
