@@ -70,11 +70,7 @@ class Entry:
 	body = feed.replaceText('body', self._body)
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
-        if Plagg.VERBOSE > 2:
-            print 'before tidy:', Plagg.encode(body)
 	self.body = self.tidy(body)
-        if Plagg.VERBOSE > 2:
-            print 'after tidy:', Plagg.encode(self.body)
 
 	# tags
 	if item.has_key('tags'):
@@ -194,6 +190,8 @@ class Entry:
 	return 1
 
     def tidy(self, body):
+	if Plagg.VERBOSE > 3:
+	    print 'before tidy:', Plagg.encode(body)
 	r = subprocess.Popen([
 	    '/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null'
 	], stdin=subprocess.PIPE, stdout=subprocess.PIPE).communicate(
@@ -201,7 +199,10 @@ class Entry:
 	)[0]
 	# Keep the part between <body> and </body>
 	m = _body.search(r)
-	return Plagg.decode(m.group(1) if m else r)
+	body = (m.group(1) if m else r).strip()
+	if Plagg.VERBOSE > 3:
+	    print 'after tidy:', body
+	return Plagg.decode(body)
 
 
 class Entries:
