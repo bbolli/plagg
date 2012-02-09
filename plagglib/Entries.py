@@ -5,7 +5,7 @@ import Plagg		# for default encoding and config
 
 
 def _escape(text):
-    """Replaces the three common HTML character entities."""
+    """Replaces common HTML character entities."""
     return text.replace('&', '&amp;').replace('<', '&lt;'). \
 	replace('>', '&gt;').replace('"', '&quot;').replace('\'', '&apos;')
 
@@ -15,7 +15,7 @@ def _linktag(href, text, **attrs):
     return u'<a href="%s"%s>%s</a>' % (href, a, Plagg.decode(text))
 
 def _unescape(text):
-    """Replaces the three common HTML character entities."""
+    """Replaces common HTML character entities."""
     return text.replace('&gt;', '>').replace('&lt;', '<').replace('&amp;', '&')
 
 _markup = re.compile(r'<.*?>', re.DOTALL)
