@@ -192,11 +192,10 @@ class Entry:
     def tidy(self, body):
 	if Plagg.VERBOSE > 3:
 	    print 'before tidy:', Plagg.encode(body)
-	r = subprocess.Popen([
-	    '/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null'
-	], stdin=subprocess.PIPE, stdout=subprocess.PIPE).communicate(
-	    Plagg.encode(body)
-	)[0]
+	r = subprocess.Popen(
+	    ['/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null'],
+	    stdin=subprocess.PIPE, stdout=subprocess.PIPE
+	).communicate(Plagg.encode(body))[0]
 	# Keep the part between <body> and </body>
 	m = _body.search(r)
 	body = (m.group(1) if m else r).strip()
