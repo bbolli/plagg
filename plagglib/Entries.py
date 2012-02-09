@@ -1,6 +1,6 @@
 "Entries.py -- make blog entries from a feed object"
 
-import os, re, time, subprocess
+import sys, os, re, time, subprocess
 import Plagg		# for default encoding and config
 
 
@@ -35,6 +35,8 @@ else:
 class Entry:
     """Blog entry class.
     Represents one Blosxom blog entry."""
+
+    TidyWarningDone = False
 
     def __init__(self):
 	self.channel = self.item = None
@@ -201,15 +203,22 @@ class Entry:
 	return 1
 
     def tidy(self, body):
+	body = Plagg.encode(body)
 	if Plagg.VERBOSE > 3:
-	    print 'before tidy:', Plagg.encode(body)
-	r = subprocess.Popen(
-	    ['/usr/bin/tidy2', '-asxhtml', '-utf8', '-f', '/dev/null'],
-	    stdin=subprocess.PIPE, stdout=subprocess.PIPE
-	).communicate(Plagg.encode(body))[0]
-	# Keep the part between <body> and </body>
-	m = _body.search(r)
-	body = (m.group(1) if m else r).strip()
+	    print 'before tidy:', body
+	tidy = ['/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null']
+	try:
+	    r = subprocess.Popen(
+		tidy, stdin=subprocess.PIPE, stdout=subprocess.PIPE
+	    ).communicate(body)[0]
+	except OSError:
+	    if not Entry.TidyWarningDone:
+		sys.stderr.write("Cannot execute %s\n" % ' '.join(tidy))
+		Entry.TidyWarningDone = True
+	else:
+	    # Keep the part between <body> and </body>
+	    m = _body.search(r)
+	    body = (m.group(1) if m else r).strip()
 	if Plagg.VERBOSE > 3:
 	    print 'after tidy:', body
 	return Plagg.decode(body)
