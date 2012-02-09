@@ -278,6 +278,12 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
 * Version 2.0, 2012-02-07
   - Add option -d to define the newsdir instead of the second non-option argument
   - Add option -F to generate posts from a single feed URL
+* Version 2.1, 2012-02-09
+  - If the entry starts with a link, use it and delete it from the body
+  - Make tidying the entry body optional
+  - Gracefully handle OSErrors while calling tidy
+  - Add the missing "ignoredate" documentation
+
 
 5. TODO
 -------
