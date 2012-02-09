@@ -24,6 +24,7 @@ _idfirst = re.compile('^[a-zA-Z]')
 _idwrong = re.compile('[^0-9a-zA-Z]+')
 _body = re.compile('<body>(.*?)</body>', re.IGNORECASE + re.DOTALL)
 _tumblr = re.compile(r'\.tumblr\.com/post/(\d+)$', re.IGNORECASE)
+_link = re.compile(r'''(?is)^<a href="([^"]+?)">(.*?)</a>((:\s+)|$)''')
 
 if time.localtime()[8]:
     tz = time.altzone
@@ -37,7 +38,7 @@ class Entry:
 
     def __init__(self):
 	self.channel = self.item = None
-	self._title = self._link = self._body = self.body = self.footer = ''
+	self._title = self._link = self.body = self.footer = ''
 	self.mdate = self.tm = None
 	self.metas = {}
 
@@ -52,25 +53,33 @@ class Entry:
 	self.channel = channel
 	self.item = item
 
-	# title and link
-	title = _unescape(item.get('title', '').replace('\n', ' ')).strip()
-	self._title = feed.replaceText('title', title)
-	self._link = item.get('link')
-	if self._title and self._link:
-	    self.title = _linktag(self._link, self._title)
-	else:
-	    self.title = self._title
-
 	# body
-	self._body = (
+	body = (
 	    item.get('content', [{}])[0].get('value') or
 	    item.get('description') or
 	    item.get('summary', '')
 	).strip()
-	body = feed.replaceText('body', self._body)
+	body = feed.replaceText('body', body)
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
-	self.body = self.tidy(body)
+	self.body = body
+
+	# title and link
+	title = _unescape(item.get('title', '').replace('\n', ' ')).strip()
+	self._title = feed.replaceText('title', title)
+	self._link = item.get('link')
+	# if the body starts with a link, use it and delete it from the body
+	m = _link.match(self.body)
+	if m:
+	    link = m.group(1)
+	    self.body = self.body[m.end():]
+	else:
+	    link = self._link
+	if self._title and link:
+	    self.title = _linktag(link, self._title)
+	else:
+	    self.title = self._title
+	self.body = self.tidy(self.body)
 
 	# tags
 	if item.has_key('tags'):
@@ -79,7 +88,7 @@ class Entry:
 	# footer
 	if Plagg.FOOTER:
 	    footer = '\n<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
-	    if self._link and len(self.body) > 2500:
+	    if self._link and (len(self.body) > 2500 or self._link != link):
 		footer += '\n[%s]' % _linktag(self._link, 'Link')
 	    if item.has_key('comments'):
 		footer += '\n[%s]' % _linktag(item['comments'], 'Comments')
@@ -101,7 +110,7 @@ class Entry:
 
     def setEntry(self, title, body, footer=''):
 	self._title = self.title = title
-	self._body = self.body = body
+	self.body = body
 	self.footer = footer
 
     def setMeta(self, **meta):
