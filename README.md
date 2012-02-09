@@ -195,7 +195,16 @@ Please keep in mind that in the actual OPML file, the "less than", "greater than
 and "quote" signs in attribute values have to be escaped as `&lt;`, `&gt;` and `&quot;`,
 respectively.
 
-#### 3.5.4 Tidying the feed HTML
+#### 3.5.4 Ignoring the entry date
+
+This is a new attribute of `<outline>`.
+
+**`ignoredate`="yes"**
+
+If "yes", the entry's date is ignored and the current time used instead. Useful
+for feeds that are published with delays of more than one hour.
+
+#### 3.5.5 Tidying the feed HTML
 
 This is a new attribute of `<outline>`.
 
