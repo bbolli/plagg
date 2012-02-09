@@ -5,8 +5,6 @@
   xmlns="http://www.w3.org/1999/xhtml"
 >
 
-<!-- $Id: opml.xsl 349 2004-10-25 21:01:47Z bb $ -->
-
 <xsl:output method="xml" indent="yes"
   doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"
   doctype-public="-//W3C//DTD XHTML 1.1//EN"
