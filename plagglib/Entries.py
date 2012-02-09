@@ -79,7 +79,9 @@ class Entry:
 	    self.title = _linktag(link, self._title)
 	else:
 	    self.title = self._title
-	self.body = self.tidy(self.body)
+
+	if feed.attrs.get('tidy', 'yes') == 'yes':
+	    self.body = self.tidy(self.body)
 
 	# tags
 	if item.has_key('tags'):
@@ -202,7 +204,7 @@ class Entry:
 	if Plagg.VERBOSE > 3:
 	    print 'before tidy:', Plagg.encode(body)
 	r = subprocess.Popen(
-	    ['/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null'],
+	    ['/usr/bin/tidy2', '-asxhtml', '-utf8', '-f', '/dev/null'],
 	    stdin=subprocess.PIPE, stdout=subprocess.PIPE
 	).communicate(Plagg.encode(body))[0]
 	# Keep the part between <body> and </body>

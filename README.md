@@ -195,6 +195,15 @@ Please keep in mind that in the actual OPML file, the "less than", "greater than
 and "quote" signs in attribute values have to be escaped as `&lt;`, `&gt;` and `&quot;`,
 respectively.
 
+#### 3.5.4 Tidying the feed HTML
+
+This is a new attribute of `<outline>`.
+
+**`tidy`="no"**
+
+The default value is "yes". If "yes", the entry body is run through `tidy`, an
+external tool that cleans up HTML. Tidy must be installed in `/usr/bin`.
+
 ### 3.6. Rendering the OPML file as XHTML
 
 The distribution tar file contains the XSL style sheet `opml.xsl` that transforms
