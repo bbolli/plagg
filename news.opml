@@ -44,13 +44,10 @@
 		        <outline text="Familie &amp; Fröinde">
 				<outline text="Michael" type="rss" htmlUrl="http://blog.bolli.us/" xmlUrl="http://blog.bolli.us/feed/0"/>
 				<outline text="Dinah" type="rss" htmlUrl="http://dinah-in-the-usa.blogspot.com/" xmlUrl="http://dinah-in-the-usa.blogspot.com/feeds/posts/default"/>
-				<outline text="Ändu Weber" nick="aendu" type="rss" htmlUrl="http://worldwideweber.ch/log/" xmlUrl="http://worldwideweber.ch/log/feed"/>
 				<outline text="Bärni" nick="baerni" type="rss" htmlUrl="http://blog.nostromo.ch/" xmlUrl="http://blog.nostromo.ch/3b/atom.xml"/>
 				<outline text="Chris" type="rss" htmlUrl="http://www.chrisbuergi.ch/" xmlUrl="http://www.chrisbuergi.ch/blog/?feed=rss2" hours="6"/>
-				<outline text="Jan Schenk" type="rss" htmlUrl="http://curryujanufreise.blogspot.com/" xmlUrl="http://curryujanufreise.blogspot.com/feeds/posts/default"/>
 				<outline text="Uli &amp; Lise" type="rss" htmlUrl="http://blog.uli-und-lise.de" xmlUrl="http://uli-und-lise.blogspot.com/feeds/posts/default"/>
 			</outline>
-			<outline text="Mark Pilgrim" nick="mark" type="rss" htmlUrl="http://diveintomark.org/" xmlUrl="http://diveintomark.org/feed/"/>
 			<outline text="Dave Winer" nick="winer" type="rss" htmlUrl="http://www.scripting.com/" xmlUrl="http://www.scripting.com/rss.xml"/>
 			<outline text="Doc Searls" nick="doc" type="rss" htmlUrl="http://blogs.law.harvard.edu/doc/" xmlUrl="http://blogs.law.harvard.edu/doc/feed/"/>
 			<outline text="Simon Willison" nick="simon" type="rss" htmlUrl="http://simonwillison.net/" xmlUrl="http://feeds.simonwillison.net/swn-everything"/>
@@ -67,7 +64,6 @@
 			<outline text="Mac">
 				<outline text="Daring Fireball" nick="fireball" type="rss" htmlUrl="http://daringfireball.net/" xmlUrl="http://daringfireball.net/index.xml"/>
 				<outline text="Webkit" type="rss" htmlUrl="http://webkit.org/blog/" xmlUrl="http://webkit.org/blog/feed/atom/"/>
-				<outline text="fakesteve" type="rss" htmlUrl="http://www.fakesteve.net/" xmlUrl="http://feeds.feedburner.com/TheSecretDiaryOfSteveJobs"/>
 				<outline text="rentzsch" type="rss" htmlUrl="http://rentzsch.tumblr.com/" xmlUrl="http://rentzsch.tumblr.com/rss"/>
 				<outline text="siracusa" type="rss" htmlUrl="http://siracusa.tumblr.com/" xmlUrl="http://siracusa.tumblr.com/rss"/>
 				<outline text="marco" type="rss" htmlUrl="http://marco.tumblr.com/" xmlUrl="http://marco.tumblr.com/rss"/>
