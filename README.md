@@ -1,8 +1,6 @@
-plagg, a RSS aggregator
-=======================
+# plagg, a RSS aggregator
 
-0. What is this?
-----------------
+## 0. What is this?
 
 plagg is a weblog/news aggregator that works in conjunction with
 [Rael Dornfest's](http://www.raelity.org) [blosxom](http://www.blosxom.com).
@@ -16,8 +14,7 @@ read the news all at once or per feed.
 You can see examples of plagg's output [on my news page](http://drbeat.li/news).
 
 
-1. Installation
----------------
+## 1. Installation
 
 1. Download and install the [Universal Feed Parser 4](http://feedparser.org/) or later
 2. Download [plagg](plagg.tar.gz)
@@ -28,8 +25,7 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
 7. Enjoy your personalized news feed!
 
 
-2. Usage
---------
+## 2. Usage
 
 ### 2.1. Synopsis
 
@@ -61,8 +57,7 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
 The default arguments for _opmlfile_ and _destdir_ can be set in the `plagg` script.
 
 
-3. The OPML file
-----------------
+## 3. The OPML file
 
 The distribution contains my OPML file as an example.
 
@@ -226,8 +221,7 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
 `<div>` tags.
 
 
-4. Changelog
-------------
+## 4. Changelog
 
 * Version 1.0, 2004-10-29:
   - Initial public release
@@ -285,15 +279,13 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
   - Add the missing "ignoredate" documentation
 
 
-5. TODO
--------
+## 5. TODO
 
 * Should support `skipHours` from the RSS feed instead of using `hours`
 * Support RSS enclosures
 * Use a proper [XML namespace](http://www.w3.org/TR/REC-xml-names/) for my OPML extensions
 
 
-6. Author
----------
+## 6. Author
 
 Beat Bolli `<me+plagg@drbeat.li>`, http://drbeat.li/py/plagg
