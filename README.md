@@ -16,13 +16,12 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
 
 ## 1. Installation
 
-1. Download and install the [Universal Feed Parser 4](http://feedparser.org/) or later
-2. Download [plagg](plagg.tar.gz)
-3. Untar the distribution file to a directory of your choice
-4. Run `python setup.py install` as root
-5. Set up an [OPML](#opml) file containing the feeds you'd like to read
-6. Run `plagg -d` _newsdir_ _opmlfile_ as often as you like from a cron job, where _newsdir_ is somewhere within your blosxom data directory
-7. Enjoy your personalized news feed!
+1. Download [plagg](http://drbeat.li/py/plagg/plagg.tar.gz)
+2. Untar the distribution file to a directory of your choice
+3. Run `python setup.py install` as root
+4. Set up an [OPML](#opml) file containing the feeds you'd like to read
+5. Run `plagg -d` _newsdir_ _opmlfile_ as often as you like from a cron job, where _newsdir_ is somewhere within your blosxom data directory
+6. Enjoy your personalized news feed!
 
 
 ## 2. Usage
