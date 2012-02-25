@@ -27,7 +27,7 @@
 		</outline>
 		<outline text="Science">
 			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="http://antwrp.gsfc.nasa.gov/apod/"
-				regex="(?is)&lt;img src=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; *(?P&lt;title&gt;.*?) *&lt;/b&gt;\s*&lt;br /&gt;.*?Explanation: *&lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt;\s*&lt;center&gt;"
+				regex="(?is)&lt;img .*?src=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;.*?&lt;b&gt; *(?P&lt;title&gt;.*?) *&lt;/b&gt;\s*&lt;br /&gt;.*?Explanation: *&lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt;\s*&lt;center&gt;"
 				hours="8-10"/>
 			<outline text="Bad Astronomy" nick="badastro" type="rss" htmlUrl="http://blogs.discovermagazine.com/badastronomy/" xmlUrl="http://blogs.discovermagazine.com/badastronomy/feed/"/>
 		</outline>
@@ -90,7 +90,7 @@
 				commands="import time&#10;tm = time.gmtime()&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.itemLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
 				hours="7-8"/>
 			<outline text="Userfriendly" nick="uf" type="x-plagg-html" htmlUrl="http://www.userfriendly.org/static/"
-				regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)&quot; /&gt;"
+				regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)&quot;"
 				hours="7-10"
 			>
 				<replace what="link" from="/xuf" to="/uf"/>
