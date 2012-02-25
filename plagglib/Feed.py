@@ -131,7 +131,7 @@ class HTMLFeed(SimulatedFeed):
 	"""Reads the HTML page and extracts the link and title."""
 	self.loadCache()
 	try:
-	    f = feedparser._open_resource(self.uri, self.etag, self.modified, USER_AGENT, None, [])
+	    f = feedparser._open_resource(self.uri, self.etag, self.modified, USER_AGENT, None, [], {})
 	    html = f.read()
 	except Exception, e:
 	    sys.stderr.write('Getting page %s: %s\n' % (self.uri, e))
@@ -168,7 +168,7 @@ class HTMLFeed(SimulatedFeed):
 		    return
 
 	# resolve relative URIs
-	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding)
+	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding, 'text/html')
 
         if hasattr(f, 'headers'):
             charsets = [c for c in feedparser._getCharacterEncoding(f.headers, html) if c]
