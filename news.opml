@@ -52,7 +52,7 @@
 			<outline text="Doc Searls" nick="doc" type="rss" htmlUrl="http://blogs.law.harvard.edu/doc/" xmlUrl="http://blogs.law.harvard.edu/doc/feed/"/>
 			<outline text="Simon Willison" nick="simon" type="rss" htmlUrl="http://simonwillison.net/" xmlUrl="http://feeds.simonwillison.net/swn-everything"/>
 			<outline text="Tim Bray" nick="ongoing" type="rss" htmlUrl="http://www.tbray.org/ongoing/" xmlUrl="http://www.tbray.org/ongoing/ongoing.rss"/>
-			<outline text="Sam Ruby" nick="samruby" type="rss" htmlUrl="http://www.intertwingly.net/blog/" xmlUrl="http://www.intertwingly.net/blog/index.atom"/>
+			<outline text="Sam Ruby" nick="samruby" type="rss" htmlUrl="http://www.intertwingly.net/blog/" xmlUrl="http://www.intertwingly.net/blog/index.atom" tidy="no"/>
 			<outline text="Joe Gregorio" nick="joegregorio" htmlUrl="http://bitworking.org/news/" xmlUrl="http://bitworking.org/news/feed/"/>
 			<outline text="Mark Nottingham" nick="mnot" type="rss" htmlUrl="http://www.mnot.net/blog/" xmlUrl="http://www.mnot.net/blog/index.atom"/>
 			<outline text="Wes Felter" nick="wmf" type="rss" htmlUrl="http://blog.felter.org/" xmlUrl="http://blog.felter.org/rss"/>
@@ -75,7 +75,8 @@
 				<!-- name not known! outline text="Blake Ross" nick="blaker" type="rss" htmlUrl="http://blakeross.com/" xmlUrl="http://blakeross.com/wp-rss2.php"/ -->
 				<outline text="Gerv Markham" nick="gerv" type="rss" htmlUrl="http://weblogs.mozillazine.org/gerv/" xmlUrl="http://weblogs.mozillazine.org/gerv/index.rdf"/>
 				<outline text="Robert O&apos;Callahan" nick="roc" type="rss" htmlUrl="http://weblogs.mozillazine.org/roc/" xmlUrl="http://weblogs.mozillazine.org/roc/index.rdf"/>
-				<outline text="Mozilla WebDev" nick="webdev" type="rss" htmlUrl="http://blog.mozilla.com/webdev/" xmlUrl="http://blog.mozilla.com/webdev/feed/"/>
+				<outline text="Mozilla WebDev" nick="webdev" type="rss" htmlUrl="http://blog.mozilla.com/webdev/" xmlUrl="http://blog.mozilla.com/webdev/feed/" tidy="no"/>
+				<outline text="Mozilla Hacks" nick="mozhacks" type="rss" htmlUrl="https://hacks.mozilla.com/" xmlUrl="https://hacks.mozilla.org/feed/" tidy="no"/>
 			</outline>
 		</outline>
 		<outline text="Photoblogs">
