@@ -86,7 +86,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	# get common attributes
 	name = attrs.get('text') or attrs.get('title')
 	if not name: return
-	nick = attrs.get('nick', name.lower())
+	nick = attrs['nick'] = attrs.get('nick', name.lower())
 
 	# select by nickname
 	if self.nicks and not nick in self.nicks: return
@@ -166,4 +166,5 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    e = Entries.Entry()
 	    e.setEntry('Latest news (%s)' % time.strftime('%H:%M:%S'), u'\n'.join(body))
 	    e.setMeta(markup='markdown')
+	    e.setMeta(source='plagg')
 	    e.write(self.newspath, '.txt', overwrite=True, fname='Latest')

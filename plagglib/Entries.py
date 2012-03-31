@@ -54,6 +54,7 @@ class Entry:
 	title), an optional comments link, and the channel link."""
 	self.channel = channel
 	self.item = item
+	self.setMeta(source=feed.attrs['nick'])
 
 	# body
 	body = (

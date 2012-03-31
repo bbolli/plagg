@@ -240,8 +240,8 @@ class ComputedFeed(HTMLFeed):
 	self.suite = suite
 
     def getLink(self):
-        """Execute the suite which should set at least self.itemLink"""
-    	try:
+	"""Execute the suite which should set at least self.itemLink"""
+	try:
 	    exec self.suite
 	except Exception, e:
 	    sys.stderr.write("%s in suite\n\n----\n%s\n----\n" % (str(e), self.suite))
