@@ -9,7 +9,7 @@ import Feed, Entries
 
 ENCODING = 'utf-8'	# default character encoding, used by Feed.py and Entries.py
 
-VERBOSE = 0             # will be set by Plagg.setConfig()
+VERBOSE = 0		# will be set by Plagg.setConfig()
 FOOTER = 1
 
 def encode(text):
@@ -53,10 +53,10 @@ class Plagg(xml.sax.handler.ContentHandler):
 	xml.sax.handler.ContentHandler.__init__(self)
 
     def setConfig(self, newspath, logging, footer):
-        self.newspath = newspath
-        global VERBOSE, FOOTER
-        VERBOSE = logging
-        FOOTER = footer
+	self.newspath = newspath
+	global VERBOSE, FOOTER
+	VERBOSE = logging
+	FOOTER = footer
 
     def startOPML(self):
 	xml.sax.parse(self.opmlfile, self)
@@ -148,9 +148,9 @@ class Plagg(xml.sax.handler.ContentHandler):
 	self.path = os.path.join(self.newspath, nick)
 
     def singleFeed(self, url, name):
-        """Handles a single feed URL by simulating an <outline> element"""
-        self.outline({'xmlurl': url, 'text': name})
-        self.endElement('outline')
+	"""Handles a single feed URL by simulating an <outline> element"""
+	self.outline({'xmlurl': url, 'text': name})
+	self.endElement('outline')
 
     def newEntry(self, entry):
 	if entry._title:

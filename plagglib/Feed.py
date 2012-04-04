@@ -170,16 +170,16 @@ class HTMLFeed(SimulatedFeed):
 	# resolve relative URIs
 	html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding, 'text/html')
 
-        if hasattr(f, 'headers'):
-            charsets = [c for c in feedparser._getCharacterEncoding(f.headers, html) if c]
-        else:
-            charsets = [self.encoding]
-        for charset in charsets:
-            try:
-                html = html.decode(charset)
-                break
-            except LookupError:
-                pass
+	if hasattr(f, 'headers'):
+	    charsets = [c for c in feedparser._getCharacterEncoding(f.headers, html) if c]
+	else:
+	    charsets = [self.encoding]
+	for charset in charsets:
+	    try:
+		html = html.decode(charset)
+		break
+	    except LookupError:
+		pass
 
 	# search for the regex
 	m = self.regex.search(html)

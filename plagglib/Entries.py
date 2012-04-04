@@ -109,9 +109,9 @@ class Entry:
 		self.tm = time.mktime(self.mdate[:8] + (-1, )) - tz	# convert date/time 9-tuple in UTC to timestamp
 		self.mdate = time.localtime(self.tm)	# convert timestamp to local 9-tuple
 
-        if Plagg.VERBOSE > 1:
-            import pprint
-            pprint.pprint(('new item', self.__dict__))
+	if Plagg.VERBOSE > 1:
+	    import pprint
+	    pprint.pprint(('new item', self.__dict__))
 
     def setEntry(self, title, body, footer=''):
 	self._title = self.title = title
@@ -180,8 +180,8 @@ class Entry:
 
 	# ignore entries in the future or older than 7 days
 	if self.tm:
-            now = time.time()
-            if self.tm + 7 * 86400 < now or self.tm > now:
+	    now = time.time()
+	    if self.tm + 7 * 86400 < now or self.tm > now:
 		return 0
 
 	fname = os.path.join(destdir, self.fname + ext)
