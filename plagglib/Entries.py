@@ -157,15 +157,9 @@ class Entry:
 	    return ''
 	return time.strftime('%H:%M:%S', self.mdate) + suffix
 
-    def logKey(self):
-	return self.channel['title']
-
     def logSummary(self):
 	return self.timestamp(': ') + \
 	    Plagg.encode(_markup.sub('', self._title) or self.fname)
-
-    def newKey(self):
-	return self.logKey()
 
     def newSummary(self):
 	return self.timestamp(': ') + \
@@ -231,19 +225,19 @@ class Entries:
 
     def processFeed(self, feed):
 	"""Processes each entry of a feed object.
-	Returns the number of new entries."""
+	Returns the new entries."""
+	self.new = []
 	if not feed.feed: return 0	# skip empty feeds
 	self.feed = feed
 	self.channel = feed.feed['channel']
+	self.name = self.channel.get('title', feed.name)
 	self.items = feed.feed['items']
-	entries = 0
 	# Process the entries
 	for item in self.items:
 	    if item.has_key('link'):
 		item['link'] = feed.replaceText('link', item['link'])
-	    if self.processItem(item):
-		entries += 1
-	return entries
+	    self.processItem(item)
+	return self.new
 
     def processItem(self, item):
 	"""Processes an entry for one RSS item. Subclasses must implement this."""
@@ -253,12 +247,11 @@ class Entries:
 class BlosxomEntries(Entries):
     """Creates Blosxom entries from a feed."""
 
-    def __init__(self, app, path):
-	self.app = app
+    def __init__(self, path):
 	self.fdir = path	# directory where entries go
 	self.fext = '.txt'	# file extension
 	self.logging = 0	# logging of new entries
-	self.oldKey = None
+	self.logged = False
 	# Create the directory if needed
 	if not os.path.isdir(path):
 	    os.makedirs(path)
@@ -271,16 +264,12 @@ class BlosxomEntries(Entries):
 	entry.setFromItem(self.feed, self.channel, item)
 	if not entry.write(self.fdir, self.fext):
 	    return
-
-	# tell Plagg about the new entry
-	self.app.newEntry(entry)
+	if entry._title:
+	    self.new.append(entry)
 
 	# logging
 	if self.logging:
-	    newKey = entry.logKey()
-	    if self.oldKey != newKey:
-		print Plagg.encode(newKey)
-		self.oldKey = newKey
+	    if not self.logged:
+		print Plagg.encode(self.name)
+		self.logged = True
 	    print '  ' + entry.logSummary()
-
-	return 1

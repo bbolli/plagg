@@ -1,7 +1,8 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
-import os, sys, time, xml.sax, httplib
+from __future__ import with_statement
+import os, sys, time, xml.sax, httplib, threading
 
 __version__ = "2.0"
 
@@ -48,8 +49,10 @@ class Plagg(xml.sax.handler.ContentHandler):
 	self.opmlfile = opmlfile
 	self.nicks = nicks
 	self.logging = self.errors = 0
-	self.newentries = {}
+	self.newentries = []
 	self.feed = None
+	self.threads = []
+	self.lock = threading.Lock()
 	xml.sax.handler.ContentHandler.__init__(self)
 
     def setConfig(self, newspath, logging, footer):
@@ -60,11 +63,12 @@ class Plagg(xml.sax.handler.ContentHandler):
 
     def startOPML(self):
 	xml.sax.parse(self.opmlfile, self)
+	for t in self.threads:
+	    t.join()
 
     def startElement(self, name, attrs):
 	if name == 'outline':
-	    # Normalize attribute names to lower case
-	    self.outline(dict([(k.lower(), v) for k, v in attrs.items()]))
+	    self.feed = self.createFeed(attrs)
 	elif self.feed and name == 'replace':
 	    self.feed.addReplacement(attrs.get('what'), attrs.get('from'), attrs.get('to', ''))
 
@@ -72,16 +76,14 @@ class Plagg(xml.sax.handler.ContentHandler):
 	"""Ends one outline element by processing the feed."""
 	if name != 'outline' or not self.feed: return
 
-	# process the feed
-	e = Entries.BlosxomEntries(self, self.path)
-	e.logging = VERBOSE
-	e.processFeed(self.feed)
+	# create a thread to process the feed
+	t = threading.Thread(target=self.processFeed, args=(self.feed,))
+	self.threads.append(t)
+	t.start()
 
-    def outline(self, attrs):
-	"""Handles the OPML outline start tag."""
-
-	# reset the feed dict
-	self.feed = None
+    def createFeed(self, attrs):
+	# Normalize attribute names to lower case
+	attrs = dict([(k.lower(), v) for k, v in attrs.items()])
 
 	# get common attributes
 	name = attrs.get('text') or attrs.get('title')
@@ -113,7 +115,19 @@ class Plagg(xml.sax.handler.ContentHandler):
 	else:
 	    return
 
-	# get this feed
+	feed.path = os.path.join(self.newspath, nick)
+	return feed
+
+    def processFeed(self, feed):
+	if self.fetchFeed(feed):
+	    e = Entries.BlosxomEntries(feed.path)
+	    e.logging = VERBOSE
+	    new = e.processFeed(feed)
+	    if new:
+		with self.lock:
+		    self.newentries.append((e.name, new))
+
+    def fetchFeed(self, feed):
 	try:
 	    feed.getFeed()
 	except httplib.HTTPException, e:
@@ -144,27 +158,22 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    if 'bozo_exception' in feed.feed:
 		print feed.feed['bozo_exception']
 
-	self.feed = feed
-	self.path = os.path.join(self.newspath, nick)
+	return True
 
     def singleFeed(self, url, name):
-	"""Handles a single feed URL by simulating an <outline> element"""
-	self.outline({'xmlurl': url, 'text': name})
-	self.endElement('outline')
-
-    def newEntry(self, entry):
-	if entry._title:
-	    self.newentries.setdefault(entry.newKey(), []).append(entry)
+	"""Handles a single feed URL"""
+	feed = self.createFeed({'xmlurl': url, 'text': name})
+	if feed:
+	    self.processFeed(feed)
 
     def newEntries(self):
 	body = []
-	for c in self.newentries.keys():
-	    body.append('* ' + c)
-	    for e in self.newentries[c]:
+	for feed, entries in self.newentries:
+	    body.append('* ' + feed)
+	    for e in entries:
 		body.append('  - %s' % e.newSummary())
 	if body:
 	    e = Entries.Entry()
 	    e.setEntry('Latest news (%s)' % time.strftime('%H:%M:%S'), u'\n'.join(body))
-	    e.setMeta(markup='markdown')
-	    e.setMeta(source='plagg')
+	    e.setMeta(markup='markdown', source='plagg')
 	    e.write(self.newspath, '.txt', overwrite=True, fname='Latest')
