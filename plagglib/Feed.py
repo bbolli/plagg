@@ -11,6 +11,12 @@ CACHE_DIR = '.cache'
 if hasattr(socket, 'setdefaulttimeout'):
     socket.setdefaulttimeout(20)
 
+# feedparser shouldn't filter <iframe> elements
+try:
+    feedparser._HTMLSanitizer.acceptable_elements.add('iframe')
+except:
+    pass
+
 
 class Feed:
     """Abstract Feed class.
@@ -94,20 +100,22 @@ class SimulatedFeed(Feed):
     <link>%(uri)s</link>
     <item>
       <title>%(itemTitle)s</title>
-      <description><p><img src="%(itemLink)s" /></p>%(itemBody)s</description>
+      <description>%(item)s\n%(itemBody)s</description>
     </item>
   </channel>
 </rss>"""
 
     def __init__(self, attrs, name, uri):
 	Feed.__init__(self, attrs, name, uri)
-	self.itemLink = ''
+	self.imgLink = ''
+	self.iframe = ''
 	self.itemTitle = ''
 	self.itemBody = ''
 
     def generateFeed(self):
+	self.item = self.iframe or '<p><img src="%s" /></p>' % self.imgLink
 	if self.itemBody and not self.itemBody.startswith('<'):
-	    self.itemBody = '<p>' + self.itemBody + '</p>'
+	    self.itemBody = '<p>%s</p>' % self.itemBody
 	self.itemBody = Plagg.decode(self.itemBody)
 	rss = self.RSS_TEMPLATE % self.__dict__
 	rss = Plagg.encode(rss)
@@ -186,7 +194,8 @@ class HTMLFeed(SimulatedFeed):
 	if m:
 	    try:
 		if m.groupdict():	# new-style named groups regex
-		    self.itemLink = m.group('link')
+		    self.imgLink = m.group('link')
+		    self.iframe = m.group('iframe')
 		    self.itemTitle = m.group('title')
 		    if m.group('body'):
 			# strip whitespace inside href attributes (for APOD)
@@ -195,7 +204,7 @@ class HTMLFeed(SimulatedFeed):
 			    m.group('body')
 			)
 		else:			# old-style numbered groups
-		    self.itemLink = m.group(1)
+		    self.imgLink = m.group(1)
 		    self.itemTitle = m.group(2)
 	    except IndexError:
 		pass
@@ -206,46 +215,46 @@ class HTMLFeed(SimulatedFeed):
 
     def getFeed(self):
 	self.getLink()
-	if not self.itemLink:
+	if not self.imgLink and not self.iframe:
 	    return
 
 	# If the savepath and saveurl attributes are present,
-	# save the linked-to item and adjust the itemLink to
+	# save the linked-to item and adjust the imgLink to
 	# point to the local copy. Allow to fake the referrer
 	# while getting the remote file.
-	if self.attrs.get('savepath') and self.attrs.get('saveurl'):
-	    link = self.replaceText('link', self.itemLink)
+	if self.imgLink and self.attrs.get('savepath') and self.attrs.get('saveurl'):
+	    link = self.replaceText('link', self.imgLink)
 	    self.replacements = [r for r in self.replacements if r[0] != 'link']
 	    basename = re.search('([^/]+)$', link).group(1)
 	    localfile = os.path.join(self.attrs['savepath'], basename)
 	    # only get and save the file if it doesn't exist yet
 	    if not os.path.isfile(localfile):
 		req = urllib2.Request(link)
-		req.add_header('Referer', self.attrs.get('referrer') or self.uri or self.itemLink)
+		req.add_header('Referer', self.attrs.get('referrer') or self.uri or self.imgLink)
 		image = urllib2.urlopen(req).read()
 		f = file(localfile, 'wb')
 		f.write(image)
 		f.close()
-	    # adjust the itemLink in every case
-	    self.itemLink = self.attrs['saveurl'] + '/' + basename
+	    # adjust the imgLink in every case
+	    self.imgLink = self.attrs['saveurl'] + '/' + basename
 
 	self.generateFeed()
 
 
 class ComputedFeed(HTMLFeed):
-    """Builds the itemLink out of arbitrary Python statements."""
+    """Builds the imgLink out of arbitrary Python statements."""
 
     def __init__(self, attrs, name, uri, suite):
 	SimulatedFeed.__init__(self, attrs, name, uri)
 	self.suite = suite
 
     def getLink(self):
-	"""Execute the suite which should set at least self.itemLink"""
+	"""Execute the suite which should set at least self.imgLink"""
 	try:
 	    exec self.suite
 	except Exception, e:
 	    sys.stderr.write("%s in suite\n\n----\n%s\n----\n" % (str(e), self.suite))
-	    self.itemLink = ''
+	    self.imgLink = ''
 	    return
 	if not self.itemTitle:
-	    self.itemTitle = re.search('([^/]+)(?:\.\w+)?$', self.itemLink).group(1)
+	    self.itemTitle = re.search('([^/]+)(?:\.\w+)?$', self.imgLink).group(1)
