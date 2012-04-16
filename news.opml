@@ -10,7 +10,7 @@
 	<body>
 		<outline text="News">
 			<outline text="slashdot" type="rss" htmlUrl="http://slashdot.org/" xmlUrl="http://rss.slashdot.org/Slashdot/slashdot">
-				<!--replace what="body" from="&lt;[pa].+|\n" to=""/-->
+				<replace what="body" from="(?is)(&lt;iframe.*?/iframe&gt;|&lt;img.*? /&gt;)"/>
 			</outline>
 			<outline text="Heise" type="rss" htmlUrl="http://www.heise.de/" xmlUrl="http://www.heise.de/newsticker/heise-atom.xml"/>
 			<outline text="Linux Weekly News" nick="lwn" type="rss" htmlUrl="http://lwn.net/" xmlUrl="http://lwn.net/headlines/rss">
