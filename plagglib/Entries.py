@@ -110,8 +110,7 @@ class Entry:
 		self.mdate = time.localtime(self.tm)	# convert timestamp to local 9-tuple
 
 	if Plagg.VERBOSE > 1:
-	    import pprint
-	    pprint.pprint(('new item', self.__dict__))
+	    Plagg.pprint(('new item', self.__dict__))
 
     def setEntry(self, title, body, footer=''):
 	self._title = self.title = title
@@ -269,7 +268,6 @@ class BlosxomEntries(Entries):
 
 	# logging
 	if self.logging:
-	    if not self.logged:
-		print Plagg.encode(self.name)
-		self.logged = True
-	    print '  ' + entry.logSummary()
+	    name = '' if self.logged else Plagg.encode(self.name) + '\n'
+	    self.logged = True
+	    Plagg.pprint(name + '  ' + entry.logSummary())

@@ -3,6 +3,7 @@ corresponding to the items in the feeds."""
 
 from __future__ import with_statement
 import os, sys, time, xml.sax, httplib, threading
+import pprint as _pprint
 
 __version__ = "2.0"
 
@@ -12,6 +13,7 @@ ENCODING = 'utf-8'	# default character encoding, used by Feed.py and Entries.py
 
 VERBOSE = 0		# will be set by Plagg.setConfig()
 FOOTER = 1
+pprint = None
 
 def encode(text):
     """Converts a unicode string to its encoded equivalent."""
@@ -53,6 +55,8 @@ class Plagg(xml.sax.handler.ContentHandler):
 	self.feed = None
 	self.threads = []
 	self.lock = threading.Lock()
+	global pprint
+	pprint = self.pprint
 	xml.sax.handler.ContentHandler.__init__(self)
 
     def setConfig(self, newspath, logging, footer):
@@ -60,6 +64,13 @@ class Plagg(xml.sax.handler.ContentHandler):
 	global VERBOSE, FOOTER
 	VERBOSE = logging
 	FOOTER = footer
+
+    def pprint(self, obj):
+	with self.lock:
+	    if type(obj) in (str, unicode):
+		print obj
+	    else:
+		_pprint.pprint(obj)
 
     def startOPML(self):
 	xml.sax.parse(self.opmlfile, self)
@@ -136,8 +147,9 @@ class Plagg(xml.sax.handler.ContentHandler):
 	except Exception, e:
 	    import traceback
 	    if VERBOSE > 1:
-		sys.stderr.write("Feed: %s (%s)\n" % (feed.name.encode(ENCODING, 'replace'), feed.uri))
-		traceback.print_exc()
+		with self.lock:
+		    sys.stderr.write("Feed: %s (%s)\n" % (feed.name.encode(ENCODING, 'replace'), feed.uri))
+		    traceback.print_exc()
 		self.errors += 1
 	    else:
 		e_str = str(e).lower()
@@ -153,10 +165,10 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    return
 
 	if VERBOSE > 2:
-	    import pprint
-	    pprint.pprint(feed.feed)
-	    if 'bozo_exception' in feed.feed:
-		print feed.feed['bozo_exception']
+	    with self.lock:
+		_pprint.pprint(feed.feed)
+		if 'bozo_exception' in feed.feed:
+		    print feed.feed['bozo_exception']
 
 	return True
 
