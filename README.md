@@ -272,6 +272,9 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
   - Make tidying the entry body optional
   - Gracefully handle OSErrors while calling tidy
   - Add the missing "ignoredate" documentation
+* Version 2.2, 2012-07-20
+  - Process the feeds in parallel
+  - Allow computed feeds to generate `<iframe>`s instead of images
 
 
 ## 5. TODO
