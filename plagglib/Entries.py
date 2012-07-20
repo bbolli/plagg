@@ -161,7 +161,7 @@ class Entry:
 	    Plagg.encode(_markup.sub('', self._title) or self.fname)
 
     def newSummary(self):
-	return self.timestamp(': ') + \
+	return self.timestamp(u'\N{EN SPACE}') + \
 	    _linktag('#' + self._id, self._title)
 
     def write(self, destdir, ext, overwrite=False, fname=None):
