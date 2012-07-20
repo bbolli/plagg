@@ -118,7 +118,7 @@ Example:
     />
 
 Please keep in mind that in the actual OPML file, the linefeeds have to be
-escaped as <code>&#10;</code>.
+escaped as <code>&amp;#10;</code>.
 
 ### 3.4. Saving scraped bits
 
