@@ -42,7 +42,7 @@
 		</outline>
 		<outline text="Blogs">
 		        <outline text="Familie &amp; Fröinde">
-				<outline text="Michael" type="rss" htmlUrl="http://blog.bolli.us/" xmlUrl="http://blog.bolli.us/feed/0"/>
+				<outline text="Michael" type="rss" htmlUrl="http://blog.bolli.us/" xmlUrl="http://blog.bolli.us/feed/"/>
 				<outline text="Dinah" type="rss" htmlUrl="http://dinah-in-the-usa.blogspot.com/" xmlUrl="http://dinah-in-the-usa.blogspot.com/feeds/posts/default"/>
 				<outline text="Bärni" nick="baerni" type="rss" htmlUrl="http://blog.nostromo.ch/" xmlUrl="http://blog.nostromo.ch/3b/atom.xml"/>
 				<outline text="Chris" type="rss" htmlUrl="http://www.chrisbuergi.ch/" xmlUrl="http://www.chrisbuergi.ch/blog/?feed=rss2" hours="6"/>
@@ -73,7 +73,7 @@
 				<outline text="Asa Dotzler" nick="asad" type="rss" htmlUrl="http://weblogs.mozillazine.org/asa/" xmlUrl="http://weblogs.mozillazine.org/asa/index.rdf"/>
 				<!-- throws an exception! outline text="Ben Goodger" nick="beng" type="rss" htmlUrl="http://weblogs.mozillazine.org/ben/" xmlUrl="http://weblogs.mozillazine.org/ben/index.rdf"/ -->
 				<!-- name not known! outline text="Blake Ross" nick="blaker" type="rss" htmlUrl="http://blakeross.com/" xmlUrl="http://blakeross.com/wp-rss2.php"/ -->
-				<outline text="Gerv Markham" nick="gerv" type="rss" htmlUrl="http://weblogs.mozillazine.org/gerv/" xmlUrl="http://weblogs.mozillazine.org/gerv/index.rdf"/>
+				<outline text="Gerv Markham" nick="gerv" type="rss" htmlUrl="http://blog.gerv.net" xmlUrl="http://blog.gerv.net/feed"/>
 				<outline text="Robert O&apos;Callahan" nick="roc" type="rss" htmlUrl="http://weblogs.mozillazine.org/roc/" xmlUrl="http://weblogs.mozillazine.org/roc/index.rdf"/>
 				<outline text="Mozilla WebDev" nick="webdev" type="rss" htmlUrl="http://blog.mozilla.com/webdev/" xmlUrl="http://blog.mozilla.com/webdev/feed/" tidy="no"/>
 				<outline text="Mozilla Hacks" nick="mozhacks" type="rss" htmlUrl="https://hacks.mozilla.com/" xmlUrl="https://hacks.mozilla.org/feed/" tidy="no"/>
@@ -97,7 +97,7 @@
 				<replace what="link" from="/xuf" to="/uf"/>
 			</outline>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/"
-				regex="src=&quot;(?P&lt;link&gt;http://cdn.svcs.c2.uclick.com/c2/(?P&lt;title&gt;[0-9a-f]+)\?width=\d+)"
+				regex="&lt;meta content=&quot;(http://.*/([0-9a-f]+))&quot; name=.twitter:image"
 				hours="7-10"/>
 			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
 				hours="7-10" ignoredate="yes"/>
