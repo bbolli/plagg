@@ -77,10 +77,6 @@ Example:
 The `htmlUrl` attribute is not used by `plagg` itself, but by `opml.xsl`, which
 I use to generate my [blogroll](http://drbeat.li/news/news.opml).
 
-If you need support for Atom 1.0 feeds and have installed a feedparser older
-than version 4, please apply the patch from
-http://fucoder.com/wp-content/feedparser/feedparser-atom10.patch.
-
 ### 3.2. HTML scraping
 
 Set the `type` to `"x-plagg-html"`. In this case, plagg reads the HTML page
