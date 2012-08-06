@@ -5,7 +5,13 @@ import feedparser	# needs at least version 3 beta 22!
 import Plagg
 
 USER_AGENT = 'plagg/%s (+http://drbeat.li/py/plagg/)' % Plagg.__version__
-CACHE_DIR = '.cache'
+
+try:
+    CACHE_DIR = [os.environ['XDG_CACHE_HOME']]
+except KeyError:
+    CACHE_DIR = [os.path.expanduser('~'), '.cache']
+CACHE_DIR.append('plagg')
+CACHE_DIR = os.path.join(*CACHE_DIR)
 
 # set a global socket timeout of 20s
 if hasattr(socket, 'setdefaulttimeout'):

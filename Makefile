@@ -27,6 +27,6 @@ test: clean
 	./plagg -vvv -d t -fF http://staff.tumblr.com/rss tumblr >>log 2>&1
 
 clean:
-	-rm -rf .cache t log
+	-rm -rf ~/.cache/plagg t log
 
 # vim: set noet:
