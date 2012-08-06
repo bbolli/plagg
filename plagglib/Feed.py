@@ -11,9 +11,16 @@ CACHE_DIR = '.cache'
 if hasattr(socket, 'setdefaulttimeout'):
     socket.setdefaulttimeout(20)
 
-# feedparser shouldn't filter <iframe> elements
+# feedparser shouldn't filter <iframe> and HTML5 elements
 try:
     feedparser._HTMLSanitizer.acceptable_elements.add('iframe')
+    feedparser._HTMLSanitizer.acceptable_elements.add('article')
+    feedparser._HTMLSanitizer.acceptable_elements.add('section')
+    feedparser._HTMLSanitizer.acceptable_elements.add('header')
+    feedparser._HTMLSanitizer.acceptable_elements.add('footer')
+    feedparser._HTMLSanitizer.acceptable_elements.add('aside')
+    feedparser._HTMLSanitizer.acceptable_elements.add('audio')
+    feedparser._HTMLSanitizer.acceptable_elements.add('video')
 except:
     pass
 
