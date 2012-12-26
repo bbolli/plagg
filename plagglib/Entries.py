@@ -67,10 +67,19 @@ class Entry:
 	    body = '<p>' + body + '</p>'
 	self.body = body
 
-	# title and link
+	# title
 	title = _unescape(item.get('title', '').replace('\n', ' ')).strip()
-	self._title = feed.replaceText('title', title)
+	title = feed.replaceText('title', title)
+	# remove the title if it matches the start of the body (for tumblr quotes)
+	if len(title) > 20 and title[0] == title[-1] == '"':
+	    title = title[1:-1].rstrip('.')
+	    if title in self.body:
+		title = ''
+	self._title = title
+
+	# link
 	self._link = item.get('link')
+
 	# if the body starts with a link, use it and delete it from the body
 	m = _link.match(self.body)
 	if m:
