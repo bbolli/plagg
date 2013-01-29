@@ -199,6 +199,8 @@ class HTMLFeed(SimulatedFeed):
 	    try:
 		html = html.decode(charset)
 		break
+	    except UnicodeDecodeError:
+		pass
 	    except LookupError:
 		pass
 
