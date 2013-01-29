@@ -13,6 +13,8 @@ ENCODING = 'utf-8'	# default character encoding, used by Feed.py and Entries.py
 
 VERBOSE = 0		# will be set by Plagg.setConfig()
 FOOTER = 1
+OLD_ENTRIES = 0
+
 pprint = None
 
 def encode(text):
@@ -59,11 +61,12 @@ class Plagg(xml.sax.handler.ContentHandler):
 	pprint = self.pprint
 	xml.sax.handler.ContentHandler.__init__(self)
 
-    def setConfig(self, newspath, logging, footer):
+    def setConfig(self, newspath, logging, footer, old_entries):
 	self.newspath = newspath
-	global VERBOSE, FOOTER
+	global VERBOSE, FOOTER, OLD_ENTRIES
 	VERBOSE = logging
 	FOOTER = footer
+	OLD_ENTRIES = old_entries
 
     def pprint(self, obj):
 	with self.lock:

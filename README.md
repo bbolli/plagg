@@ -28,7 +28,7 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
 
 ### 2.1. Synopsis
 
-    plagg -fFnvVh [-d newsdir] [opmlfile [nickname ...]]
+    plagg -fFnovVh [-d newsdir] [opmlfile [nickname ...]]
 
 ### 2.2. Options
 
@@ -38,6 +38,7 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
       mandatory and indicates the name of the folder within _newsdir_ where
       the entries get written.
 * -n: Write a file _newsdir_/`Latest.txt` that contains the new entries.
+* -o: Also generate entries older than one week. These are normally suppressed.
 * -v: Be verbose. May be repeated for additional effect.
 * -V: Display version information and exit.
 * -h: Display usage information and exit.

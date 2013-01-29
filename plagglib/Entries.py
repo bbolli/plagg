@@ -183,7 +183,9 @@ class Entry:
 	# ignore entries in the future or older than 7 days
 	if self.tm:
 	    now = time.time()
-	    if self.tm + 7 * 86400 < now or self.tm > now:
+	    if self.tm > now:
+		return 0
+	    if not Plagg.OLD_ENTRIES and self.tm + 7 * 86400 < now:
 		return 0
 
 	fname = os.path.join(destdir, self.fname + ext)
