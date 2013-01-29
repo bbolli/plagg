@@ -276,6 +276,13 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
 * Version 2.2, 2012-07-20
   - Process the feeds in parallel
   - Allow computed feeds to generate `<iframe>`s instead of images
+* Version 2.3, 2013-01-29
+  - Add option -o to generate entries older than one week
+  - Remove the entry title if it matches the start of the body
+  - Follow the [XDG recommendations][XDG] for the cache location
+  - Don't filter new HTML5 elements
+
+[XDG]: http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
 
 ## 5. TODO
