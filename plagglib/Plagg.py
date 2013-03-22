@@ -130,6 +130,11 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    return
 
 	feed.path = os.path.join(self.newspath, nick)
+
+	# disable the cache if only some feeds are requested
+	if self.nicks:
+	    feed.use_cache = False
+
 	return feed
 
     def processFeed(self, feed):

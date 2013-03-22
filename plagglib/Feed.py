@@ -48,6 +48,7 @@ class Feed:
 	self.cachefile = os.path.join(CACHE_DIR, digest)
 	self.etag = None
 	self.modified = None
+	self.use_cache = True
 
 	# enable feedparser debugging
 	if Plagg.VERBOSE > 2:
@@ -68,12 +69,16 @@ class Feed:
 	return text
 
     def loadCache(self):
+	if not self.use_cache:
+	    return
 	try:
 	    _uri, self.etag, self.modified = pickle.load(open(self.cachefile))
 	except Exception, e:
 	    self.etag = self.modified = None
 
     def saveCache(self, etag, mod):
+	if not self.use_cache:
+	    return
 	try:
 	    if not os.path.isdir(CACHE_DIR):
 		os.makedirs(CACHE_DIR)
