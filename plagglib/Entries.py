@@ -1,6 +1,7 @@
 "Entries.py -- make blog entries from a feed object"
 
 import sys, os, re, time, subprocess
+from urlparse import urlsplit
 import Plagg		# for default encoding and config
 
 
@@ -157,6 +158,13 @@ class Entry:
 		s.append('meta-%s: %s' % m)
 	    s.append('')
 	s.append(self.body)
+	if self.item and self.item.get('media_content'):
+	    s.append('<p class="blosxomMedia">')
+	    for c in self.item['media_content']:
+		url = c['url']
+		name = urlsplit(url).path.split('/')[-1]
+		s.append('<a href="%s">%s</a>' % (url, name))
+	    s.append('</p>')
 	s.append(self.footer)
 	return Plagg.encode(u'\n'.join(map(Plagg.decode, s)))
 
