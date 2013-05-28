@@ -187,13 +187,15 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    self.processFeed(feed)
 
     def newEntries(self):
-	body = []
+	body = ['<ul>']
 	for feed, entries in self.newentries:
-	    body.append('* ' + feed)
+	    body.append(u'  <li>%s</li>\n  <ul>' % feed)
 	    for e in entries:
-		body.append('  - %s' % e.newSummary())
-	if body:
+		body.append(u'    <li>%s</li>' % e.newSummary())
+	    body.append('  </ul>')
+	body.append('</ul>')
+	if len(body) > 2:
 	    e = Entries.Entry()
 	    e.setEntry('Latest news (%s)' % time.strftime('%H:%M:%S'), u'\n'.join(body))
-	    e.setMeta(markup='markdown', source='plagg')
+	    e.setMeta(source='plagg')
 	    e.write(self.newspath, '.txt', overwrite=True, fname='Latest')
