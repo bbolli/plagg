@@ -1,6 +1,6 @@
 ALL: plagg.tar.gz README.inc
 
-.PHONY: dist install test clean
+.PHONY: dist release install test clean
 
 source := $(shell cat MANIFEST)
 
@@ -18,6 +18,18 @@ README: README.html
 
 dist: ${source}
 	python setup.py sdist
+
+# provide a Regex-escaped variant of $(V) for grep
+VE := $(subst .,\.,$(V))
+
+release:
+	grep -q 'Version $(VE)' README.md || \
+		{ echo "No version $(V) in README.md"; exit 1; }
+	grep __version__ plagglib/Plagg.py | grep -q '$(VE)' || \
+		{ echo "No version $(V) in plagglib/Plagg.py"; exit 1; }
+	git tag | grep -q '$(VE)' || \
+		{ git commit -am"Version $(V)"; git tag v$(V) -m v$(V); }
+	make dist
 
 install: plagg.tar.gz
 	su -c "python setup.py install"
