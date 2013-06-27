@@ -281,6 +281,11 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
   - Remove the entry title if it matches the start of the body
   - Follow the [XDG recommendations][XDG] for the cache location
   - Don't filter new HTML5 elements
+* Version 2.4, 2013-06-27
+  - Disable the HTTP cache if only some feeds are requested
+  - Add support for media:content links
+  - Don't use Markdown for Latest.txt
+  - Provide a "release" target in the Makefile
 
 [XDG]: http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
