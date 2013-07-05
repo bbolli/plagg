@@ -87,7 +87,10 @@
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/fast/"
 				regex="src=&quot;(http://www\.dilbert\.com/dyn/str_strip[\d/]+/(\d+)\.strip\.[\w/.]+)&quot;"
-				hours="7-10"/>
+				hours="7-10"
+			>
+				<replace what="link" from="\.print" to = ""/>
+			</outline>
 			<outline text="Garfield" type="x-plagg-computed" htmlUrl="http://garfield.ucomics.com"
 				commands="import time&#10;tm = time.gmtime()&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.imgLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
 				hours="7-8"/>

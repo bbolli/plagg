@@ -226,6 +226,8 @@ class HTMLFeed(SimulatedFeed):
 		else:			# old-style numbered groups
 		    self.imgLink = m.group(1)
 		    self.itemTitle = m.group(2)
+		# run the link replacements
+		self.imgLink = self.replaceText('link', self.imgLink)
 	    except IndexError:
 		pass
 	else:
@@ -243,9 +245,7 @@ class HTMLFeed(SimulatedFeed):
 	# point to the local copy. Allow to fake the referrer
 	# while getting the remote file.
 	if self.imgLink and self.attrs.get('savepath') and self.attrs.get('saveurl'):
-	    link = self.replaceText('link', self.imgLink)
-	    self.replacements = [r for r in self.replacements if r[0] != 'link']
-	    basename = re.search('([^/]+)$', link).group(1)
+	    basename = os.path.split(self.imgLink)[1]
 	    localfile = os.path.join(self.attrs['savepath'], basename)
 	    # only get and save the file if it doesn't exist yet
 	    if not os.path.isfile(localfile):
