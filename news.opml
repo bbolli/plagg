@@ -62,16 +62,18 @@
 			<outline text="Cringely" type="rss" htmlUrl="http://www.cringely.com/" xmlUrl="http://www.cringely.com/feed/"/>
 			<outline text="Django" type="rss" htmlUrl="http://www.djangoproject.com/weblog/" xmlUrl="http://www.djangoproject.com/rss/weblog/"/>
 			<outline text="jhague" type="rss" htmlUrl="http://prog21.dadgum.com/" xmlUrl="http://prog21.dadgum.com/atom.xml"/>
+			<outline text="Krebs on Security" nick="krebs" type="rss" htmlUrl="http://krebsonsecurity.com/" xmlUrl="http://krebsonsecurity.com/feed/atom/"/>
 			<outline text="Mac">
 				<outline text="Daring Fireball" nick="fireball" type="rss" htmlUrl="http://daringfireball.net/" xmlUrl="http://daringfireball.net/index.xml"/>
 				<outline text="Webkit" type="rss" htmlUrl="http://webkit.org/blog/" xmlUrl="http://webkit.org/blog/feed/atom/"/>
+				<outline text="llvm" type="rss" htmlUrl="http://blog.llvm.org/" xmlUrl="http://blog.llvm.org/feeds/posts/default"/>
 				<outline text="rentzsch" type="rss" htmlUrl="http://rentzsch.tumblr.com/" xmlUrl="http://rentzsch.tumblr.com/rss" tidy="no"/>
 				<outline text="siracusa" type="rss" htmlUrl="http://siracusa.tumblr.com/" xmlUrl="http://siracusa.tumblr.com/rss" tidy="no"/>
 				<outline text="marco" type="rss" htmlUrl="http://marco.tumblr.com/" xmlUrl="http://marco.tumblr.com/rss" tidy="no"/>
 				<outline text="chipotle" type="rss" htmlUrl="http://chipotle.tumblr.com/" xmlUrl="http://chipotle.tumblr.com/rss" tidy="no"/>
 			</outline>
 			<outline text="Mozilla &amp;c">
-				<outline text="Asa Dotzler" nick="asad" type="rss" htmlUrl="http://weblogs.mozillazine.org/asa/" xmlUrl="http://weblogs.mozillazine.org/asa/index.rdf"/>
+				<outline text="Asa Dotzler" nick="asad" type="rss" htmlUrl="http://asadotzler.com/" xmlUrl="http://asadotzler.com/feed/"/>
 				<!-- throws an exception! outline text="Ben Goodger" nick="beng" type="rss" htmlUrl="http://weblogs.mozillazine.org/ben/" xmlUrl="http://weblogs.mozillazine.org/ben/index.rdf"/ -->
 				<!-- name not known! outline text="Blake Ross" nick="blaker" type="rss" htmlUrl="http://blakeross.com/" xmlUrl="http://blakeross.com/wp-rss2.php"/ -->
 				<outline text="Gerv Markham" nick="gerv" type="rss" htmlUrl="http://blog.gerv.net" xmlUrl="http://blog.gerv.net/feed"/>
