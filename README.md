@@ -295,6 +295,9 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
   - Add support for media:content links
   - Don't use Markdown for Latest.txt
   - Provide a "release" target in the Makefile
+* Version 2.5, 2014-03-18
+  - Remove the entry title if it appears in the body
+  - Add support to force using an entry's summary
 
 [XDG]: http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 
