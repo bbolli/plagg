@@ -23,6 +23,8 @@ dist: ${source}
 VE := $(subst .,\.,$(V))
 
 release:
+	[ "$(V)" ] || \
+		{ echo "Missing parameter V=version"; exit 1; }
 	grep -q 'Version $(VE)' README.md || \
 		{ echo "No version $(V) in README.md"; exit 1; }
 	grep __version__ plagglib/Plagg.py | grep -q '$(VE)' || \
