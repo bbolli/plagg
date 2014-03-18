@@ -59,6 +59,7 @@ class Entry:
 
 	# body
 	body = (
+	    not feed.attrs.get('body') == 'summary' and
 	    item.get('content', [{}])[0].get('value') or
 	    item.get('description') or
 	    item.get('summary', '')

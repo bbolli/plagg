@@ -204,6 +204,15 @@ This is a new attribute of `<outline>`.
 The default value is "yes". If "yes", the entry body is run through `tidy`, an
 external tool that cleans up HTML. Tidy must be installed in `/usr/bin`.
 
+#### 3.5.6 Forcing to use the entry summary
+
+This is a new attribute of `<outline>`.
+
+**`body`="summary"**
+
+The default value is the empty string. If "summary", and the feed contains both
+the full article and a summary, use the summary instead of the full article.
+
 ### 3.6. Rendering the OPML file as XHTML
 
 The distribution tar file contains the XSL style sheet `opml.xsl` that transforms
