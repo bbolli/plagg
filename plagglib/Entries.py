@@ -76,6 +76,8 @@ class Entry:
 	    title = title[1:-1].rstrip('.')
 	    if title in self.body:
 		title = ''
+	elif title.endswith(u'...') and title[:-3] in self.body:
+	    title = ''
 	self._title = title
 
 	# link
