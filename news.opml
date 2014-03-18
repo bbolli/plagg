@@ -71,6 +71,7 @@
 				<outline text="siracusa" type="rss" htmlUrl="http://siracusa.tumblr.com/" xmlUrl="http://siracusa.tumblr.com/rss" tidy="no"/>
 				<outline text="marco" type="rss" htmlUrl="http://marco.tumblr.com/" xmlUrl="http://marco.tumblr.com/rss" tidy="no"/>
 				<outline text="chipotle" type="rss" htmlUrl="http://chipotle.tumblr.com/" xmlUrl="http://chipotle.tumblr.com/rss" tidy="no"/>
+				<outline text="loopinsight" type="rss" htmlUrl="http://www.loopinsight.com/" xmlUrl="http://www.loopinsight.com/feed/"/>
 			</outline>
 			<outline text="Mozilla &amp;c">
 				<outline text="Asa Dotzler" nick="asad" type="rss" htmlUrl="http://asadotzler.com/" xmlUrl="http://asadotzler.com/feed/"/>
@@ -79,7 +80,7 @@
 				<outline text="Gerv Markham" nick="gerv" type="rss" htmlUrl="http://blog.gerv.net" xmlUrl="http://blog.gerv.net/feed"/>
 				<outline text="Robert O&apos;Callahan" nick="roc" type="rss" htmlUrl="http://weblogs.mozillazine.org/roc/" xmlUrl="http://weblogs.mozillazine.org/roc/index.rdf"/>
 				<outline text="Mozilla WebDev" nick="webdev" type="rss" htmlUrl="http://blog.mozilla.com/webdev/" xmlUrl="http://blog.mozilla.com/webdev/feed/" tidy="no"/>
-				<outline text="Mozilla Hacks" nick="mozhacks" type="rss" htmlUrl="https://hacks.mozilla.com/" xmlUrl="https://hacks.mozilla.org/feed/" tidy="no"/>
+				<outline text="Mozilla Hacks" nick="mozhacks" type="rss" htmlUrl="https://hacks.mozilla.com/" xmlUrl="https://hacks.mozilla.org/feed/" tidy="no" body="summary"/>
 			</outline>
 		</outline>
 		<outline text="Photoblogs">
@@ -93,8 +94,8 @@
 			>
 				<replace what="link" from="\.print" to = ""/>
 			</outline>
-			<outline text="Garfield" type="x-plagg-computed" htmlUrl="http://garfield.ucomics.com"
-				commands="import time&#10;tm = time.gmtime()&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.imgLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
+			<outline text="Garfield" type="x-plagg-computed" htmlUrl="http://garfield.com"
+				commands="from time import strftime; self.itemTitle = strftime('%Y-%m-%d'); self.imgLink = 'http://garfield.com/uploads/strips/%s.jpg' % self.itemTitle"
 				hours="7-8"/>
 			<outline text="Userfriendly" nick="uf" type="x-plagg-html" htmlUrl="http://www.userfriendly.org/static/"
 				regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)&quot;"
@@ -103,7 +104,7 @@
 				<replace what="link" from="/xuf" to="/uf"/>
 			</outline>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/"
-				regex="&lt;meta content=&quot;(http://.*/([0-9a-f]+))&quot; name=.twitter:image"
+				regex=" class=.strip. src=.(http://.*?/([0-9a-f]+)\?width=900)."
 				hours="7-10"/>
 			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
 				hours="7-10" ignoredate="yes"/>
