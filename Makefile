@@ -19,19 +19,22 @@ README: README.html
 dist: ${source}
 	python setup.py sdist
 
+# get the version
+V := $(shell awk -F\" '/__version__/ { print $$2 }' <plagglib/Plagg.py)
+
 # provide a Regex-escaped variant of $(V) for grep
 VE := $(subst .,\.,$(V))
 
 release:
-	[ "$(V)" ] || \
-		{ echo "Missing parameter V=version"; exit 1; }
-	grep -q 'Version $(VE)' README.md || \
+	grep -q '^\* Version $(VE)' README.md || \
 		{ echo "No version $(V) in README.md"; exit 1; }
-	grep __version__ plagglib/Plagg.py | grep -q '$(VE)' || \
-		{ echo "No version $(V) in plagglib/Plagg.py"; exit 1; }
-	git tag | grep -q '$(VE)' || \
-		{ git commit -am"Version $(V)"; git tag v$(V) -m v$(V); }
-	make dist
+	if git tag | grep -q '^v$(VE)$$'; then \
+		echo "Version $(V) is already tagged"; exit 1; \
+	else \
+		git commit -am"Version $(V)" && \
+		git tag v$(V) -m v$(V) && \
+		make dist; \
+	fi
 
 install: plagg.tar.gz
 	su -c "python setup.py install"
