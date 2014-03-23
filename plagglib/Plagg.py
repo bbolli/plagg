@@ -126,9 +126,9 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    if not uri: return
 	    feed = Feed.RSSFeed(attrs, name, uri)
 	elif kind == 'x-plagg-html':
-	    uri, regex = attrs.get('htmlurl'), attrs.get('regex')
-	    if not uri or not regex: return
-	    feed = Feed.HTMLFeed(attrs, name, uri, regex)
+	    uri = attrs.get('htmlurl')
+	    if not uri: return
+	    feed = Feed.HTMLFeed(attrs, name, uri)
 	elif kind == 'x-plagg-computed':
 	    uri, suite = attrs.get('htmlurl'), attrs.get('commands')
 	    if not suite: return

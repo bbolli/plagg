@@ -26,8 +26,9 @@
 		</outline>
 		<outline text="Science">
 			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="http://antwrp.gsfc.nasa.gov/apod/"
-				regex="(?is)(&lt;img .*?src=&quot;(?P&lt;link&gt;http://.*?/image/\d{4}/.*?\..*?)&quot;|(?P&lt;iframe&gt;&lt;iframe .*?/iframe&gt;)).*?&lt;b&gt; *(?P&lt;title&gt;.*?) *&lt;/b&gt;\s*&lt;br /&gt;.*?Explanation: *&lt;/b&gt;(?P&lt;body&gt;.*?)&lt;p&gt;\s*&lt;center&gt;"
-				hours="8-10"/>
+				hours="8-10">
+				<regex><![CDATA[(?is)(<img .*?src="(?P<link>http://.*?/image/\d{4}/.*?\..*?)"|(?P<iframe><iframe .*?/iframe>)).*?<b> *(?P<title>.*?) *</b>\s*<br />.*?Explanation: *</b>(?P<body>.*?)<p>\s*<center>]]></regex>
+			</outline>
 			<outline text="Bad Astronomy" nick="badastro" type="rss" htmlUrl="http://www.slate.com/blogs/bad_astronomy" xmlUrl="http://www.slate.com/blogs/bad_astronomy.fulltext.all.10.rss"/>
 			<outline text="What if?" nick="whatif" type="rss" htmlUrl="http://what-if.xkcd.com/" xmlUrl="http://what-if.xkcd.com/feed.atom" tidy="no" ignoredate="yes">
 				<replace what="body" from=".h1.*?./h1."/>
@@ -89,23 +90,24 @@
 		</outline>
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/fast/"
-				regex="src=&quot;(http://www\.dilbert\.com/dyn/str_strip[\d/]+/(\d+)\.strip\.[\w/.]+)&quot;"
 				hours="7-10"
 			>
+				<regex>src="(http://www\.dilbert\.com/dyn/str_strip[\d/]+/(\d+)\.strip\.[\w/.]+)"</regex>
 				<replace what="link" from="\.print" to = ""/>
 			</outline>
 			<outline text="Garfield" type="x-plagg-computed" htmlUrl="http://garfield.com"
 				commands="from time import strftime; self.itemTitle = strftime('%Y-%m-%d'); self.imgLink = 'http://garfield.com/uploads/strips/%s.jpg' % self.itemTitle"
 				hours="7-8"/>
 			<outline text="Userfriendly" nick="uf" type="x-plagg-html" htmlUrl="http://www.userfriendly.org/static/"
-				regex="&lt;img alt=&quot;latest strip&quot; .* src=&quot;(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)&quot;"
 				hours="7-10"
 			>
+				<regex>&lt;img alt="latest strip" .* src="(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)"</regex>
 				<replace what="link" from="/xuf" to="/uf"/>
 			</outline>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/"
-				regex=" class=.strip. src=.(http://.*?/([0-9a-f]+)\?width=900)."
-				hours="7-10"/>
+				hours="7-10">
+				<regex> class=.strip. src=.(http://.*?/([0-9a-f]+)\?width=900).</regex>
+			</outline>
 			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
 				hours="7-10" ignoredate="yes"/>
 			<outline text="xkcd" type="rss" htmlUrl="http://xkcd.com/" xmlUrl="http://xkcd.com/rss.xml"/>

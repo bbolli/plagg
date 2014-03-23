@@ -157,12 +157,11 @@ class HTMLFeed(SimulatedFeed):
     third group 'body' returns the entry's body text. All relative links will
     already have been converted to absolute, and img tags will end with " />"."""
 
-    def __init__(self, attrs, name, uri, regex):
-	SimulatedFeed.__init__(self, attrs, name, uri)
-	self.regex = re.compile(regex, re.I)
-
     def getLink(self):
 	"""Reads the HTML page and extracts the link and title."""
+
+	if 'regex' not in self.attrs: return	# missing <regex> sub-element
+
 	self.loadCache()
 	try:
 	    f = feedparser._open_resource(self.uri, self.etag, self.modified, USER_AGENT, None, [], {})
@@ -218,7 +217,7 @@ class HTMLFeed(SimulatedFeed):
 		pass
 
 	# search for the regex
-	m = self.regex.search(html)
+	m = re.search(self.attrs['regex'], html, re.I)
 	if m:
 	    try:
 		if m.groupdict():	# new-style named groups regex
@@ -240,7 +239,7 @@ class HTMLFeed(SimulatedFeed):
 		pass
 	else:
 	    sys.stderr.write((u"Regex '%s' not found at %s:\n\n----\n%s----\n" % (
-		self.regex.pattern, self.uri, html
+		self.attrs['regex'], self.uri, html
 	    )).encode(self.encoding))
 
     def getFeed(self):
