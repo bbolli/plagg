@@ -54,9 +54,13 @@ class Feed:
 	if Plagg.VERBOSE > 2:
 	    feedparser._debug = 1
 
-    def getFeed(self):
-	"""Sets self.feed to a feedparser dictionary. Subclasses must implement this."""
-	raise NotImplementedError('Feed.getFeed()')
+    def addChildElement(self, name, attrs, content):
+	"""Handle an <outline> child element"""
+	if name == 'replace':
+	    self.addReplacement(attrs.get('what'), attrs.get('from'), attrs.get('to', ''))
+	else:
+	    # default: do as if it were an <outline> attribute
+	    self.attrs[name] = content
 
     def addReplacement(self, what, old, new):
 	if what and old:
@@ -67,6 +71,10 @@ class Feed:
 	for pattern, new in [r[1:] for r in self.replacements if r[0] == what]:
 	    text = pattern.sub(new, text)
 	return text
+
+    def getFeed(self):
+	"""Sets self.feed to a feedparser dictionary. Subclasses must implement this."""
+	raise NotImplementedError('Feed.getFeed()')
 
     def loadCache(self):
 	if not self.use_cache:

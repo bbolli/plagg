@@ -55,6 +55,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	self.logging = self.errors = 0
 	self.newentries = []
 	self.feed = None
+	self.attrstack = []
 	self.threads = []
 	self.lock = threading.Lock()
 	global pprint
@@ -81,14 +82,20 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    t.join()
 
     def startElement(self, name, attrs):
+	self.attrstack.append(attrs)
 	if name == 'outline':
 	    self.feed = self.createFeed(attrs)
-	elif self.feed and name == 'replace':
-	    self.feed.addReplacement(attrs.get('what'), attrs.get('from'), attrs.get('to', ''))
+	self.content = ''
+
+    def characters(self, content):
+	self.content += content
 
     def endElement(self, name):
-	"""Ends one outline element by processing the feed."""
-	if name != 'outline' or not self.feed: return
+	attrs = self.attrstack.pop()
+	if not self.feed: return
+	if name != 'outline':
+	    self.feed.addChildElement(name, attrs, self.content)
+	    return
 
 	# create a thread to process the feed
 	t = threading.Thread(target=self.processFeed, args=(self.feed,))
