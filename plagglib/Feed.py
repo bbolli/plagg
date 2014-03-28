@@ -73,7 +73,7 @@ class Feed:
 	    return
 	try:
 	    _uri, self.etag, self.modified = pickle.load(open(self.cachefile))
-	except Exception, e:
+	except Exception as e:
 	    self.etag = self.modified = None
 
     def saveCache(self, etag, mod):
@@ -84,7 +84,7 @@ class Feed:
 		os.makedirs(CACHE_DIR)
 	    # the URI is saved just for reference
 	    pickle.dump((self.uri, etag, mod), open(self.cachefile, 'w'))
-	except Exception, e:
+	except Exception as e:
 	    try:
 		os.unlink(self.cacheFile)
 	    except:
@@ -159,7 +159,7 @@ class HTMLFeed(SimulatedFeed):
 	try:
 	    f = feedparser._open_resource(self.uri, self.etag, self.modified, USER_AGENT, None, [], {})
 	    html = f.read()
-	except Exception, e:
+	except Exception as e:
 	    sys.stderr.write('Getting page %s: %s\n' % (self.uri, e))
 	    return
 
@@ -182,14 +182,14 @@ class HTMLFeed(SimulatedFeed):
 		try:
 		    import gzip, StringIO
 		    html = gzip.GzipFile(fileobj=StringIO.StringIO(html)).read()
-		except Exception, e:
+		except Exception as e:
 		    sys.stderr.write('Unzipping page %s: %s\n' % (self.uri, e))
 		    return
 	    elif ce == 'deflate':
 		try:
 		    import zlib
 		    html = zlib.decompress(html, -zlib.MAX_WBITS)
-		except Exception, e:
+		except Exception as e:
 		    sys.stderr.write('Inflating page %s: %s\n' % (self.uri, e))
 		    return
 
@@ -272,7 +272,7 @@ class ComputedFeed(HTMLFeed):
 	"""Execute the suite which should set at least self.imgLink"""
 	try:
 	    exec self.suite
-	except Exception, e:
+	except Exception as e:
 	    sys.stderr.write("%s in suite\n\n----\n%s\n----\n" % (str(e), self.suite))
 	    self.imgLink = ''
 	    return

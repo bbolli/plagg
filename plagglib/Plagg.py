@@ -149,10 +149,10 @@ class Plagg(xml.sax.handler.ContentHandler):
     def fetchFeed(self, feed):
 	try:
 	    feed.getFeed()
-	except httplib.HTTPException, e:
+	except httplib.HTTPException as e:
 	    sys.stderr.write(("Feed: %s (%s): %s\n" % (feed.name, feed.uri, e.__class__.__name__)).encode(ENCODING, 'replace'))
 	    return
-	except Exception, e:
+	except Exception as e:
 	    import traceback
 	    if VERBOSE > 1:
 		with self.lock:
