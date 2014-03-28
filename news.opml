@@ -106,7 +106,7 @@
 			<outline text="Userfriendly" nick="uf" type="x-plagg-html" htmlUrl="http://www.userfriendly.org/static/"
 				hours="7-10"
 			>
-				<regex>&lt;img alt="latest strip" .* src="(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)"</regex>
+				<regex>src="(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)"</regex>
 				<replace what="link" from="/xuf" to="/uf"/>
 			</outline>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/"
