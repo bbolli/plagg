@@ -81,29 +81,59 @@ I use to generate my [blogroll](http://drbeat.li/news/news.opml).
 ### 3.2. HTML scraping
 
 Set the `type` to `"x-plagg-html"`. In this case, plagg reads the HTML page
-whose URL is in the `htmlUrl` attribute. It then uses the `regex` attribute
-to extract an item title, a link and, optionally, a body.
-I use this type to grab a few comics off sites that don't provide an RSS feed.
+whose URL is in the `htmlUrl` attribute. There are two ways of specifying how to
+scrape: Using a regex or using XPath expressions.
+
+The result of the scraping is either an image link or an `<iframe>` tag, a title
+and optionally a body. The iframe, if any, overrides the image link.
+
+When the match happens against the page's HTML source, all relative URLs have
+already been converted to absolute ones, which means that you can't simply copy
+a link from a page's HTML source. `<img>` tags end with `" />"`.
+
+#### 3.2.1 Regex
+
+Define the `<regex>` child element of `<outline>` to extract an item title, an
+image link or an iframe and, optionally, a body. I use this type to grab a few
+comics off sites that don't provide an RSS feed.
 
 There are two ways to specify the regex:
 
-* Using named groups ("`(?P<name>...)`" regex syntax):
-  This requires you to define the regex using three named groups called
-  `link`, `title` and `body`, which are used as their name indicates (cf.
-  APOD). If you want to scrape an item body, you must use this kind of regex.
+* Using named groups ("`(?P<name>...)`" regex syntax): This requires you to
+  define the regex using three named groups called `link` or `iframe`, `title`
+  and `body`, which are used as their name indicates (cf. APOD). If you want to
+  scrape an item body, you must use this kind of regex.
 * Using numbered groups ("`(...)`" regex syntax): The first group defines the
   link, the second one defines the title (cf. Dilbert).
 
-In each case, at the moment the regex is matched against the page's HTML source,
-all relative URLs have already been converted to absolute ones, which means
-that you can't simply copy a regex from a page's HTML source.
+Example:
+
+    <outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/">
+        <regex>&lt;img src="(http://www\.dilbert\.com/comics/dilbert/archive/images/dilbert(\d+)\.[gj][ip][fg])"</regex>
+    </outline>
+
+Here, the whole `src` attribute (i.e. the outer set of parentheses) becomes the
+image link, and the number after "dilbert" becomes the entry title.
+
+#### 3.2.2 XPath
+
+Define the child elements `<image-xpath>` or `<iframe-xpath>`, `<title-xpath>`
+and optionally `<body-xpath>`.
+
+Each element's content is an XPath expression that is looked up in the HTML body
+of the page.
 
 Example:
 
-    <outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/"
-        regex="&lt;img src=&quot;(http://www\.dilbert\.com/comics/dilbert/archive/images/dilbert(\d+)\.[gj][ip][fg])&quot;"
-        hours="8-10"
-    />;
+    <outline text="EOPotD" type="x-plagg-html" htmlUrl="http://earthobservatory.nasa.gov/IOTD/">
+        <title-xpath>//div[@class='img-desc']/h3/a</title-xpath>
+        <image-xpath>//img[@class='lf']/@src</image-xpath>
+        <body-xpath>//div[@class='img-desc']//p</body-xpath>
+    </outline>
+
+The XPath expressions are limited to what the Python ElementTree implementation
+supports, plus `…/text()` to access an element's text content, and `…/@attr` to
+access an element's attribute value.
 
 ### 3.3. Computed items
 
@@ -113,7 +143,7 @@ and optionally `self.itemTitle` and `self.itemBody` (cf. Garfield)
 
 Example:
 
-    <outline text="Garfield" type="x-plagg-computed" link="http://garfield.ucomics.com"
+    <outline text="Garfield" type="x-plagg-computed" htmlUrl="http://garfield.ucomics.com"
         commands="import time&#10;tm = time.gmtime()&#10;self.itemTitle = '%02d%02d%02d' % (tm[0] % 100, tm[1], tm[2])&#10;self.itemLink = 'http://images.ucomics.com/comics/ga/%d/ga%s.gif' % (tm[0], self.itemTitle)"
         hours="8"
     />
@@ -312,3 +342,5 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
 ## 6. Author
 
 Beat Bolli `<me+plagg@drbeat.li>`, http://drbeat.li/py/plagg
+
+<!-- vim: set tw=80 et: -->
