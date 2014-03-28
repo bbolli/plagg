@@ -33,6 +33,11 @@
 			<outline text="What if?" nick="whatif" type="rss" htmlUrl="http://what-if.xkcd.com/" xmlUrl="http://what-if.xkcd.com/feed.atom" tidy="no" ignoredate="yes">
 				<replace what="body" from=".h1.*?./h1."/>
 			</outline>
+			<outline text="Earth Observatory Picture of the Day" nick="eopod" type="x-plagg-html" htmlUrl="http://earthobservatory.nasa.gov/IOTD/" hours="8-10">
+				<title-xpath>//div[@class='img-desc']/h3/a</title-xpath>
+				<image-xpath>//img[@class='lf']/@src</image-xpath>
+				<body-xpath>//div[@class='img-desc']//p</body-xpath>
+			</outline>
 		</outline>
 		<outline text="Articles">
 			<outline text="A List Apart" type="rss" htmlUrl="http://www.alistapart.com/" xmlUrl="http://www.alistapart.com/site/rss"/>

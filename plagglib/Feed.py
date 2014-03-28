@@ -1,6 +1,7 @@
 # Feed.py -- one configured feed
 
 import sys, os, re, socket, urllib2, pickle, hashlib
+import xml.etree.ElementTree as et
 import feedparser	# needs at least version 3 beta 22!
 import Plagg
 
@@ -29,6 +30,9 @@ try:
     feedparser._HTMLSanitizer.acceptable_elements.add('video')
 except:
     pass
+
+# regex to strip scripts from a page
+script_re = re.compile(r'(?is)<script.*?</script>')
 
 
 class Feed:
@@ -149,18 +153,19 @@ class SimulatedFeed(Feed):
 
 
 class HTMLFeed(SimulatedFeed):
-    """Extracts a single link from a HTML page and builds an ad-hoc feed
+    """Extracts a link or iframe from a HTML page and builds an ad-hoc feed
     object from it.
 
-    self.regex must contain one to three named groups. The group 'link' returns
-    the extracted link, the optional group 'title' contains the item title, the
-    third group 'body' returns the entry's body text. All relative links will
-    already have been converted to absolute, and img tags will end with " />"."""
+    There are two ways of matching the HTML content: by regex or by XPath."""
 
     def getLink(self):
-	"""Reads the HTML page and extracts the link and title."""
+	"""Reads the HTML page and extracts the link, title and body."""
 
-	if 'regex' not in self.attrs: return	# missing <regex> sub-element
+	for a in ('regex', 'image-xpath', 'iframe-xpath'):
+	    if a in self.attrs:
+		break
+	else:
+	    return	# mandatory child element missing
 
 	self.loadCache()
 	try:
@@ -216,8 +221,15 @@ class HTMLFeed(SimulatedFeed):
 	    except LookupError:
 		pass
 
-	# search for the regex
-	m = re.search(self.attrs['regex'], html, re.I)
+	if 'regex' in self.attrs:
+	    self.match_regex(html)
+	else:
+	    self.match_xpath(html)
+
+    def match_regex(self, html):
+	"""Search for the regex."""
+	regex = self.attrs['regex']
+	m = re.search(regex, html, re.I)
 	if m:
 	    try:
 		if m.groupdict():	# new-style named groups regex
@@ -239,8 +251,41 @@ class HTMLFeed(SimulatedFeed):
 		pass
 	else:
 	    sys.stderr.write((u"Regex '%s' not found at %s:\n\n----\n%s----\n" % (
-		self.attrs['regex'], self.uri, html
+		regex, self.uri, html
 	    )).encode(self.encoding))
+
+    def match_xpath(self, html):
+	"""Search for the content given by the {image,title,body,iframe}-xpath values."""
+
+	# remove scripts; they generally can't be parsed as XML
+	html = script_re.sub('', html)
+	try:
+	    root = et.fromstring(html)
+	except Exception as e:
+	    sys.stderr.write(u"Page at %s not parseable as XML: %s\n" % (self.uri, e))
+	    return
+
+	def _find(attrname):
+	    if attrname not in self.attrs: return None
+	    xpath = self.attrs[attrname]
+	    # handle text and attribute access which are not done by ElementTree
+	    accessf = lambda e: et.tostring(e)	# default: element as X(HT)ML
+	    if xpath.endswith('/text()'):	# text content
+		xpath = xpath[:-7]
+		accessf = lambda e: e.text
+	    elif '/@' in xpath:			# attribute value
+		xpath, attrname = xpath.split('/@', 1)
+		accessf = lambda e: e.get(attrname)
+	    for e in root.iterfind('.' + xpath):
+		return accessf(e)		# use only the first match
+	    sys.stderr.write((u"%s '%s' not found at %s:\n\n----\n%s----\n" % (
+		attrname, xpath, self.uri, html
+	    )).encode(self.encoding))
+
+	self.imgLink = _find('image-xpath')
+	self.itemTitle = _find('title-xpath')
+	self.itemBody = _find('body-xpath')
+	self.iframe = _find('iframe-xpath')
 
     def getFeed(self):
 	self.getLink()
