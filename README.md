@@ -82,7 +82,7 @@ I use to generate my [blogroll](http://drbeat.li/news/news.opml).
 
 Set the `type` to `"x-plagg-html"`. In this case, plagg reads the HTML page
 whose URL is in the `htmlUrl` attribute. There are two ways of specifying how to
-scrape: Using a regex or using XPath expressions.
+scrape: Using a regex or using [XPath][XPATH] expressions.
 
 The result of the scraping is either an image link or an `<iframe>` tag, a title
 and optionally a body. The iframe, if any, overrides the image link.
@@ -328,8 +328,13 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
 * Version 2.5, 2014-03-18
   - Remove the entry title if it appears in the body
   - Add support to force using an entry's summary
+* Version 3.0, 2014-03-28
+  - **Backwards-incompatible change:** move the scraping regex into its own
+    child element of `<outline>`
+  - Add support for [XPath][XPATH] scraping
 
 [XDG]: http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+[XPATH]: http://www.w3.org/TR/xpath/
 
 
 ## 5. TODO

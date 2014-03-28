@@ -5,7 +5,7 @@ from __future__ import with_statement
 import os, sys, time, xml.sax, httplib, threading
 import pprint as _pprint
 
-__version__ = "2.5"
+__version__ = "3.0"
 
 import Feed, Entries
 
