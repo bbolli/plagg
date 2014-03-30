@@ -1,8 +1,8 @@
-"Entries.py -- make blog entries from a feed object"
+"entries.py -- make blog entries from a feed object"
 
 import sys, os, re, time, subprocess
 from urlparse import urlsplit
-import Plagg		# for default encoding and config
+import plagg		# for default encoding and config
 
 
 def _escape(text):
@@ -13,7 +13,7 @@ def _escape(text):
 def _linktag(href, text, **attrs):
     """Returns a HTML link tag."""
     a = ''.join([' %s="%s"' % (k, _escape(v)) for k, v in attrs.items() if v])
-    return u'<a href="%s"%s>%s</a>' % (href, a, Plagg.decode(text))
+    return u'<a href="%s"%s>%s</a>' % (href, a, plagg.decode(text))
 
 def _unescape(text):
     """Replaces common HTML character entities."""
@@ -104,7 +104,7 @@ class Entry:
 	    self.setMeta(tags=' '.join(t.term.replace(' ', '+') for t in item.tags))
 
 	# footer
-	if Plagg.FOOTER:
+	if plagg.FOOTER:
 	    footer = '\n<p class="blosxomEntryFoot">' + (item.get('date') or item.get('modified', ''))
 	    if self._link and (len(self.body) > 2500 or self._link != link):
 		footer += '\n[%s]' % _linktag(self._link, 'Link')
@@ -122,8 +122,8 @@ class Entry:
 		self.tm = time.mktime(self.mdate[:8] + (-1, )) - tz	# convert date/time 9-tuple in UTC to timestamp
 		self.mdate = time.localtime(self.tm)	# convert timestamp to local 9-tuple
 
-	if Plagg.VERBOSE > 1:
-	    Plagg.pprint(('new item', self.__dict__))
+	if plagg.VERBOSE > 1:
+	    plagg.pprint(('new item', self.__dict__))
 
     def setEntry(self, title, body, footer=''):
 	self._title = self.title = title
@@ -169,7 +169,7 @@ class Entry:
 		s.append('<a href="%s">%s</a>' % (url, name))
 	    s.append('</p>')
 	s.append(self.footer)
-	return Plagg.encode(u'\n'.join(map(Plagg.decode, s)))
+	return plagg.encode(u'\n'.join(map(plagg.decode, s)))
 
     def timestamp(self, suffix):
 	if not self.mdate:
@@ -178,7 +178,7 @@ class Entry:
 
     def logSummary(self):
 	return self.timestamp(': ') + \
-	    Plagg.encode(_markup.sub('', self._title) or self.fname)
+	    plagg.encode(_markup.sub('', self._title) or self.fname)
 
     def newSummary(self):
 	return self.timestamp(u'\N{EN SPACE}') + \
@@ -196,7 +196,7 @@ class Entry:
 	    now = time.time()
 	    if self.tm > now:
 		return 0
-	    if not Plagg.OLD_ENTRIES and self.tm + 7 * 86400 < now:
+	    if not plagg.OLD_ENTRIES and self.tm + 7 * 86400 < now:
 		return 0
 
 	fname = os.path.join(destdir, self.fname + ext)
@@ -219,8 +219,8 @@ class Entry:
 	return 1
 
     def tidy(self, body):
-	body = Plagg.encode(body)
-	if Plagg.VERBOSE > 3:
+	body = plagg.encode(body)
+	if plagg.VERBOSE > 3:
 	    print 'before tidy:', body
 	tidy = ['/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null']
 	try:
@@ -235,9 +235,9 @@ class Entry:
 	    # Keep the part between <body> and </body>
 	    m = _body.search(r)
 	    body = (m.group(1) if m else r).strip()
-	if Plagg.VERBOSE > 3:
+	if plagg.VERBOSE > 3:
 	    print 'after tidy:', body
-	return Plagg.decode(body)
+	return plagg.decode(body)
 
 
 class Entries:
@@ -290,6 +290,6 @@ class BlosxomEntries(Entries):
 
 	# logging
 	if self.logging:
-	    name = '' if self.logged else Plagg.encode(self.name) + '\n'
+	    name = '' if self.logged else plagg.encode(self.name) + '\n'
 	    self.logged = True
-	    Plagg.pprint(name + '  ' + entry.logSummary())
+	    plagg.pprint(name + '  ' + entry.logSummary())

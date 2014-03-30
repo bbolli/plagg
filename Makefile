@@ -20,7 +20,7 @@ dist: ${source}
 	python setup.py sdist
 
 # get the version
-V := $(shell awk -F\" '/__version__/ { print $$2 }' <plagglib/Plagg.py)
+V := $(shell awk -F\" '/__version__/ { print $$2 }' <plagglib/plagg.py)
 
 # provide a Regex-escaped variant of $(V) for grep
 VE := $(subst .,\.,$(V))

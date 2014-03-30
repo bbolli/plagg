@@ -1,11 +1,11 @@
-# Feed.py -- one configured feed
+"""feed.py -- one configured feed"""
 
 import sys, os, re, socket, urllib2, pickle, hashlib
 import xml.etree.ElementTree as et
 import feedparser	# needs at least version 3 beta 22!
-import Plagg
+import plagg
 
-USER_AGENT = 'plagg/%s (+http://drbeat.li/py/plagg/)' % Plagg.__version__
+USER_AGENT = 'plagg/%s (+http://drbeat.li/py/plagg/)' % plagg.__version__
 
 try:
     CACHE_DIR = [os.environ['XDG_CACHE_HOME']]
@@ -46,7 +46,7 @@ class Feed:
 	self.headers = {'User-Agent': USER_AGENT}
 	self.feed = {}
 	self.replacements = []	# list of (what, re, new) tuples
-	self.encoding = Plagg.ENCODING
+	self.encoding = plagg.ENCODING
 
 	digest = hashlib.md5(self.uri).hexdigest()
 	self.cachefile = os.path.join(CACHE_DIR, digest)
@@ -55,7 +55,7 @@ class Feed:
 	self.use_cache = True
 
 	# enable feedparser debugging
-	if Plagg.VERBOSE > 2:
+	if plagg.VERBOSE > 2:
 	    feedparser._debug = 1
 
     def addChildElement(self, name, attrs, content):
@@ -146,9 +146,9 @@ class SimulatedFeed(Feed):
 	self.item = self.iframe or '<p><img src="%s" /></p>' % self.imgLink
 	if self.itemBody and not self.itemBody.startswith('<'):
 	    self.itemBody = '<p>%s</p>' % self.itemBody
-	self.itemBody = Plagg.decode(self.itemBody)
+	self.itemBody = plagg.decode(self.itemBody)
 	rss = self.RSS_TEMPLATE % self.__dict__
-	rss = Plagg.encode(rss)
+	rss = plagg.encode(rss)
 	self.feed = feedparser.parse(rss)
 
 

@@ -7,7 +7,7 @@ opml.xsl
 plagg
 setup.py
 plagglib/feedparser.py
-plagglib/Entries.py
-plagglib/Feed.py
-plagglib/Plagg.py
+plagglib/entries.py
+plagglib/feed.py
+plagglib/plagg.py
 plagglib/__init__.py

@@ -5,7 +5,7 @@ corresponding to the items in the feeds."""
 
 import os, sys, getopt, signal
 
-from plagglib import Plagg
+from plagglib import plagg
 
 def usage(rc):
     print "Usage: plagg [-fFnhoVv] [-d newsdir] [-t timeout] [opmlfile [nickname ...]]]"
@@ -33,7 +33,7 @@ for o, v in opts:
     elif o == '-o':
 	old_entries = 1
     elif o == '-V':
-	print Plagg.__version__
+	print plagg.__version__
 	sys.exit(0)
     elif o == '-v':
 	verbose += 1
@@ -49,12 +49,12 @@ if feed and argc != 2:
     print "Usage: plagg -F feed-url nickname"
     sys.exit(3)
 if argc == 0:
-    plagg = Plagg.Plagg(os.path.join(path, 'news.opml'))
+    plagg = plagg.Plagg(os.path.join(path, 'news.opml'))
 elif argc == 1:
-    plagg = Plagg.Plagg(args[0])
+    plagg = plagg.Plagg(args[0])
 elif argc >= 2:
     old_entries = 1
-    plagg = Plagg.Plagg(args[0], args[1:])
+    plagg = plagg.Plagg(args[0], args[1:])
 else:
     usage(3)
 

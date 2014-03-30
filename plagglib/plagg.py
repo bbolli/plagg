@@ -7,9 +7,10 @@ import pprint as _pprint
 
 __version__ = "3.0"
 
-import Feed, Entries
+from feed import RSSFeed, HTMLFeed, ComputedFeed
+from entries import BlosxomEntries, Entry
 
-ENCODING = 'utf-8'	# default character encoding, used by Feed.py and Entries.py
+ENCODING = 'utf-8'	# default character encoding, used by feed.py and entries.py
 
 VERBOSE = 0		# will be set by Plagg.setConfig()
 FOOTER = 1
@@ -119,20 +120,20 @@ class Plagg(xml.sax.handler.ContentHandler):
 	if hours and not self.nicks and not _matchHours(hours, time.gmtime()[3]):
 	    return
 
-	# create a Feed instance based on the OPML type attribute
+	# create a feed instance based on the OPML type attribute
 	kind = attrs.get('type', 'rss').lower()
 	if kind == 'rss':
 	    uri = attrs.get('xmlurl')
 	    if not uri: return
-	    feed = Feed.RSSFeed(attrs, name, uri)
+	    feed = RSSFeed(attrs, name, uri)
 	elif kind == 'x-plagg-html':
 	    uri = attrs.get('htmlurl')
 	    if not uri: return
-	    feed = Feed.HTMLFeed(attrs, name, uri)
+	    feed = HTMLFeed(attrs, name, uri)
 	elif kind == 'x-plagg-computed':
 	    uri, suite = attrs.get('htmlurl'), attrs.get('commands')
 	    if not suite: return
-	    feed = Feed.ComputedFeed(attrs, name, uri, suite)
+	    feed = ComputedFeed(attrs, name, uri, suite)
 	else:
 	    return
 
@@ -146,7 +147,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 
     def processFeed(self, feed):
 	if self.fetchFeed(feed):
-	    e = Entries.BlosxomEntries(feed.path)
+	    e = BlosxomEntries(feed.path)
 	    e.logging = VERBOSE
 	    new = e.processFeed(feed)
 	    if new:
@@ -202,7 +203,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	    body.append('  </ul>')
 	body.append('</ul>')
 	if len(body) > 2:
-	    e = Entries.Entry()
+	    e = Entry()
 	    e.setEntry('Latest news (%s)' % time.strftime('%H:%M:%S'), u'\n'.join(body))
 	    e.setMeta(source='plagg')
 	    e.write(self.newspath, '.txt', overwrite=True, fname='Latest')
