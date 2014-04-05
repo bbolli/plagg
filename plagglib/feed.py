@@ -268,7 +268,9 @@ class HTMLFeed(SimulatedFeed):
 	try:
 	    root = et.fromstring(html)
 	except Exception as e:
-	    sys.stderr.write(u"Page at %s not parseable as XML: %s\n" % (self.uri, e))
+	    sys.stderr.write((u"Page at %s not parseable as XML: %s\n\n----\n%s----\n" % (
+		self.uri, e, html
+	    )).encode(self.encoding))
 	    return
 
 	def _find(attrname):
