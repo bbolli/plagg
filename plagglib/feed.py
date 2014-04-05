@@ -259,6 +259,12 @@ class HTMLFeed(SimulatedFeed):
 
 	# remove scripts; they generally can't be parsed as XML
 	html = script_re.sub('', html)
+
+	# Replace entity references by their corresponding character references.
+	from htmlentitydefs import name2codepoint
+	eref_re = re.compile('&(' + '|'.join(name2codepoint.keys()) + ');')
+	html = eref_re.sub(lambda m: '&#%d;' % name2codepoint[m.group(1)], html)
+
 	try:
 	    root = et.fromstring(html)
 	except Exception as e:
