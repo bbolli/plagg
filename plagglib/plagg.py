@@ -102,6 +102,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 	t = threading.Thread(target=self.processFeed, args=(self.feed,))
 	self.threads.append(t)
 	t.start()
+	self.feed = None
 
     def createFeed(self, attrs):
 	# Normalize attribute names to lower case
