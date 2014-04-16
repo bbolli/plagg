@@ -224,17 +224,21 @@ class Entry:
 	    print 'before tidy:', body
 	tidy = ['/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null']
 	try:
-	    r = subprocess.Popen(
+	    t = subprocess.Popen(
 		tidy, stdin=subprocess.PIPE, stdout=subprocess.PIPE
-	    ).communicate(body)[0]
+	    )
+	    r = t.communicate(body)[0]
 	except OSError:
 	    if not Entry.TidyWarningDone:
 		sys.stderr.write("Cannot execute %s\n" % ' '.join(tidy))
 		Entry.TidyWarningDone = True
 	else:
-	    # Keep the part between <body> and </body>
-	    m = _body.search(r)
-	    body = (m.group(1) if m else r).strip()
+	    if 0 <= t.returncode <= 1:    # warnings are ok
+		# Keep the part between <body> and </body>
+		m = _body.search(r)
+		body = (m.group(1) if m else r).strip()
+	    elif plagg.VERBOSE > 3:
+		print "tidy errors; body left as-is" % t.returncode
 	if plagg.VERBOSE > 3:
 	    print 'after tidy:', body
 	return plagg.decode(body)
