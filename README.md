@@ -168,8 +168,7 @@ empty, the item link itself.
 
 ### 3.5. OPML extensions
 
-I have extended the `<outline>` element with two attributes and an optional, repeatable
-child element.
+`plagg` extends the `<outline>` element with the following attributes and elements:
 
 #### 3.5.1. Time restrictions
 
@@ -242,6 +241,15 @@ This is a new attribute of `<outline>`.
 
 The default value is the empty string. If "summary", and the feed contains both
 the full article and a summary, use the summary instead of the full article.
+
+#### 3.5.7 Adjusting the HTML header level
+
+This is a new attribute of `<outline>`.
+
+**`h-adjust`="n"**
+
+The default value is zero. The HTML elements `h1` to `h4` have their heading
+level adjusted by the indicated amount. Useful values are in the range -2..2.
 
 ### 3.6. Rendering the OPML file as XHTML
 

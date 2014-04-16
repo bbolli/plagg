@@ -40,10 +40,10 @@
 			</outline>
 		</outline>
 		<outline text="Articles">
-			<outline text="A List Apart" type="rss" htmlUrl="http://www.alistapart.com/" xmlUrl="http://www.alistapart.com/site/rss"/>
+			<outline text="A List Apart" type="rss" htmlUrl="http://www.alistapart.com/" xmlUrl="http://www.alistapart.com/site/rss" h-adjust="2"/>
 			<outline text="Linux Journal" nick="lj" type="rss" htmlUrl="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
 			<!--outline text="Groklaw" type="rss" htmlUrl="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/-->
-			<outline text="ars technica" nick="arstech" type="rss" htmlUrl="http://www.arstechnica.com/" xmlUrl="http://feeds.arstechnica.com/arstechnica/index"/>
+			<outline text="ars technica" nick="arstech" type="rss" htmlUrl="http://www.arstechnica.com/" xmlUrl="http://feeds.arstechnica.com/arstechnica/index" h-adjust="2"/>
 			<outline text="WTF" type="rss" htmlUrl="http://thedailywtf.com/" xmlUrl="http://syndication.thedailywtf.com/TheDailyWtf"/>
 			<outline text="PHP advent" type="rss" htmlUrl="http://phpadvent.org" xmlUrl="http://feeds.feedburner.com/phpadvent"/>
 		</outline>

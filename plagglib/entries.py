@@ -26,6 +26,7 @@ _idwrong = re.compile('[^0-9a-zA-Z]+')
 _body = re.compile('<body>(.*?)</body>', re.IGNORECASE + re.DOTALL)
 _tumblr = re.compile(r'\.tumblr\.com/post/(\d+)$', re.IGNORECASE)
 _link = re.compile(r'''(?is)^<a href="([^"]+?)">(.*?)</a>((:\s+)|$)''')
+_h14 = re.compile(r'(?i)(</?h)([1-4])>')
 
 if time.localtime()[8]:
     tz = time.altzone
@@ -67,6 +68,15 @@ class Entry:
 	body = feed.replaceText('body', body)
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
+	try:
+	    adj = int(feed.attrs['h-adjust'])
+	except (KeyError, ValueError):
+	    pass
+	else:
+	    body = _h14.sub(
+		lambda m: '%s%d>' % (m.group(1), int(m.group(2)) + adj),
+		body
+	    )
 	self.body = body
 
 	# title
