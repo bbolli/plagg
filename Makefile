@@ -34,6 +34,7 @@ release:
 		git commit -am"Version $(V)" && \
 		git tag v$(V) -m v$(V) && \
 		make dist; \
+		cp dist/plagg-$(V).tar.gz ~/public_html/lib; \
 	fi
 
 install: plagg.tar.gz
