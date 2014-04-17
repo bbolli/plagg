@@ -23,6 +23,7 @@
 			</outline>
 			<outline text="symlink" type="rss" htmlUrl="http://www.symlink.ch/" xmlUrl="http://www.symlink.ch/feed/atom/"/>
 			<outline text="NTP Pool News" nick="ntp" type="rss" htmlUrl="http://www.pool.ntp.org/" xmlUrl="http://feed.news.ntppool.org/ntppool?format=xml"/>
+			<outline text="Debian security advisories" nick="debiansec" type="rss" htmlUrl="http://www.debian.org/security/" xmlUrl="http://www.debian.org/security/dsa"/>
 		</outline>
 		<outline text="Science">
 			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="http://antwrp.gsfc.nasa.gov/apod/"
