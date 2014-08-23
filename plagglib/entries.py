@@ -59,13 +59,15 @@ class Entry:
 	self.setMeta(source=feed.attrs['nick'])
 
 	# body
-	body = (
-	    not feed.attrs.get('body') == 'summary' and
-	    item.get('content', [{}])[0].get('value') or
-	    item.get('description') or
-	    item.get('summary', '')
-	).strip()
-	body = feed.replaceText('body', body)
+	bodytype = feed.attrs.get('body', '')
+	if bodytype == 'none':
+	    body = ''
+	else:
+	    body = (
+		bodytype != 'summary' and item.get('content', [{}])[0].get('value') or
+		item.get('summary', '')
+	    ).strip()
+	    body = feed.replaceText('body', body)
 	if body and not body.startswith('<'):
 	    body = '<p>' + body + '</p>'
 	try:

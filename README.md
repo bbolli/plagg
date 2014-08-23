@@ -233,14 +233,17 @@ This is a new attribute of `<outline>`.
 The default value is "yes". If "yes", the entry body is run through `tidy`, an
 external tool that cleans up HTML. Tidy must be installed in `/usr/bin`.
 
-#### 3.5.6 Forcing to use the entry summary
+#### 3.5.6 Choosing the entry body
 
 This is a new attribute of `<outline>`.
 
+**`body`="none"**
 **`body`="summary"**
 
-The default value is the empty string. If "summary", and the feed contains both
-the full article and a summary, use the summary instead of the full article.
+The default value is the empty string which will use the full article. If
+"empty", the entry's body will be empty. If "summary", and the feed contains
+both the full article and a summary, use the summary instead of the full
+article.
 
 #### 3.5.7 Adjusting the HTML header level
 
