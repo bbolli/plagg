@@ -23,7 +23,7 @@
 			</outline>
 			<outline text="symlink" type="rss" htmlUrl="http://www.symlink.ch/" xmlUrl="http://www.symlink.ch/feed/atom/"/>
 			<outline text="NTP Pool News" nick="ntp" type="rss" htmlUrl="http://www.pool.ntp.org/" xmlUrl="http://feed.news.ntppool.org/ntppool?format=xml"/>
-			<outline text="Debian security advisories" nick="debiansec" type="rss" htmlUrl="http://www.debian.org/security/" xmlUrl="http://www.debian.org/security/dsa"/>
+			<outline text="Debian security advisories" nick="debiansec" type="rss" htmlUrl="http://www.debian.org/security/" xmlUrl="http://www.debian.org/security/dsa" ignoredate="yes"/>
 		</outline>
 		<outline text="Science">
 			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="http://antwrp.gsfc.nasa.gov/apod/"
@@ -70,15 +70,15 @@
 			<outline text="Django" type="rss" htmlUrl="http://www.djangoproject.com/weblog/" xmlUrl="http://www.djangoproject.com/rss/weblog/"/>
 			<outline text="jhague" type="rss" htmlUrl="http://prog21.dadgum.com/" xmlUrl="http://prog21.dadgum.com/atom.xml"/>
 			<outline text="Krebs on Security" nick="krebs" type="rss" htmlUrl="http://krebsonsecurity.com/" xmlUrl="http://krebsonsecurity.com/feed/atom/"/>
+			<outline text="Adam Langley (imperialviolet)" nick="adaml" type="rss" htmlUrl="https://www.imperialviolet.org/" xmlUrl="https://www.imperialviolet.org/iv-rss.xml"/>
 			<outline text="Mac">
 				<outline text="Daring Fireball" nick="fireball" type="rss" htmlUrl="http://daringfireball.net/" xmlUrl="http://daringfireball.net/index.xml"/>
 				<outline text="Webkit" type="rss" htmlUrl="http://webkit.org/blog/" xmlUrl="http://webkit.org/blog/feed/atom/"/>
-				<outline text="llvm" type="rss" htmlUrl="http://blog.llvm.org/" xmlUrl="http://blog.llvm.org/feeds/posts/default"/>
-				<outline text="rentzsch" type="rss" htmlUrl="http://rentzsch.tumblr.com/" xmlUrl="http://rentzsch.tumblr.com/rss" tidy="no"/>
-				<outline text="siracusa" type="rss" htmlUrl="http://siracusa.tumblr.com/" xmlUrl="http://siracusa.tumblr.com/rss" tidy="no"/>
-				<outline text="marco" type="rss" htmlUrl="http://marco.tumblr.com/" xmlUrl="http://marco.tumblr.com/rss" tidy="no"/>
-				<outline text="chipotle" type="rss" htmlUrl="http://chipotle.tumblr.com/" xmlUrl="http://chipotle.tumblr.com/rss" tidy="no"/>
-				<outline text="loopinsight" type="rss" htmlUrl="http://www.loopinsight.com/" xmlUrl="http://www.loopinsight.com/feed/"/>
+				<outline text="LLVM" type="rss" htmlUrl="http://blog.llvm.org/" xmlUrl="http://blog.llvm.org/feeds/posts/default"/>
+				<outline text="Rentzsch" type="rss" htmlUrl="http://rentzsch.tumblr.com/" xmlUrl="http://rentzsch.tumblr.com/rss" tidy="no"/>
+				<outline text="Siracusa" type="rss" htmlUrl="http://hypercritical.co/" xmlUrl="http://hypercritical.co/feeds/main" tidy="no"/>
+				<outline text="Chipotle" type="rss" htmlUrl="http://chipotle.tumblr.com/" xmlUrl="http://chipotle.tumblr.com/rss" tidy="no"/>
+				<outline text="LoopInsight" type="rss" htmlUrl="http://www.loopinsight.com/" xmlUrl="http://www.loopinsight.com/feed/"/>
 			</outline>
 			<outline text="Mozilla &amp;c">
 				<outline text="Asa Dotzler" nick="asad" type="rss" htmlUrl="http://asadotzler.com/" xmlUrl="http://asadotzler.com/feed/"/>
@@ -92,7 +92,7 @@
 		</outline>
 		<outline text="Photoblogs">
 			<outline text="bolli.us" type="rss" htmlUrl="http://bolli.us" xmlUrl="http://www.bolli.us/fpblog.xml"/>
-			<outline text="duncan" type="rss" htmlUrl="http://duncandavidson.com/blog" xmlUrl="http://duncandavidson.com/feed"/>
+			<outline text="duncan" type="rss" htmlUrl="http://duncandavidson.com/blog" xmlUrl="http://duncandavidson.com/feed" ignoredate="yes"/>
 		</outline>
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/fast/"
@@ -110,9 +110,9 @@
 				<regex>src="(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)"</regex>
 				<replace what="link" from="/xuf" to="/uf"/>
 			</outline>
-			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/"
-				hours="7-10">
-				<regex> class=.strip. src=.(http://.*?/([0-9a-f]+)\?width=900).</regex>
+			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/" hours="7-10" tidy="no">
+				<regex> class=.strip. src=.(http://.*?/([0-9a-f]+)).</regex>
+				<!-- image-xpath>//img[@class='strip'][2]/@src</image-xpath -->
 			</outline>
 			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
 				hours="7-10" ignoredate="yes"/>
