@@ -43,6 +43,7 @@ install: plagg.tar.gz
 test: clean
 	./plagg -nvvv -d t news.opml ongoing dilbert uf joyoftech >log 2>&1 && \
 	./plagg -vvv -d t -fF http://staff.tumblr.com/rss tumblr >>log 2>&1
+	vi log
 
 clean:
 	-rm -rf ~/.cache/plagg t log
