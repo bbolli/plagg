@@ -3,9 +3,13 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
-import os, sys, getopt, signal
+import os
+import sys
+import getopt
+import signal
 
 from plagglib import plagg
+
 
 def usage(rc):
     print "Usage: plagg [-fFnhoVv] [-d newsdir] [-t timeout] [opmlfile [nickname ...]]]"
@@ -25,18 +29,18 @@ for o, v in opts:
     elif o == '-F':
         feed = 1
     elif o == '-f':
-	footer = 0
+        footer = 0
     elif o == '-n':
-	news = 1
+        news = 1
     elif o == '-h':
-	usage(0)
+        usage(0)
     elif o == '-o':
-	old_entries = 1
+        old_entries = 1
     elif o == '-V':
-	print plagg.__version__
-	sys.exit(0)
+        print plagg.__version__
+        sys.exit(0)
     elif o == '-v':
-	verbose += 1
+        verbose += 1
     elif o == '-t':
         timeout = int(v)
 
