@@ -165,13 +165,12 @@ class HTMLFeed(SimulatedFeed):
 
     There are two ways of matching the HTML content: by regex or by XPath."""
 
+    children = frozenset(('regex', 'image-xpath', 'iframe-xpath'))
+
     def getLink(self):
         """Reads the HTML page and extracts the link, title and body."""
 
-        for a in ('regex', 'image-xpath', 'iframe-xpath'):
-            if a in self.attrs:
-                break
-        else:
+        if not self.children.intersection(self.attrs):
             return      # mandatory child element missing
 
         self.loadCache()
