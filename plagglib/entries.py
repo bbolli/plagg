@@ -1,10 +1,10 @@
 "entries.py -- make blog entries from a feed object"
 
-import sys
 import os
 import re
-import time
 import subprocess
+import sys
+import time
 from urlparse import urlsplit
 
 import plagg            # for default encoding and config

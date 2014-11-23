@@ -1,12 +1,12 @@
 """feed.py -- one configured feed"""
 
-import sys
+import hashlib
 import os
+import pickle
 import re
 import socket
+import sys
 import urllib2
-import pickle
-import hashlib
 import xml.etree.ElementTree as et
 
 import feedparser  # needs at least version 3 beta 22!

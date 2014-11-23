@@ -2,13 +2,14 @@
 corresponding to the items in the feeds."""
 
 from __future__ import with_statement
+
+import httplib
 import os
+import pprint as _pprint
 import sys
+import threading
 import time
 import xml.sax
-import httplib
-import threading
-import pprint as _pprint
 
 __version__ = "3.0"
 

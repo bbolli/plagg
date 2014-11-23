@@ -3,10 +3,10 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
-import os
-import sys
 import getopt
+import os
 import signal
+import sys
 
 from plagglib import plagg
 
