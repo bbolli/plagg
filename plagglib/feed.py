@@ -1,5 +1,6 @@
 """feed.py -- one configured feed"""
 
+import collections
 import hashlib
 import os
 import pickle
@@ -52,7 +53,7 @@ class Feed:
         self.uri = uri
         self.headers = {'User-Agent': USER_AGENT}
         self.feed = {}
-        self.replacements = []  # list of (what, re, new) tuples
+        self.replacements = collections.defaultdict(list)  # {what: [(old_re, new), ...]}
         self.encoding = plagg.ENCODING
 
         digest = hashlib.md5(self.uri).hexdigest()
@@ -75,11 +76,11 @@ class Feed:
 
     def addReplacement(self, what, old, new):
         if what and old:
-            self.replacements.append((what, re.compile(old), new))
+            self.replacements[what].append((re.compile(old), new))
 
     def replaceText(self, what, text):
         """Performs a regex replacement according to the list."""
-        for pattern, new in [r[1:] for r in self.replacements if r[0] == what]:
+        for pattern, new in self.replacements[what]:
             text = pattern.sub(new, text)
         return text
 
