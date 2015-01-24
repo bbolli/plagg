@@ -95,23 +95,23 @@
 			<outline text="duncan" type="rss" htmlUrl="http://duncandavidson.com/blog" xmlUrl="http://duncandavidson.com/feed" ignoredate="yes"/>
 		</outline>
 		<outline text="Comics">
-			<outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/fast/"
-				hours="7-10"
-			>
-				<regex>src="(http://www\.dilbert\.com/dyn/str_strip[\d/]+/(\d+)\.strip\.[\w/.]+)"</regex>
-				<replace what="link" from="\.print" to = ""/>
+			<outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/" tidy="no"
+				hours="7-10">
+				<regex>alt=&quot;(?P&lt;title>.*?)&quot; .*?img-comic&quot; .*? src=&quot;(?P&lt;link>http://.*?)&quot;</regex>
+				<!--replace what="link" from="\.print" to = ""/-->
+				<!--title-xpath>//img[@class*='img-comic']/@alt</title-xpath>
+				<image-xpath>//img[@class*='img-comic']/@src</image-xpath-->
 			</outline>
 			<outline text="Garfield" type="x-plagg-computed" htmlUrl="http://garfield.com"
 				commands="from time import strftime; self.itemTitle = strftime('%Y-%m-%d'); self.imgLink = 'http://garfield.com/uploads/strips/%s.jpg' % self.itemTitle"
 				hours="7-8"/>
 			<outline text="Userfriendly" nick="uf" type="x-plagg-html" htmlUrl="http://www.userfriendly.org/static/"
-				hours="7-10"
-			>
+				hours="7-10">
 				<regex>src="(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)"</regex>
 				<replace what="link" from="/xuf" to="/uf"/>
 			</outline>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/" hours="7-10" tidy="no">
-				<regex> class=.strip. src=.(http://.*?/([0-9a-f]+)).</regex>
+				<regex> id=.mutable_.*? class=.strip. src=.(http://.*?/([0-9a-f]+)).</regex>
 				<!-- image-xpath>//img[@class='strip'][2]/@src</image-xpath -->
 			</outline>
 			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
