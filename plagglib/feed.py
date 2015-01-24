@@ -242,16 +242,16 @@ class HTMLFeed(SimulatedFeed):
         m = re.search(regex, html, re.I)
         if m:
             try:
-                if m.groupdict():       # new-style named groups regex
-                    self.imgLink = m.group('link')
-                    self.iframe = m.group('iframe')
-                    self.itemTitle = m.group('title')
-                    if m.group('body'):
-                        # strip whitespace inside href attributes (for APOD)
-                        self.itemBody = re.sub(r'''(?s)href=(['"]).+?\1''',     # "
-                            lambda m: re.sub(r'\s+', '', m.group(0)),
-                            m.group('body')
-                        )
+                groups = m.groupdict()
+                if groups:      # new-style named groups regex
+                    self.imgLink = groups.get('link')
+                    self.iframe = groups.get('iframe')
+                    self.itemTitle = groups.get('title')
+                    # strip whitespace inside href attributes (for APOD)
+                    self.itemBody = re.sub(r'''(?s)href=(['"]).+?\1''',
+                        lambda m: re.sub(r'\s+', '', m.group(0)),
+                        groups.get('body', '')
+                    )
                 else:                   # old-style numbered groups
                     self.imgLink = m.group(1)
                     self.itemTitle = m.group(2)
