@@ -41,12 +41,10 @@
 			</outline>
 		</outline>
 		<outline text="Articles">
-			<outline text="A List Apart" type="rss" htmlUrl="http://www.alistapart.com/" xmlUrl="http://www.alistapart.com/site/rss" h-adjust="2"/>
-			<outline text="Linux Journal" nick="lj" type="rss" htmlUrl="http://www.linuxjournal.com/" xmlUrl="http://www.linuxjournal.com/news.rss"/>
-			<!--outline text="Groklaw" type="rss" htmlUrl="http://www.groklaw.net/" xmlUrl="http://www.groklaw.net/backend/GrokLaw.rdf"/-->
 			<outline text="ars technica" nick="arstech" type="rss" htmlUrl="http://www.arstechnica.com/" xmlUrl="http://feeds.arstechnica.com/arstechnica/index" h-adjust="2"/>
 			<outline text="WTF" type="rss" htmlUrl="http://thedailywtf.com/" xmlUrl="http://syndication.thedailywtf.com/TheDailyWtf"/>
-			<outline text="PHP advent" type="rss" htmlUrl="http://phpadvent.org" xmlUrl="http://feeds.feedburner.com/phpadvent"/>
+			<outline text="isocpp" type="rss" htmlUrl="http://isocpp.org" xmlUrl="http://isocpp.org/blog/rss/category/news"/>
+			<outline text="gitrev" type="rss" htmlUrl="http://git.github.io/" xmlUrl="http://git.github.io/feed.xml"/>
 		</outline>
 		<outline text="Blogs">
 			<outline text="Familie &amp; Fröinde">
@@ -82,8 +80,6 @@
 			</outline>
 			<outline text="Mozilla &amp;c">
 				<outline text="Asa Dotzler" nick="asad" type="rss" htmlUrl="http://asadotzler.com/" xmlUrl="http://asadotzler.com/feed/"/>
-				<!-- throws an exception! outline text="Ben Goodger" nick="beng" type="rss" htmlUrl="http://weblogs.mozillazine.org/ben/" xmlUrl="http://weblogs.mozillazine.org/ben/index.rdf"/ -->
-				<!-- name not known! outline text="Blake Ross" nick="blaker" type="rss" htmlUrl="http://blakeross.com/" xmlUrl="http://blakeross.com/wp-rss2.php"/ -->
 				<outline text="Gerv Markham" nick="gerv" type="rss" htmlUrl="http://blog.gerv.net" xmlUrl="http://blog.gerv.net/feed"/>
 				<outline text="Robert O&apos;Callahan" nick="roc" type="rss" htmlUrl="http://weblogs.mozillazine.org/roc/" xmlUrl="http://weblogs.mozillazine.org/roc/index.rdf"/>
 				<outline text="Mozilla WebDev" nick="webdev" type="rss" htmlUrl="http://blog.mozilla.com/webdev/" xmlUrl="http://blog.mozilla.com/webdev/feed/" tidy="no"/>
@@ -97,14 +93,11 @@
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-plagg-html" htmlUrl="http://www.dilbert.com/" tidy="no"
 				hours="7-10">
-				<regex>alt=&quot;(?P&lt;title>.*?)&quot; .*?img-comic&quot; .*? src=&quot;(?P&lt;link>http://.*?)&quot;</regex>
-				<!--replace what="link" from="\.print" to = ""/-->
-				<!--title-xpath>//img[@class*='img-comic']/@alt</title-xpath>
-				<image-xpath>//img[@class*='img-comic']/@src</image-xpath-->
+				<regex>(?s)comic-title-name.>(?P&lt;title>.*?)&lt;.*? img-comic" .*? src="(?P&lt;link>http://.*?)"</regex>
 			</outline>
-			<outline text="Garfield" type="x-plagg-computed" htmlUrl="http://garfield.com"
-				commands="from time import strftime; self.itemTitle = strftime('%Y-%m-%d'); self.imgLink = 'http://garfield.com/uploads/strips/%s.jpg' % self.itemTitle"
-				hours="7-8"/>
+			<outline text="Garfield" type="x-plagg-html" htmlUrl="http://garfield.com/" hours="7-8">
+				<regex>img class="img-responsive" src="(?P&lt;link>http.*?/20../(?P&lt;title>[^.]+)\..+?)"</regex>
+			</outline>
 			<outline text="Userfriendly" nick="uf" type="x-plagg-html" htmlUrl="http://www.userfriendly.org/static/"
 				hours="7-10">
 				<regex>src="(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)"</regex>
@@ -120,4 +113,5 @@
 			<outline text="geekandpoke" type="rss" htmlUrl="http://geekandpoke.typepad.com/geekandpoke/" xmlUrl="http://feeds.feedburner.com/GeekAndPoke"/>
 		</outline>
 	</body>
+	<!-- vim: set noet sw=8: -->
 </opml>
