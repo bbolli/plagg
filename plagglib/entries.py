@@ -93,7 +93,8 @@ class Entry:
         title = feed.replaceText('title', title)
         # remove the title if it matches the start of the body (for tumblr quotes)
         if len(title) > 20 and title[0] == title[-1] == '"':
-            title = title[1:-1].rstrip('.')
+            if title.count('"') == 2:
+                title = title[1:-1].rstrip('.')
             if title in self.body:
                 title = ''
         elif title.endswith(u'...') and title[:-3] in self.body:
