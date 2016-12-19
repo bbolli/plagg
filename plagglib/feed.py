@@ -51,7 +51,7 @@ class Feed:
         self.attrs = attrs
         self.name = name
         self.uri = uri
-        self.headers = {'User-Agent': USER_AGENT}
+        self.headers = {}
         self.feed = {}
         self.replacements = collections.defaultdict(list)  # {what: [(old_re, new), ...]}
         self.encoding = plagg.ENCODING
@@ -70,6 +70,8 @@ class Feed:
         """Handle an <outline> child element"""
         if name == 'replace':
             self.addReplacement(attrs.get('what'), attrs.get('from'), attrs.get('to', ''))
+        elif name == 'header':
+            self.addHeader(attrs.get('name'), attrs.get('value'))
         else:
             # default: do as if it were an <outline> attribute
             self.attrs[name] = content
@@ -83,6 +85,10 @@ class Feed:
         for pattern, new in self.replacements[what]:
             text = pattern.sub(new, text)
         return text
+
+    def addHeader(self, name, value):
+        if name and value is not None:
+            self.headers[name] = value
 
     def getFeed(self):
         """Sets self.feed to a feedparser dictionary. Subclasses must implement this."""
@@ -116,7 +122,10 @@ class RSSFeed(Feed):
     def getFeed(self):
         """Builds an ultra-liberally parsed feed dict from the URL."""
         self.loadCache()
-        feed = feedparser.parse(self.uri, etag=self.etag, modified=self.modified, agent=USER_AGENT)
+        feed = feedparser.parse(self.uri, etag=self.etag,
+            modified=self.modified, agent=USER_AGENT,
+            request_headers=self.headers
+        )
         if feed.get('status') == 304:
             # feed not modified
             return
@@ -177,7 +186,7 @@ class HTMLFeed(SimulatedFeed):
         self.loadCache()
         try:
             f = feedparser._open_resource(self.uri, self.etag, self.modified,
-                USER_AGENT, None, [], {}
+                USER_AGENT, None, [], self.headers
             )
             html = f.read()
         except Exception as e:

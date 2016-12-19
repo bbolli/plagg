@@ -254,6 +254,17 @@ This is a new attribute of `<outline>`.
 The default value is zero. The HTML elements `h1` to `h4` have their heading
 level adjusted by the indicated amount. Useful values are in the range -2..2.
 
+#### 3.5.8 Setting HTTP request headers `<header>`
+
+This is a new, repeatable child element of `<outline>`.
+
+It has a `name` and `value` attribute that specify a HTTP header that should be
+sent along with the request.
+
+Example:
+
+    <header name='Cookie' value='sessionID=1c521c788d5da9a1448bd93a63e9b78ba54f902a'/>
+
 ### 3.6. Rendering the OPML file as XHTML
 
 The distribution tar file contains the XSL style sheet `opml.xsl` that transforms
