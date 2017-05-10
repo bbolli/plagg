@@ -284,7 +284,7 @@ class Entries:
         self.items = feed.feed['items']
         # Process the entries
         for item in self.items:
-            if 'item' in item:
+            if 'link' in item:
                 item['link'] = feed.replaceText('link', item['link'])
             self.processItem(item)
         return self.new
