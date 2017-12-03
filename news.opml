@@ -16,10 +16,10 @@
 				<replace what="body" from="&lt;br /&gt;\s*"/>
 			</outline>
 			<outline text="Linux Weekly News" nick="lwn" type="rss" htmlUrl="http://lwn.net/" xmlUrl="http://lwn.net/headlines/rss">
-				<replace what="link" from="rss$" to=""/>
+				<replace what="link" from="/rss$" to=""/>
 			</outline>
 			<outline text="The Register" nick="reg" type="rss" htmlUrl="http://www.theregister.co.uk/" xmlUrl="http://www.theregister.co.uk/headlines.atom">
-				<replace what="link" from="go.theregister.com/feed/www\." to="m."/>
+				<replace what="link" from="go.theregister.com/feed/" to=""/>
 			</outline>
 			<outline text="symlink" type="rss" htmlUrl="http://www.symlink.ch/" xmlUrl="http://www.symlink.ch/feed/atom/"/>
 			<outline text="NTP Pool News" nick="ntp" type="rss" htmlUrl="http://www.pool.ntp.org/" xmlUrl="http://feed.news.ntppool.org/ntppool?format=xml"/>
@@ -30,7 +30,9 @@
 				hours="8-10">
 				<regex><![CDATA[(?is)(<img .*?src="(?P<link>http://.*?/image/\d{4}/.*?\..*?)"|(?P<iframe><iframe .*?/iframe>)).*?<b> *(?P<title>.*?) *</b>\s*<br />.*?Explanation: *</b>(?P<body>.*?)<p>\s*<center>]]></regex>
 			</outline>
-			<outline text="Bad Astronomy" nick="badastro" type="rss" htmlUrl="http://www.slate.com/blogs/bad_astronomy" xmlUrl="http://www.slate.com/blogs/bad_astronomy.fulltext.all.10.rss"/>
+			<outline text="Bad Astronomy" nick="badastro" type="rss" htmlUrl="http://www.blastr.com/tags/bad-astronomy" xmlUrl="http://www.blastr.com/tags/bad-astronomy/feed">
+				<replace what="body" from="(?s)\d+\s+&lt;h3 class=&quot;field-label&quot;&gt;.*"/>
+			</outline>
 			<outline text="What if?" nick="whatif" type="rss" htmlUrl="http://what-if.xkcd.com/" xmlUrl="http://what-if.xkcd.com/feed.atom" tidy="no" ignoredate="yes">
 				<replace what="body" from=".h1.*?./h1."/>
 			</outline>
@@ -45,6 +47,7 @@
 			<outline text="WTF" type="rss" htmlUrl="http://thedailywtf.com/" xmlUrl="http://syndication.thedailywtf.com/TheDailyWtf"/>
 			<outline text="isocpp" type="rss" htmlUrl="http://isocpp.org" xmlUrl="http://isocpp.org/blog/rss/category/news"/>
 			<outline text="gitrev" type="rss" htmlUrl="http://git.github.io/" xmlUrl="http://git.github.io/feed.xml"/>
+			<outline text="awesomecpp" type="rss" htmlUrl="https://cpp.libhunt.com/newsletter/" xmlUrl="https://cpp.libhunt.com/newsletter/feed"/>
 		</outline>
 		<outline text="Blogs">
 			<outline text="Familie &amp; Fröinde">
@@ -70,7 +73,7 @@
 			<outline text="Krebs on Security" nick="krebs" type="rss" htmlUrl="http://krebsonsecurity.com/" xmlUrl="http://krebsonsecurity.com/feed/atom/"/>
 			<outline text="Adam Langley (imperialviolet)" nick="adaml" type="rss" htmlUrl="https://www.imperialviolet.org/" xmlUrl="https://www.imperialviolet.org/iv-rss.xml"/>
 			<outline text="Mac">
-				<outline text="Daring Fireball" nick="fireball" type="rss" htmlUrl="http://daringfireball.net/" xmlUrl="http://daringfireball.net/index.xml"/>
+				<outline text="Daring Fireball" nick="fireball" type="rss" htmlUrl="https://daringfireball.net/" xmlUrl="https://daringfireball.net/feeds/main"/>
 				<outline text="Webkit" type="rss" htmlUrl="http://webkit.org/blog/" xmlUrl="http://webkit.org/blog/feed/atom/"/>
 				<outline text="LLVM" type="rss" htmlUrl="http://blog.llvm.org/" xmlUrl="http://blog.llvm.org/feeds/posts/default"/>
 				<outline text="Rentzsch" type="rss" htmlUrl="http://rentzsch.tumblr.com/" xmlUrl="http://rentzsch.tumblr.com/rss" tidy="no"/>
@@ -96,6 +99,7 @@
 				<regex>(?s)comic-title-name.>(?P&lt;title>.*?)&lt;.*? img-comic" .*? src="(?P&lt;link>http://.*?)"</regex>
 			</outline>
 			<outline text="Garfield" type="x-plagg-html" htmlUrl="http://garfield.com/" hours="7-8">
+				<header name='Cookie' value='age-gated=eyJpdiI6IjBMNVo2djl6dFNianA3eWRkTGZCY3c9PSIsInZhbHVlIjoiSWdtWGozS3kySFRJRklrWDBZektrQT09IiwibWFjIjoiNzRiMTQ3Nzk3ZjQ0YTc0N2M1Y2M4NTdiYTgyNjVlMWI4MmNmZWEwOGY2ZDk3ZTZiNTY3ZWZlOWZmMmU4MjRiYyJ9'/>
 				<regex>img class="img-responsive" src="(?P&lt;link>http.*?/20../(?P&lt;title>[^.]+)\..+?)"</regex>
 			</outline>
 			<outline text="Userfriendly" nick="uf" type="x-plagg-html" htmlUrl="http://www.userfriendly.org/static/"
@@ -104,12 +108,12 @@
 				<replace what="link" from="/xuf" to="/uf"/>
 			</outline>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/" hours="7-10" tidy="no">
-				<regex> id=.mutable_.*? class=.strip. src=.(http://.*?/([0-9a-f]+)).</regex>
+				<regex>img sizes=.100vw.* src=.(http://.*?/([0-9a-f]+))</regex>
 				<!-- image-xpath>//img[@class='strip'][2]/@src</image-xpath -->
 			</outline>
 			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
 				hours="7-10" ignoredate="yes"/>
-			<outline text="xkcd" type="rss" htmlUrl="http://xkcd.com/" xmlUrl="http://xkcd.com/rss.xml"/>
+			<outline text="xkcd" type="rss" htmlUrl="http://xkcd.com/" xmlUrl="http://xkcd.com/rss.xml" ignoredate="yes"/>
 			<outline text="geekandpoke" type="rss" htmlUrl="http://geekandpoke.typepad.com/geekandpoke/" xmlUrl="http://feeds.feedburner.com/GeekAndPoke"/>
 		</outline>
 	</body>
