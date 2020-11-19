@@ -32,6 +32,8 @@
 			</outline>
 			<outline text="Bad Astronomy" nick="badastro" type="rss" htmlUrl="http://www.blastr.com/tags/bad-astronomy" xmlUrl="http://www.blastr.com/tags/bad-astronomy/feed">
 				<replace what="body" from="(?s)\d+\s+&lt;h3 class=&quot;field-label&quot;&gt;.*"/>
+				<replace what="body" from="height=&quot;.*?&quot;"/>
+				<replace what="body" from="width=&quot;.*?&quot;"/>
 			</outline>
 			<outline text="What if?" nick="whatif" type="rss" htmlUrl="http://what-if.xkcd.com/" xmlUrl="http://what-if.xkcd.com/feed.atom" tidy="no" ignoredate="yes">
 				<replace what="body" from=".h1.*?./h1."/>
@@ -39,10 +41,9 @@
 		</outline>
 		<outline text="Articles">
 			<outline text="ars technica" nick="arstech" type="rss" htmlUrl="http://www.arstechnica.com/" xmlUrl="http://feeds.arstechnica.com/arstechnica/index" h-adjust="2"/>
-			<outline text="WTF" type="rss" htmlUrl="http://thedailywtf.com/" xmlUrl="http://syndication.thedailywtf.com/TheDailyWtf"/>
+			<outline text="WTF" type="rss" htmlUrl="http://thedailywtf.com/" xmlUrl="http://syndication.thedailywtf.com/TheDailyWtf" ignoredate="yes"/>
 			<outline text="isocpp" type="rss" htmlUrl="http://isocpp.org" xmlUrl="http://isocpp.org/blog/rss/category/news"/>
 			<outline text="gitrev" type="rss" htmlUrl="http://git.github.io/" xmlUrl="http://git.github.io/feed.xml"/>
-			<outline text="awesomecpp" type="rss" htmlUrl="https://cpp.libhunt.com/newsletter/" xmlUrl="https://cpp.libhunt.com/newsletter/feed"/>
 		</outline>
 		<outline text="Blogs">
 			<outline text="Familie &amp; Fröinde">
@@ -61,7 +62,7 @@
 			<outline text="Wes Felter" nick="wmf" type="rss" htmlUrl="http://blog.felter.org/" xmlUrl="http://blog.felter.org/rss"/>
 			<outline text="Fredy (init7)" nick="init7" type="rss" htmlUrl="http://www.blogg.ch/" xmlUrl="http://www.blogg.ch/index.php?/feeds/index.rss2"/>
 			<outline text="DVD Jon" nick="dvdjon" type="rss" htmlUrl="http://nanocr.eu/" xmlUrl="http://nanocr.eu/feed/"/>
-			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="http://www.schneier.com/blog/" xmlUrl="http://feeds2.feedburner.com/schneier/fulltext"/>
+			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="https://www.schneier.com/" xmlUrl="https://www.schneier.com/feed/"/>
 			<outline text="Cringely" type="rss" htmlUrl="http://www.cringely.com/" xmlUrl="http://www.cringely.com/feed/"/>
 			<outline text="Django" type="rss" htmlUrl="http://www.djangoproject.com/weblog/" xmlUrl="http://www.djangoproject.com/rss/weblog/"/>
 			<outline text="jhague" type="rss" htmlUrl="http://prog21.dadgum.com/" xmlUrl="http://prog21.dadgum.com/atom.xml"/>
@@ -92,8 +93,7 @@
 		<outline text="Comics">
 			<outline text="Dilbert" type="x-plagg-html" htmlUrl="https://www.dilbert.com/" tidy="no"
 				hours="7-10">
-				<regex>(?s)comic-title-name">(?P&lt;title>.*?)&lt;.*? img-comic" .*? src="(?P&lt;link>//.*?)"</regex>
-				<replace what="body" from="&quot;//" to="&quot;https://"/>
+				<regex>&lt;img alt="(?P&lt;title>.*?)".*? img-comic" .*? src="(?P&lt;link>.*?)"</regex>
 			</outline>
 			<outline text="Garfield" type="x-plagg-html" htmlUrl="https://garfield.com/" hours="7-8">
 				<header name='Cookie' value='age-gated=eyJpdiI6IjBMNVo2djl6dFNianA3eWRkTGZCY3c9PSIsInZhbHVlIjoiSWdtWGozS3kySFRJRklrWDBZektrQT09IiwibWFjIjoiNzRiMTQ3Nzk3ZjQ0YTc0N2M1Y2M4NTdiYTgyNjVlMWI4MmNmZWEwOGY2ZDk3ZTZiNTY3ZWZlOWZmMmU4MjRiYyJ9'/>
