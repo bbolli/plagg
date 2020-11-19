@@ -132,10 +132,11 @@ class Entry:
                 footer += '\n[%s]' % _linktag(self._link, 'Link')
             if 'comments' in item:
                 footer += '\n[%s]' % _linktag(item['comments'], 'Comments')
-            footer += '\n[%s]\n</p>\n' % _linktag(
-                channel['link'], channel['title'], title=channel.get('tagline')
-            )
-            self.footer = footer
+            if 'link' in channel:
+                footer += '\n[%s]\n</p>' % _linktag(
+                    channel['link'], channel['title'], title=channel.get('tagline')
+                )
+            self.footer = footer + '\n'
 
         # modification time
         if feed.attrs.get('ignoredate', 'no') != 'yes':
@@ -279,7 +280,7 @@ class Entries:
         if not feed.feed:
             return 0      # skip empty feeds
         self.feed = feed
-        self.channel = feed.feed['channel']
+        self.channel = feed.feed.get('channel', {'title': feed.name})
         self.name = self.channel.get('title', feed.name)
         self.items = feed.feed['items']
         # Process the entries
