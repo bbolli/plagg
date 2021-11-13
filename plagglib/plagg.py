@@ -1,9 +1,9 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
-from __future__ import with_statement
 
-import httplib
+
+import http.client
 import os
 import pprint as _pprint
 import sys
@@ -13,8 +13,8 @@ import xml.sax
 
 __version__ = "3.0"
 
-from feed import RSSFeed, HTMLFeed, ComputedFeed
-from entries import BlosxomEntries, Entry
+from .feed import RSSFeed, HTMLFeed, ComputedFeed
+from .entries import BlosxomEntries, Entry
 
 ENCODING = 'utf-8'      # default character encoding, used by feed.py and entries.py
 
@@ -81,8 +81,8 @@ class Plagg(xml.sax.handler.ContentHandler):
 
     def pprint(self, obj):
         with self.lock:
-            if type(obj) in (str, unicode):
-                print obj
+            if type(obj) in (str, str):
+                print(obj)
             else:
                 _pprint.pprint(obj)
 
@@ -173,7 +173,7 @@ class Plagg(xml.sax.handler.ContentHandler):
     def fetchFeed(self, feed):
         try:
             feed.getFeed()
-        except httplib.HTTPException as e:
+        except http.client.HTTPException as e:
             sys.stderr.write(("Feed: %s (%s): %s\n" % (
                 feed.name, feed.uri, e.__class__.__name__
             )).encode(ENCODING, 'replace'))
@@ -206,7 +206,7 @@ class Plagg(xml.sax.handler.ContentHandler):
             with self.lock:
                 _pprint.pprint(feed.feed)
                 if 'bozo_exception' in feed.feed:
-                    print feed.feed['bozo_exception']
+                    print(feed.feed['bozo_exception'])
 
         return True
 
@@ -219,13 +219,13 @@ class Plagg(xml.sax.handler.ContentHandler):
     def newEntries(self):
         body = ['<ul>']
         for feed, entries in self.newentries:
-            body.append(u'  <li>%s</li>\n  <ul>' % feed)
+            body.append('  <li>%s</li>\n  <ul>' % feed)
             for e in entries:
-                body.append(u'    <li>%s</li>' % e.newSummary())
+                body.append('    <li>%s</li>' % e.newSummary())
             body.append('  </ul>')
         body.append('</ul>')
         if len(body) > 2:
             e = Entry()
-            e.setEntry('Latest news (%s)' % time.strftime('%H:%M:%S'), u'\n'.join(body))
+            e.setEntry('Latest news (%s)' % time.strftime('%H:%M:%S'), '\n'.join(body))
             e.setMeta(source='plagg')
             e.write(self.newspath, '.txt', overwrite=True, fname='Latest')

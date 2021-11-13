@@ -7,15 +7,14 @@ import pickle
 import re
 import socket
 import sys
-import urllib2
-import ssl
+import urllib.request, urllib.error, urllib.parse
 import xml.etree.ElementTree as et
 
 import feedparser  # needs at least version 3 beta 22!
-import plagg
+
+from . import plagg
 
 USER_AGENT = 'plagg/%s (+https://drbeat.li/py/plagg/)' % plagg.__version__
-
 SSL_CTX = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 SSL_CTX.options &= ~ssl.OP_NO_SSLv3
 ssl_handler = urllib2.HTTPSHandler(context=SSL_CTX)
@@ -149,7 +148,7 @@ class SimulatedFeed(Feed):
     one entry. Is used by subclasses which know how to get an item from
     a website."""
 
-    RSS_TEMPLATE = u"""\
+    RSS_TEMPLATE = """\
 <?xml version="1.0" encoding="%(encoding)s"?>
 
 <rss version="2.0">
@@ -280,7 +279,7 @@ class HTMLFeed(SimulatedFeed):
             except IndexError:
                 pass
         else:
-            sys.stderr.write((u"Regex '%s' not found at %s:\n\n----\n%s----\n" % (
+            sys.stderr.write(("Regex '%s' not found at %s:\n\n----\n%s----\n" % (
                 regex, self.uri, html
             )).encode(self.encoding))
 
@@ -291,14 +290,14 @@ class HTMLFeed(SimulatedFeed):
         html = script_re.sub('', html)
 
         # Replace entity references by their corresponding character references.
-        from htmlentitydefs import name2codepoint
+        from html.entities import name2codepoint
         eref_re = re.compile('&(' + '|'.join(name2codepoint.keys()) + ');')
         html = eref_re.sub(lambda m: '&#%d;' % name2codepoint[m.group(1)], html)
 
         try:
             root = et.fromstring(html)
         except Exception as e:
-            sys.stderr.write((u"Page at %s not parseable as XML: %s\n\n----\n%s----\n" % (
+            sys.stderr.write(("Page at %s not parseable as XML: %s\n\n----\n%s----\n" % (
                 self.uri, e, html
             )).encode(self.encoding))
             return
@@ -317,7 +316,7 @@ class HTMLFeed(SimulatedFeed):
                 accessf = lambda e: e.get(attrname)
             for e in root.iterfind('.' + xpath):
                 return accessf(e)               # use only the first match
-            sys.stderr.write((u"%s '%s' not found at %s:\n\n----\n%s----\n" % (
+            sys.stderr.write(("%s '%s' not found at %s:\n\n----\n%s----\n" % (
                 attrname, xpath, self.uri, html
             )).encode(self.encoding))
 
@@ -340,9 +339,9 @@ class HTMLFeed(SimulatedFeed):
             localfile = os.path.join(self.attrs['savepath'], basename)
             # only get and save the file if it doesn't exist yet
             if not os.path.isfile(localfile):
-                req = urllib2.Request(link, context=SSL_CTX)
+                req = urllib.request.Request(link, context=SSL_CTX)
                 req.add_header('Referer', self.attrs.get('referrer') or self.uri or self.imgLink)
-                image = urllib2.urlopen(req).read()
+                image = urllib.request.urlopen(req).read()
                 f = file(localfile, 'wb')
                 f.write(image)
                 f.close()
@@ -362,7 +361,7 @@ class ComputedFeed(HTMLFeed):
     def getLink(self):
         """Execute the suite which should set at least self.imgLink"""
         try:
-            exec self.suite
+            exec(self.suite)
         except Exception as e:
             sys.stderr.write("%s in suite\n\n----\n%s\n----\n" % (str(e), self.suite))
             self.imgLink = ''

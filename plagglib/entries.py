@@ -5,9 +5,9 @@ import re
 import subprocess
 import sys
 import time
-from urlparse import urlsplit
+from urllib.parse import urlsplit
 
-import plagg            # for default encoding and config
+from . import plagg            # for default encoding and config
 
 
 def _escape(text):
@@ -19,7 +19,7 @@ def _escape(text):
 def _linktag(href, text, **attrs):
     """Returns a HTML link tag."""
     a = ''.join([' %s="%s"' % (k, _escape(v)) for k, v in attrs.items() if v])
-    return u'<a href="%s"%s>%s</a>' % (href, a, plagg.decode(text))
+    return '<a href="%s"%s>%s</a>' % (href, a, text)
 
 
 def _unescape(text):
@@ -99,7 +99,7 @@ class Entry:
                 title = title[1:-1].rstrip('.')
             if title in self.body:
                 title = ''
-        elif title.endswith(u'...') and title[:-3] in self.body:
+        elif title.endswith('...') and title[:-3] in self.body:
             title = ''
         self._title = title
 
@@ -198,7 +198,7 @@ class Entry:
                 s.append('<a href="%s">%s</a>' % (url, name))
             s.append('</p>')
         s.append(self.footer)
-        return plagg.encode(u'\n'.join(map(plagg.decode, s)))
+        return '\n'.join(s)
 
     def timestamp(self, suffix):
         if not self.mdate:
@@ -207,10 +207,10 @@ class Entry:
 
     def logSummary(self):
         return self.timestamp(': ') + \
-            plagg.encode(_markup.sub('', self._title) or self.fname)
+            (_markup.sub('', self._title) or self.fname)
 
     def newSummary(self):
-        return self.timestamp(u'\N{EN SPACE}') + \
+        return self.timestamp('\N{EN SPACE}') + \
             _linktag('#' + self._id, self._title)
 
     def write(self, destdir, ext, overwrite=False, fname=None):
@@ -248,9 +248,8 @@ class Entry:
         return 1
 
     def tidy(self, body):
-        body = plagg.encode(body)
         if plagg.VERBOSE > 3:
-            print 'before tidy:', body
+            print('before tidy:', body)
         tidy = ['/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null']
         try:
             t = subprocess.Popen(
@@ -267,10 +266,10 @@ class Entry:
                 m = _body.search(r)
                 body = (m.group(1) if m else r).strip()
             elif plagg.VERBOSE > 3:
-                print "tidy errors; body left as-is" % t.returncode
+                print("tidy errors; body left as-is" % t.returncode)
         if plagg.VERBOSE > 3:
-            print 'after tidy:', body
-        return plagg.decode(body)
+            print('after tidy:', body)
+        return body
 
 
 class Entries:
@@ -325,6 +324,6 @@ class BlosxomEntries(Entries):
 
         # logging
         if self.logging:
-            name = '' if self.logged else plagg.encode(self.name) + '\n'
+            name = '' if self.logged else self.name + '\n'
             self.logged = True
             plagg.pprint(name + '  ' + entry.logSummary())
