@@ -90,6 +90,8 @@ class Entry:
 
         # title
         title = _unescape(item.get('title', '').replace('\n', ' ')).strip()
+        if feed.skipEntry('title', title):
+            return False
         title = feed.replaceText('title', title)
         # remove the title if it matches the start of the body (for tumblr quotes)
         if len(title) > 20 and title[0] == title[-1] == '"':
@@ -149,6 +151,8 @@ class Entry:
 
         if plagg.VERBOSE > 1:
             plagg.pprint(('new item', self.__dict__))
+
+        return True
 
     def setEntry(self, title, body, footer=''):
         self._title = self.title = title
@@ -312,7 +316,8 @@ class BlosxomEntries(Entries):
         sets its mtime to the timestamp, if present."""
 
         entry = Entry()
-        entry.setFromItem(self.feed, self.channel, item)
+        if not entry.setFromItem(self.feed, self.channel, item):
+            return
         if not entry.write(self.fdir, self.fext):
             return
         if entry._title:

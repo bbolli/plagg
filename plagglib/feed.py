@@ -60,6 +60,7 @@ class Feed:
         self.feed = {}
         self.replacements = collections.defaultdict(list)  # {what: [(old_re, new), ...]}
         self.encoding = plagg.ENCODING
+        self.skip = {}
 
         digest = hashlib.md5(self.uri).hexdigest()
         self.cachefile = os.path.join(CACHE_DIR, digest)
@@ -77,6 +78,8 @@ class Feed:
             self.addReplacement(attrs.get('what'), attrs.get('from'), attrs.get('to', ''))
         elif name == 'header':
             self.addHeader(attrs.get('name'), attrs.get('value'))
+        elif name == 'skip':
+            self.skip = dict((k, re.compile(v)) for k, v in attrs.items())
         else:
             # default: do as if it were an <outline> attribute
             self.attrs[name] = content
@@ -90,6 +93,9 @@ class Feed:
         for pattern, new in self.replacements[what]:
             text = pattern.sub(new, text)
         return text
+
+    def skipEntry(self, what, text):
+        return what in self.skip and self.skip[what].match(text)
 
     def addHeader(self, name, value):
         if name and value is not None:

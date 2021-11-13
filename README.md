@@ -265,6 +265,19 @@ Example:
 
     <header name='Cookie' value='sessionID=1c521c788d5da9a1448bd93a63e9b78ba54f902a'/>
 
+#### 3.5.9 Skipping entries: `<skip>`
+
+This is a new child element of `<outline>`.
+
+    <skip title="regex"/>
+
+Skip entries whose titles match the regex given. The matching occurs before
+the title text replacements, if any.
+
+Example:
+
+    <skip title="^heise\+"/>
+
 ### 3.6. Rendering the OPML file as XHTML
 
 The distribution tar file contains the XSL style sheet `opml.xsl` that transforms
