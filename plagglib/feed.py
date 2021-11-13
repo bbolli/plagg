@@ -61,7 +61,7 @@ class Feed:
         self.encoding = plagg.ENCODING
         self.skip = {}
 
-        digest = hashlib.md5(self.uri).hexdigest()
+        digest = hashlib.md5(self.uri.encode()).hexdigest()
         self.cachefile = os.path.join(CACHE_DIR, digest)
         self.etag = None
         self.modified = None
@@ -173,9 +173,7 @@ class SimulatedFeed(Feed):
         self.item = self.iframe or '<p><img src="%s" /></p>' % self.imgLink
         if self.itemBody and not self.itemBody.startswith('<'):
             self.itemBody = '<p>%s</p>' % self.itemBody
-        self.itemBody = plagg.decode(self.itemBody)
         rss = self.RSS_TEMPLATE % self.__dict__
-        rss = plagg.encode(rss)
         self.feed = feedparser.parse(rss)
 
 
@@ -279,9 +277,9 @@ class HTMLFeed(SimulatedFeed):
             except IndexError:
                 pass
         else:
-            sys.stderr.write(("Regex '%s' not found at %s:\n\n----\n%s----\n" % (
+            sys.stderr.write("Regex '%s' not found at %s:\n\n----\n%s----\n" % (
                 regex, self.uri, html
-            )).encode(self.encoding))
+            ))
 
     def match_xpath(self, html):
         """Search for the content given by the {image,title,body,iframe}-xpath values."""
@@ -297,9 +295,9 @@ class HTMLFeed(SimulatedFeed):
         try:
             root = et.fromstring(html)
         except Exception as e:
-            sys.stderr.write(("Page at %s not parseable as XML: %s\n\n----\n%s----\n" % (
+            sys.stderr.write("Page at %s not parseable as XML: %s\n\n----\n%s----\n" % (
                 self.uri, e, html
-            )).encode(self.encoding))
+            ))
             return
 
         def _find(attrname):
@@ -316,9 +314,9 @@ class HTMLFeed(SimulatedFeed):
                 accessf = lambda e: e.get(attrname)
             for e in root.iterfind('.' + xpath):
                 return accessf(e)               # use only the first match
-            sys.stderr.write(("%s '%s' not found at %s:\n\n----\n%s----\n" % (
+            sys.stderr.write("%s '%s' not found at %s:\n\n----\n%s----\n" % (
                 attrname, xpath, self.uri, html
-            )).encode(self.encoding))
+            ))
 
         self.imgLink = _find('image-xpath')
         self.itemTitle = _find('title-xpath')

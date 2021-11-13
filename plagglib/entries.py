@@ -253,7 +253,7 @@ class Entry:
         tidy = ['/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null']
         try:
             t = subprocess.Popen(
-                tidy, stdin=subprocess.PIPE, stdout=subprocess.PIPE
+                tidy, stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True
             )
             r = t.communicate(body)[0]
         except OSError:

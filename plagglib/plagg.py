@@ -25,20 +25,6 @@ OLD_ENTRIES = 0
 pprint = None
 
 
-def encode(text):
-    """Converts a unicode string to its encoded equivalent."""
-    if isinstance(text, unicode):
-        return text.encode(ENCODING, 'xmlcharrefreplace')
-    return text
-
-
-def decode(text):
-    """Converts a string to its unicode equivalent."""
-    if isinstance(text, str):
-        text = unicode(text, ENCODING, 'replace')
-    return text
-
-
 def _matchHours(hours, currentHour):
     """Returns true if currentHour is present in hours.
     hours is a comma-separated list of ranges or single hour numbers,
@@ -174,16 +160,16 @@ class Plagg(xml.sax.handler.ContentHandler):
         try:
             feed.getFeed()
         except http.client.HTTPException as e:
-            sys.stderr.write(("Feed: %s (%s): %s\n" % (
+            sys.stderr.write("Feed: %s (%s): %s\n" % (
                 feed.name, feed.uri, e.__class__.__name__
-            )).encode(ENCODING, 'replace'))
+            ))
             return
         except Exception as e:
             import traceback
             if VERBOSE > 1:
                 with self.lock:
                     sys.stderr.write("Feed: %s (%s)\n" % (
-                        feed.name.encode(ENCODING, 'replace'), feed.uri
+                        feed.name, feed.uri
                     ))
                     traceback.print_exc()
                 self.errors += 1
@@ -196,9 +182,9 @@ class Plagg(xml.sax.handler.ContentHandler):
                     if e_str.find(msg) >= 0:
                         break
                 else:
-                    sys.stderr.write(("Feed: %s (%s)\n%s: %s\n" % (
+                    sys.stderr.write("Feed: %s (%s)\n%s: %s\n" % (
                         feed.name, feed.uri, e.__class__.__name__, e
-                    )).encode(ENCODING, 'replace'))
+                    ))
                     self.errors += 1
             return
 
