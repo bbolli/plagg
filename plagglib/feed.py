@@ -192,62 +192,22 @@ class HTMLFeed(SimulatedFeed):
             return      # mandatory child element missing
 
         self.loadCache()
+        resp = {}
         try:
-            f = feedparser._open_resource(self.uri, self.etag, self.modified,
-                USER_AGENT, None, [], self.headers
+            html = feedparser.api._open_resource(self.uri, self.etag, self.modified,
+                USER_AGENT, None, [], self.headers, resp
             )
-            html = f.read()
         except Exception as e:
             sys.stderr.write('Getting page %s: %s\n' % (self.uri, e))
             return
 
-        if getattr(f, 'status', None) == 304 or not html:
+        if resp['status'] == 304 or not html:
             # not modified or empty page
             return
 
-        # save HTTP headers
-        if hasattr(f, 'info'):
-            info = f.info()
-            etag = info.getheader('ETag')
-            modified = info.getheader('Last-Modified')
-            if modified:
-                modified = feedparser._parse_date(modified)
-            self.saveCache(etag, modified)
+        self.saveCache(resp.get('etag'), resp.get('modified_parsed'))
 
-            # if the page is compressed, decompress it
-            ce = info.getheader('Content-Encoding', '')
-            if ce == 'gzip':
-                try:
-                    import gzip
-                    import StringIO
-                    html = gzip.GzipFile(fileobj=StringIO.StringIO(html)).read()
-                except Exception as e:
-                    sys.stderr.write('Unzipping page %s: %s\n' % (self.uri, e))
-                    return
-            elif ce == 'deflate':
-                try:
-                    import zlib
-                    html = zlib.decompress(html, -zlib.MAX_WBITS)
-                except Exception as e:
-                    sys.stderr.write('Inflating page %s: %s\n' % (self.uri, e))
-                    return
-
-        # resolve relative URIs
-        html = feedparser._resolveRelativeURIs(html, self.uri, self.encoding, 'text/html')
-
-        if hasattr(f, 'headers'):
-            charsets = [c for c in feedparser._getCharacterEncoding(f.headers, html) if c]
-        else:
-            charsets = [self.encoding]
-        for charset in charsets:
-            try:
-                html = html.decode(charset)
-                break
-            except UnicodeDecodeError:
-                pass
-            except LookupError:
-                pass
-
+        html = feedparser.api.convert_to_utf8(resp['headers'], html, resp).decode('utf-8')
         if 'regex' in self.attrs:
             self.match_regex(html)
         else:

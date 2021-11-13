@@ -6,7 +6,6 @@ news.opml
 opml.xsl
 plagg
 setup.py
-plagglib/feedparser.py
 plagglib/entries.py
 plagglib/feed.py
 plagglib/plagg.py
