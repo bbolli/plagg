@@ -195,7 +195,7 @@ class HTMLFeed(SimulatedFeed):
                 USER_AGENT, None, [], self.headers, resp
             )
         except Exception as e:
-            sys.stderr.write(f'Getting page {self.uri}: {e}\n')
+            print(f'Getting page {self.uri}: {e}', file=sys.stderr)
             return
 
         if resp['status'] == 304 or not html:
@@ -234,7 +234,9 @@ class HTMLFeed(SimulatedFeed):
             except IndexError:
                 pass
         else:
-            sys.stderr.write(f"Regex '{regex}' not found at {self.uri}:\n\n----\n{html}----\n")
+            print(f"Regex '{regex}' not found at {self.uri}:\n\n----\n{html}----",
+                file=sys.stderr
+            )
 
     def match_xpath(self, html):
         """Search for the content given by the {image,title,body,iframe}-xpath values."""
@@ -250,7 +252,9 @@ class HTMLFeed(SimulatedFeed):
         try:
             root = et.fromstring(html)
         except Exception as e:
-            sys.stderr.write(f"Page at {self.uri} not parseable as XML: {e}\n\n----\n{html}----\n")
+            print(f"Page at {self.uri} not parseable as XML: {e}\n\n----\n{html}----",
+                file=sys.stderr
+            )
             return
 
         def _find(attrname):
@@ -267,7 +271,9 @@ class HTMLFeed(SimulatedFeed):
                 accessf = lambda e: e.get(attrname)
             for e in root.iterfind('.' + xpath):
                 return accessf(e)               # use only the first match
-            sys.stderr.write(f"{attrname} '{xpath}' not found at {self.uri}:\n\n----\n{html}----\n")
+            print(f"{attrname} '{xpath}' not found at {self.uri}:\n\n----\n{html}----",
+                file=sys.stderr
+            )
 
         self.imgLink = _find('image-xpath')
         self.itemTitle = _find('title-xpath')
@@ -311,7 +317,7 @@ class ComputedFeed(HTMLFeed):
         try:
             exec(self.suite)
         except Exception as e:
-            sys.stderr.write(f"{e} in suite\n\n----\n{self.suite}\n----\n")
+            print(f"{e} in suite\n\n----\n{self.suite}\n----", file=sys.stderr)
             self.imgLink = ''
             return
         if not self.itemTitle:

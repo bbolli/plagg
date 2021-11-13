@@ -160,15 +160,15 @@ class Plagg(xml.sax.handler.ContentHandler):
         try:
             feed.getFeed()
         except http.client.HTTPException as e:
-            sys.stderr.write(
-                f"Feed: {feed.name} ({feed.uri}): {e.__class__.__name__}\n"
+            print(f"Feed: {feed.name} ({feed.uri}): {e.__class__.__name__}",
+                file=sys.stderr
             )
             return
         except Exception as e:
             import traceback
             if VERBOSE > 1:
                 with self.lock:
-                    sys.stderr.write(f"Feed: {feed.name} ({feed.uri})\n")
+                    print(f"Feed: {feed.name} ({feed.uri})", file=sys.stderr)
                     traceback.print_exc()
                 self.errors += 1
             else:
@@ -180,9 +180,8 @@ class Plagg(xml.sax.handler.ContentHandler):
                     if e_str.find(msg) >= 0:
                         break
                 else:
-                    sys.stderr.write(
-                        f"Feed: {feed.name} ({feed.uri}):\n"
-                        f"{e.__class__.__name__}: {e}\n"
+                    print(f"Feed: {feed.name} ({feed.uri}):\n"
+                        f"{e.__class__.__name__}: {e}", file=sys.stderr
                     )
                     self.errors += 1
             return

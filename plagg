@@ -21,7 +21,7 @@ footer = 1
 try:
     opts, args = getopt.getopt(sys.argv[1:], 'd:fFnhoVvt:')
 except getopt.GetoptError as e:
-    print(e)
+    print(e, file=sys.stderr)
     usage(3)
 for o, v in opts:
     if o == '-d':

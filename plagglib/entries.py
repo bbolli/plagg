@@ -257,7 +257,7 @@ class Entry:
             r = t.communicate(body)[0]
         except OSError:
             if not Entry.TidyWarningDone:
-                sys.stderr.write("Cannot execute %s\n" % ' '.join(tidy))
+                print("Cannot execute " + ' '.join(tidy), file=sys.stderr)
                 Entry.TidyWarningDone = True
         else:
             if 0 <= t.returncode <= 1:    # warnings are ok
