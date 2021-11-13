@@ -15,9 +15,6 @@ import feedparser  # needs at least version 3 beta 22!
 from . import plagg
 
 USER_AGENT = 'plagg/%s (+https://drbeat.li/py/plagg/)' % plagg.__version__
-SSL_CTX = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
-SSL_CTX.options &= ~ssl.OP_NO_SSLv3
-ssl_handler = urllib2.HTTPSHandler(context=SSL_CTX)
 
 try:
     CACHE_DIR = [os.environ['XDG_CACHE_HOME']]
@@ -134,7 +131,7 @@ class RSSFeed(Feed):
         self.loadCache()
         feed = feedparser.parse(self.uri, etag=self.etag,
             modified=self.modified, agent=USER_AGENT,
-            request_headers=self.headers, handlers=ssl_handler
+            request_headers=self.headers
         )
         if feed.get('status') == 304:
             # feed not modified
@@ -297,7 +294,7 @@ class HTMLFeed(SimulatedFeed):
             localfile = os.path.join(self.attrs['savepath'], basename)
             # only get and save the file if it doesn't exist yet
             if not os.path.isfile(localfile):
-                req = urllib.request.Request(link, context=SSL_CTX)
+                req = urllib.request.Request(link)
                 req.add_header('Referer', self.attrs.get('referrer') or self.uri or self.imgLink)
                 image = urllib.request.urlopen(req).read()
                 f = file(localfile, 'wb')
