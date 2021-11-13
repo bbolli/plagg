@@ -173,13 +173,10 @@ class Plagg(xml.sax.handler.ContentHandler):
                 self.errors += 1
             else:
                 e_str = str(e).lower()
-                for msg in (
+                if not any(e_str.find(msg) >= 0 for msg in (
                     'timed out', 'connection refused', 'reset by peer',
                     'name resolution', 'no route'
-                ):
-                    if e_str.find(msg) >= 0:
-                        break
-                else:
+                )):
                     print(f"Feed: {feed.name} ({feed.uri}):\n"
                         f"{e.__class__.__name__}: {e}", file=sys.stderr
                     )
