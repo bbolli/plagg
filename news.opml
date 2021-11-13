@@ -13,6 +13,7 @@
 				<replace what="body" from="(?is)(&lt;iframe.*?/iframe&gt;|&lt;img.*? /&gt;)"/>
 			</outline>
 			<outline text="Heise" type="rss" htmlUrl="http://www.heise.de/" xmlUrl="http://www.heise.de/newsticker/heise-atom.xml">
+				<skip title="^heise\+"/>
 				<replace what="body" from="&lt;br /&gt;\s*"/>
 			</outline>
 			<outline text="Linux Weekly News" nick="lwn" type="rss" htmlUrl="http://lwn.net/" xmlUrl="http://lwn.net/headlines/rss">
@@ -62,7 +63,7 @@
 			<outline text="Wes Felter" nick="wmf" type="rss" htmlUrl="http://blog.felter.org/" xmlUrl="http://blog.felter.org/rss"/>
 			<outline text="Fredy (init7)" nick="init7" type="rss" htmlUrl="http://www.blogg.ch/" xmlUrl="http://www.blogg.ch/index.php?/feeds/index.rss2"/>
 			<outline text="DVD Jon" nick="dvdjon" type="rss" htmlUrl="http://nanocr.eu/" xmlUrl="http://nanocr.eu/feed/"/>
-			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="https://www.schneier.com/" xmlUrl="https://www.schneier.com/feed/"/>
+			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="https://www.schneier.com/" xmlUrl="https://www.schneier.com/feed/atom"/>
 			<outline text="Cringely" type="rss" htmlUrl="http://www.cringely.com/" xmlUrl="http://www.cringely.com/feed/"/>
 			<outline text="Django" type="rss" htmlUrl="http://www.djangoproject.com/weblog/" xmlUrl="http://www.djangoproject.com/rss/weblog/"/>
 			<outline text="jhague" type="rss" htmlUrl="http://prog21.dadgum.com/" xmlUrl="http://prog21.dadgum.com/atom.xml"/>
@@ -95,20 +96,9 @@
 				hours="7-10">
 				<regex>&lt;img alt="(?P&lt;title>.*?)".*? img-comic" .*? src="(?P&lt;link>.*?)"</regex>
 			</outline>
-			<outline text="Garfield" type="x-plagg-html" htmlUrl="https://garfield.com/" hours="7-8">
-				<header name='Cookie' value='age-gated=eyJpdiI6IjBMNVo2djl6dFNianA3eWRkTGZCY3c9PSIsInZhbHVlIjoiSWdtWGozS3kySFRJRklrWDBZektrQT09IiwibWFjIjoiNzRiMTQ3Nzk3ZjQ0YTc0N2M1Y2M4NTdiYTgyNjVlMWI4MmNmZWEwOGY2ZDk3ZTZiNTY3ZWZlOWZmMmU4MjRiYyJ9'/>
-				<regex>img class="img-responsive" src="(?P&lt;link>http.*?/20../(?P&lt;title>[^.]+)\..+?)"</regex>
-			</outline>
-			<outline text="Userfriendly" nick="uf" type="x-plagg-html" htmlUrl="http://www.userfriendly.org/static/"
-				hours="7-10">
-				<regex>src="(http://www.userfriendly.org/cartoons/archives/\d{2}\w{3}/xuf(\d+)\.gif)"</regex>
-				<replace what="link" from="/xuf" to="/uf"/>
-			</outline>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/" hours="7-10" tidy="no">
 				<regex>src=&quot;(https?://assets\..*?/([0-9a-f]+))&quot;</regex>
 			</outline>
-			<outline text="Joy of Tech" nick="joyoftech" type="rss" htmlUrl="http://www.joyoftech.com/joyoftech/" xmlUrl="http://www.joyoftech.com/joyoftech/jotblog/index.xml"
-				hours="7-10" ignoredate="yes"/>
 			<outline text="xkcd" type="rss" htmlUrl="http://xkcd.com/" xmlUrl="http://xkcd.com/rss.xml" ignoredate="yes"/>
 			<outline text="geekandpoke" type="rss" htmlUrl="http://geekandpoke.typepad.com/geekandpoke/" xmlUrl="http://feeds.feedburner.com/GeekAndPoke"/>
 		</outline>
