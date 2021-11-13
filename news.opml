@@ -92,15 +92,12 @@
 			<outline text="duncan" type="rss" htmlUrl="http://duncandavidson.com/blog" xmlUrl="http://duncandavidson.com/feed" ignoredate="yes"/>
 		</outline>
 		<outline text="Comics">
-			<outline text="Dilbert" type="x-plagg-html" htmlUrl="https://www.dilbert.com/" tidy="no"
-				hours="7-10">
-				<regex>&lt;img alt="(?P&lt;title>.*?)".*? img-comic" .*? src="(?P&lt;link>.*?)"</regex>
-			</outline>
+			<outline text="Dilbert" htmlUrl="https://www.dilbert.com/" xmlUrl="https://www.comicsrss.com/rss/dilbert.rss" hours="7-10"/>
 			<outline text="Calvin &amp; Hobbes" nick="ch" type="x-plagg-html" htmlUrl="http://www.gocomics.com/calvinandhobbes/" hours="7-10" tidy="no">
 				<regex>src=&quot;(https?://assets\..*?/([0-9a-f]+))&quot;</regex>
 			</outline>
 			<outline text="xkcd" type="rss" htmlUrl="http://xkcd.com/" xmlUrl="http://xkcd.com/rss.xml" ignoredate="yes"/>
-			<outline text="geekandpoke" type="rss" htmlUrl="http://geekandpoke.typepad.com/geekandpoke/" xmlUrl="http://feeds.feedburner.com/GeekAndPoke"/>
+			<outline text="geekandpoke" type="rss" htmlUrl="https://geek-and-poke.com/" xmlUrl="http://feeds.feedburner.com/GeekAndPoke"/>
 		</outline>
 	</body>
 	<!-- vim: set noet sw=8: -->
