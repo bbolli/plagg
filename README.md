@@ -301,7 +301,7 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
   - Print an exception trace only at log level 2 and above
   - Generate a feed title attribute with the feed's tagline
   - Send the correct User-Agent string which was lost by using httpcache.py
-    (patch sent to and [accepted by](http://bitworking.org/news/httpcache_py_1_0_2) Joe Gregorio)
+    (patch sent to and [accepted by](https://bitworking.org/news/2004/12/httpcache_py_1_0_2/) Joe Gregorio)
 * Version 1.3, 2004-12-29:
   - Added the `-n` option
   - Process feeds only if they have changed
