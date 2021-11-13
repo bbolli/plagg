@@ -237,9 +237,8 @@ class Entry:
         self.makeId()
 
         # write out the entry
-        f = open(fname, 'w')
-        f.write(self.render())
-        f.close()
+        with open(fname, 'w') as f:
+            f.write(self.render())
 
         # set modification time if present
         if self.tm:

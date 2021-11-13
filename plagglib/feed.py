@@ -297,9 +297,8 @@ class HTMLFeed(SimulatedFeed):
                 req = urllib.request.Request(link)
                 req.add_header('Referer', self.attrs.get('referrer') or self.uri or self.imgLink)
                 image = urllib.request.urlopen(req).read()
-                f = file(localfile, 'wb')
-                f.write(image)
-                f.close()
+                with file(localfile, 'wb') as f:
+                    f.write(image)
             # adjust the imgLink in every case
             self.imgLink = self.attrs['saveurl'] + '/' + basename
 
