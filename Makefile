@@ -17,7 +17,7 @@ README: README.html
 	w3m -dump $^ >$@
 
 dist: ${source}
-	python setup.py sdist
+	python3 setup.py sdist
 
 # get the version
 V := $(shell awk -F\" '/__version__/ { print $$2 }' <plagglib/plagg.py)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from distutils.core import setup
 import sys, re, os, subprocess
@@ -10,13 +10,15 @@ if sys.hexversion < 0x02020300:
     DistributionMetadata.classifiers = None
     DistributionMetadata.download_url = None
 
-from plagglib import Plagg
-version = Plagg.__version__
+import plagglib.plagg
+version = plagglib.plagg.__version__
 
 # try to get the development version if we're in a Git repo
 if os.path.isdir('.git'):
     try:
-        version = subprocess.check_output(['git', 'describe', '--tags']).strip().lstrip('v')
+        version = subprocess.check_output(
+	    ['git', 'describe', '--tags'], text=True
+	).strip().lstrip('v')
     except subprocess.CalledProcessError:
         pass
 
