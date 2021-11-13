@@ -14,7 +14,7 @@ import feedparser  # needs at least version 3 beta 22!
 
 from . import plagg
 
-USER_AGENT = 'plagg/%s (+https://drbeat.li/py/plagg/)' % plagg.__version__
+USER_AGENT = f'plagg/{plagg.__version__} (+https://drbeat.li/py/plagg/)'
 
 try:
     CACHE_DIR = [os.environ['XDG_CACHE_HOME']]
@@ -167,9 +167,9 @@ class SimulatedFeed(Feed):
         self.itemBody = ''
 
     def generateFeed(self):
-        self.item = self.iframe or '<p><img src="%s" /></p>' % self.imgLink
+        self.item = self.iframe or f'<p><img src="{self.imgLink}" /></p>'
         if self.itemBody and not self.itemBody.startswith('<'):
-            self.itemBody = '<p>%s</p>' % self.itemBody
+            self.itemBody = f'<p>{self.itemBody}</p>'
         rss = self.RSS_TEMPLATE % self.__dict__
         self.feed = feedparser.parse(rss)
 
@@ -195,7 +195,7 @@ class HTMLFeed(SimulatedFeed):
                 USER_AGENT, None, [], self.headers, resp
             )
         except Exception as e:
-            sys.stderr.write('Getting page %s: %s\n' % (self.uri, e))
+            sys.stderr.write(f'Getting page {self.uri}: {e}\n')
             return
 
         if resp['status'] == 304 or not html:
@@ -234,9 +234,7 @@ class HTMLFeed(SimulatedFeed):
             except IndexError:
                 pass
         else:
-            sys.stderr.write("Regex '%s' not found at %s:\n\n----\n%s----\n" % (
-                regex, self.uri, html
-            ))
+            sys.stderr.write(f"Regex '{regex}' not found at {self.uri}:\n\n----\n{html}----\n")
 
     def match_xpath(self, html):
         """Search for the content given by the {image,title,body,iframe}-xpath values."""
@@ -247,14 +245,12 @@ class HTMLFeed(SimulatedFeed):
         # Replace entity references by their corresponding character references.
         from html.entities import name2codepoint
         eref_re = re.compile('&(' + '|'.join(name2codepoint.keys()) + ');')
-        html = eref_re.sub(lambda m: '&#%d;' % name2codepoint[m.group(1)], html)
+        html = eref_re.sub(lambda m: f'&#{name2codepoint[m.group(1)]}', html)
 
         try:
             root = et.fromstring(html)
         except Exception as e:
-            sys.stderr.write("Page at %s not parseable as XML: %s\n\n----\n%s----\n" % (
-                self.uri, e, html
-            ))
+            sys.stderr.write(f"Page at {self.uri} not parseable as XML: {e}\n\n----\n{html}----\n")
             return
 
         def _find(attrname):
@@ -271,9 +267,7 @@ class HTMLFeed(SimulatedFeed):
                 accessf = lambda e: e.get(attrname)
             for e in root.iterfind('.' + xpath):
                 return accessf(e)               # use only the first match
-            sys.stderr.write("%s '%s' not found at %s:\n\n----\n%s----\n" % (
-                attrname, xpath, self.uri, html
-            ))
+            sys.stderr.write(f"{attrname} '{xpath}' not found at {self.uri}:\n\n----\n{html}----\n")
 
         self.imgLink = _find('image-xpath')
         self.itemTitle = _find('title-xpath')
@@ -317,7 +311,7 @@ class ComputedFeed(HTMLFeed):
         try:
             exec(self.suite)
         except Exception as e:
-            sys.stderr.write("%s in suite\n\n----\n%s\n----\n" % (str(e), self.suite))
+            sys.stderr.write(f"{e} in suite\n\n----\n{self.suite}\n----\n")
             self.imgLink = ''
             return
         if not self.itemTitle:

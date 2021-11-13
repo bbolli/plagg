@@ -160,17 +160,15 @@ class Plagg(xml.sax.handler.ContentHandler):
         try:
             feed.getFeed()
         except http.client.HTTPException as e:
-            sys.stderr.write("Feed: %s (%s): %s\n" % (
-                feed.name, feed.uri, e.__class__.__name__
-            ))
+            sys.stderr.write(
+                f"Feed: {feed.name} ({feed.uri}): {e.__class__.__name__}\n"
+            )
             return
         except Exception as e:
             import traceback
             if VERBOSE > 1:
                 with self.lock:
-                    sys.stderr.write("Feed: %s (%s)\n" % (
-                        feed.name, feed.uri
-                    ))
+                    sys.stderr.write(f"Feed: {feed.name} ({feed.uri})\n")
                     traceback.print_exc()
                 self.errors += 1
             else:
@@ -182,9 +180,10 @@ class Plagg(xml.sax.handler.ContentHandler):
                     if e_str.find(msg) >= 0:
                         break
                 else:
-                    sys.stderr.write("Feed: %s (%s)\n%s: %s\n" % (
-                        feed.name, feed.uri, e.__class__.__name__, e
-                    ))
+                    sys.stderr.write(
+                        f"Feed: {feed.name} ({feed.uri}):\n"
+                        f"{e.__class__.__name__}: {e}\n"
+                    )
                     self.errors += 1
             return
 
@@ -205,13 +204,13 @@ class Plagg(xml.sax.handler.ContentHandler):
     def newEntries(self):
         body = ['<ul>']
         for feed, entries in self.newentries:
-            body.append('  <li>%s</li>\n  <ul>' % feed)
+            body.append(f'  <li>{feed}</li>\n  <ul>')
             for e in entries:
-                body.append('    <li>%s</li>' % e.newSummary())
+                body.append(f'    <li>{e.newSummary()}</li>')
             body.append('  </ul>')
         body.append('</ul>')
         if len(body) > 2:
             e = Entry()
-            e.setEntry('Latest news (%s)' % time.strftime('%H:%M:%S'), '\n'.join(body))
+            e.setEntry(f"Latest news ({time.strftime('%H:%M:%S')})", '\n'.join(body))
             e.setMeta(source='plagg')
             e.write(self.newspath, '.txt', overwrite=True, fname='Latest')
