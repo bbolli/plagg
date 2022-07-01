@@ -193,7 +193,7 @@ class HTMLFeed(SimulatedFeed):
         try:
             html = feedparser.api._open_resource(self.uri, self.etag, self.modified,
                 USER_AGENT, None, [], self.headers, resp
-            )
+            ).read()
         except Exception as e:
             print(f'Getting page {self.uri}: {e}', file=sys.stderr)
             return
@@ -204,7 +204,7 @@ class HTMLFeed(SimulatedFeed):
 
         self.saveCache(resp.get('etag'), resp.get('modified_parsed'))
 
-        html = feedparser.api.convert_to_utf8(resp['headers'], html, resp).decode('utf-8')
+        html = feedparser.encodings.convert_to_utf8(resp['headers'], html, resp).decode('utf-8')
         if 'regex' in self.attrs:
             self.match_regex(html)
         else:
