@@ -219,6 +219,10 @@ class HTMLFeed(SimulatedFeed):
                 groups = m.groupdict()
                 if groups:      # new-style named groups regex
                     self.imgLink = groups.get('link')
+                    relLink = groups.get('rellink')
+                    # handle relative links
+                    if not self.imgLink and relLink:
+                        self.imgLink = self.uri + relLink
                     self.iframe = groups.get('iframe')
                     self.itemTitle = groups.get('title')
                     # strip whitespace inside href attributes (for APOD)
