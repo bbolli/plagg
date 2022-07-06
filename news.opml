@@ -27,9 +27,9 @@
 			<outline text="Debian security advisories" nick="debiansec" type="rss" htmlUrl="http://www.debian.org/security/" xmlUrl="http://www.debian.org/security/dsa" ignoredate="yes"/>
 		</outline>
 		<outline text="Science">
-			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="http://antwrp.gsfc.nasa.gov/apod/"
+			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="https://apod.nasa.gov/"
 				hours="8-10">
-				<regex><![CDATA[(?is)(<img .*?src="(?P<link>http://.*?/image/\d{4}/.*?\..*?)"|(?P<iframe><iframe .*?/iframe>)).*?<b> *(?P<title>.*?) *</b>\s*<br />.*?Explanation: *</b>(?P<body>.*?)<p>\s*<center>]]></regex>
+				<regex><![CDATA[(?is)(<img .*?src="(?P<rellink>.*?image/\d{4}/.*?\..*?)"|(?P<iframe><iframe .*?/iframe>)).*?<b> *(?P<title>.*?) *</b>\s*<br>.*?Explanation: *</b>(?P<body>.*?)<p>\s*<center>]]></regex>
 			</outline>
 			<outline text="Bad Astronomy" nick="badastro" type="rss" htmlUrl="http://www.blastr.com/tags/bad-astronomy" xmlUrl="http://www.blastr.com/tags/bad-astronomy/feed">
 				<replace what="body" from="(?s)\d+\s+&lt;h3 class=&quot;field-label&quot;&gt;.*"/>
