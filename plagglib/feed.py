@@ -11,6 +11,7 @@ import urllib.request, urllib.error, urllib.parse
 import xml.etree.ElementTree as et
 
 import feedparser  # needs at least version 3 beta 22!
+import feedparser.urls
 
 from . import plagg
 
@@ -205,6 +206,7 @@ class HTMLFeed(SimulatedFeed):
         self.saveCache(resp.get('etag'), resp.get('modified_parsed'))
 
         html = feedparser.encodings.convert_to_utf8(resp['headers'], html, resp).decode('utf-8')
+        html = feedparser.urls.resolve_relative_uris(html, self.uri, 'utf-8', 'text/html')
         if 'regex' in self.attrs:
             self.match_regex(html)
         else:

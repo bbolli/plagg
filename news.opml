@@ -27,24 +27,21 @@
 			<outline text="Debian security advisories" nick="debiansec" type="rss" htmlUrl="http://www.debian.org/security/" xmlUrl="http://www.debian.org/security/dsa" ignoredate="yes"/>
 		</outline>
 		<outline text="Science">
-			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="https://apod.nasa.gov/"
+			<outline text="Astronomy Picture of the Day" nick="apod" type="x-plagg-html" htmlUrl="https://apod.nasa.gov/apod/"
 				hours="8-10">
-				<regex><![CDATA[(?is)(<img .*?src="(?P<rellink>.*?image/\d{4}/.*?\..*?)"|(?P<iframe><iframe .*?/iframe>)).*?<b> *(?P<title>.*?) *</b>\s*<br>.*?Explanation: *</b>(?P<body>.*?)<p>\s*<center>]]></regex>
+				<regex><![CDATA[(?is)(<img .*?src="(?P<link>.*?image/\d{4}/.*?\..*?)"|(?P<iframe><iframe .*?/iframe>)).*?<b> *(?P<title>.*?) *</b>\s*<br />.*?Explanation: *</b>(?P<body>.*?)<p>\s*<center>]]></regex>
 			</outline>
 			<outline text="Bad Astronomy" nick="badastro" type="rss" htmlUrl="http://www.blastr.com/tags/bad-astronomy" xmlUrl="http://www.blastr.com/tags/bad-astronomy/feed">
 				<replace what="body" from="(?s)\d+\s+&lt;h3 class=&quot;field-label&quot;&gt;.*"/>
 				<replace what="body" from="height=&quot;.*?&quot;"/>
 				<replace what="body" from="width=&quot;.*?&quot;"/>
 			</outline>
-			<outline text="What if?" nick="whatif" type="rss" htmlUrl="http://what-if.xkcd.com/" xmlUrl="http://what-if.xkcd.com/feed.atom" tidy="no" ignoredate="yes">
-				<replace what="body" from=".h1.*?./h1."/>
-			</outline>
 		</outline>
 		<outline text="Articles">
-			<outline text="ars technica" nick="arstech" type="rss" htmlUrl="http://www.arstechnica.com/" xmlUrl="http://feeds.arstechnica.com/arstechnica/index" h-adjust="2"/>
-			<outline text="WTF" type="rss" htmlUrl="http://thedailywtf.com/" xmlUrl="http://syndication.thedailywtf.com/TheDailyWtf" ignoredate="yes"/>
-			<outline text="isocpp" type="rss" htmlUrl="http://isocpp.org" xmlUrl="http://isocpp.org/blog/rss/category/news"/>
-			<outline text="gitrev" type="rss" htmlUrl="http://git.github.io/" xmlUrl="http://git.github.io/feed.xml"/>
+			<outline text="ars technica" nick="arstech" type="rss" htmlUrl="https://www.arstechnica.com/" xmlUrl="https://feeds.arstechnica.com/arstechnica/index" h-adjust="2"/>
+			<outline text="WTF" type="rss" htmlUrl="https://thedailywtf.com/" xmlUrl="https://syndication.thedailywtf.com/TheDailyWtf" ignoredate="yes"/>
+			<outline text="isocpp" type="rss" htmlUrl="https://isocpp.org" xmlUrl="https://isocpp.org/blog/rss/category/news"/>
+			<outline text="gitrev" type="rss" htmlUrl="https://git.github.io/" xmlUrl="https://git.github.io/feed.xml"/>
 		</outline>
 		<outline text="Blogs">
 			<outline text="Familie &amp; Fröinde">
@@ -57,16 +54,11 @@
 			<outline text="Doc Searls" nick="doc" type="rss" htmlUrl="http://blogs.law.harvard.edu/doc/" xmlUrl="http://blogs.law.harvard.edu/doc/feed/"/>
 			<outline text="Simon Willison" nick="simon" type="rss" htmlUrl="http://simonwillison.net/" xmlUrl="http://feeds.simonwillison.net/swn-everything"/>
 			<outline text="Tim Bray" nick="ongoing" type="rss" htmlUrl="http://www.tbray.org/ongoing/" xmlUrl="http://www.tbray.org/ongoing/ongoing.rss"/>
-			<outline text="Sam Ruby" nick="samruby" type="rss" htmlUrl="http://www.intertwingly.net/blog/" xmlUrl="http://www.intertwingly.net/blog/index.atom" tidy="no"/>
 			<outline text="Joe Gregorio" nick="joegregorio" htmlUrl="http://bitworking.org/news/" xmlUrl="http://bitworking.org/news/feed/"/>
 			<outline text="Mark Nottingham" nick="mnot" type="rss" htmlUrl="http://www.mnot.net/blog/" xmlUrl="http://www.mnot.net/blog/index.atom"/>
-			<outline text="Wes Felter" nick="wmf" type="rss" htmlUrl="http://blog.felter.org/" xmlUrl="http://blog.felter.org/rss"/>
-			<outline text="Fredy (init7)" nick="init7" type="rss" htmlUrl="http://www.blogg.ch/" xmlUrl="http://www.blogg.ch/index.php?/feeds/index.rss2"/>
-			<outline text="DVD Jon" nick="dvdjon" type="rss" htmlUrl="http://nanocr.eu/" xmlUrl="http://nanocr.eu/feed/"/>
 			<outline text="Schneier&#8217;s Crypto-Gram" nick="crypto-gram" type="rss" htmlUrl="https://www.schneier.com/" xmlUrl="https://www.schneier.com/feed/atom"/>
 			<outline text="Cringely" type="rss" htmlUrl="http://www.cringely.com/" xmlUrl="http://www.cringely.com/feed/"/>
 			<outline text="Django" type="rss" htmlUrl="http://www.djangoproject.com/weblog/" xmlUrl="http://www.djangoproject.com/rss/weblog/"/>
-			<outline text="jhague" type="rss" htmlUrl="http://prog21.dadgum.com/" xmlUrl="http://prog21.dadgum.com/atom.xml"/>
 			<outline text="Krebs on Security" nick="krebs" type="rss" htmlUrl="http://krebsonsecurity.com/" xmlUrl="http://krebsonsecurity.com/feed/atom/"/>
 			<outline text="Adam Langley (imperialviolet)" nick="adaml" type="rss" htmlUrl="https://www.imperialviolet.org/" xmlUrl="https://www.imperialviolet.org/iv-rss.xml"/>
 			<outline text="Mac">
@@ -74,10 +66,6 @@
 				<outline text="Webkit" type="rss" htmlUrl="http://webkit.org/blog/" xmlUrl="http://webkit.org/blog/feed/atom/"/>
 				<outline text="LLVM" type="rss" htmlUrl="http://blog.llvm.org/" xmlUrl="http://blog.llvm.org/feeds/posts/default"/>
 				<outline text="LLVMweekly" type="rss" htmlUrl="http://llvmweekly.org/" xmlUrl="http://llvmweekly.org/rss.xml"/>
-				<outline text="Rentzsch" type="rss" htmlUrl="http://rentzsch.tumblr.com/" xmlUrl="http://rentzsch.tumblr.com/rss" tidy="no"/>
-				<outline text="Siracusa" type="rss" htmlUrl="http://hypercritical.co/" xmlUrl="http://hypercritical.co/feeds/main" tidy="no"/>
-				<outline text="Chipotle" type="rss" htmlUrl="http://chipotle.tumblr.com/" xmlUrl="http://chipotle.tumblr.com/rss" tidy="no"/>
-				<outline text="LoopInsight" type="rss" htmlUrl="http://www.loopinsight.com/" xmlUrl="http://www.loopinsight.com/feed/"/>
 			</outline>
 			<outline text="Mozilla &amp;c">
 				<outline text="Asa Dotzler" nick="asad" type="rss" htmlUrl="http://asadotzler.com/" xmlUrl="http://asadotzler.com/feed/"/>
