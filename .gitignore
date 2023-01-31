@@ -1,8 +1,9 @@
 dist/
+*.egg-info/
 t/
 log
 README
 README.html
 README.inc
 *.tar.gz
-*.pyc
+__pycache__/
