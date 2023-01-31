@@ -76,7 +76,7 @@ class Feed:
         elif name == 'header':
             self.addHeader(attrs.get('name'), attrs.get('value'))
         elif name == 'skip':
-            self.skip = dict((k, re.compile(v)) for k, v in attrs.items())
+            self.skip = {k: re.compile(v) for k, v in attrs.items()}
         else:
             # default: do as if it were an <outline> attribute
             self.attrs[name] = content

@@ -102,7 +102,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 
     def createFeed(self, attrs):
         # Normalize attribute names to lower case
-        attrs = dict([(k.lower(), v) for k, v in attrs.items()])
+        attrs = {k.lower(): v for k, v in attrs.items()}
 
         # get common attributes
         name = attrs.get('text') or attrs.get('title')
