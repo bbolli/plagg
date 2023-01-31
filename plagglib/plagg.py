@@ -1,8 +1,6 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
-
-
 import http.client
 import os
 import pprint as _pprint
@@ -67,7 +65,7 @@ class Plagg(xml.sax.handler.ContentHandler):
 
     def pprint(self, obj):
         with self.lock:
-            if type(obj) in (str, str):
+            if isinstance(obj, str):
                 print(obj)
             else:
                 _pprint.pprint(obj)
