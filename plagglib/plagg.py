@@ -9,7 +9,7 @@ import threading
 import time
 import xml.sax
 
-__version__ = "3.0"
+__version__ = "3.1"
 
 from .feed import RSSFeed, HTMLFeed, ComputedFeed
 from .entries import BlosxomEntries, Entry

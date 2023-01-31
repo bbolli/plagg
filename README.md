@@ -368,6 +368,8 @@ of your CSS style sheet in the XSL file, as well as the CSS class names of the g
   - **Backwards-incompatible change:** move the scraping regex into its own
     child element of `<outline>`
   - Add support for [XPath][XPATH] scraping
+* Version 3.1, 2023-01-31
+  - Updated to Python 3
 
 [XDG]: http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
 [XPATH]: http://www.w3.org/TR/xpath/
