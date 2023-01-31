@@ -28,7 +28,7 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
 
 ### 2.1. Synopsis
 
-    plagg -fFnovVh [-d newsdir] [opmlfile [nickname ...]]
+    plagg -fFnovVh [-t timeout] [-d newsdir] [opmlfile [nickname ...]]
 
 ### 2.2. Options
 
@@ -40,6 +40,7 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
 * -n: Write a file _newsdir_/`Latest.txt` that contains the new entries.
 * -o: Also generate entries older than one week. These are normally suppressed.
 * -v: Be verbose. May be repeated for additional effect.
+* -t: Set a global timeout for the whole run.
 * -V: Display version information and exit.
 * -h: Display usage information and exit.
 * -d _newsdir_: The destination directory in subdirectories of which the
