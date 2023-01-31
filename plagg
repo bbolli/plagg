@@ -3,7 +3,7 @@
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
-import getopt
+import argparse
 import os
 import signal
 import sys
@@ -11,66 +11,55 @@ import sys
 from plagglib import plagg
 
 
-def usage(rc):
-    print("Usage: plagg [-fFnhoVv] [-d newsdir] [-t timeout] [opmlfile [nickname ...]]]")
-    sys.exit(rc)
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('-d', '--dir', help="the destination directory",
+                    default=os.path.join(os.getenv('HOME'), 'bblog', 'news'))
+parser.add_argument('-F', '--feed', action='store_true',
+                    help="use OPMLFILE as a single feed's URL")
+parser.add_argument('-n', '--news', action='store_true',
+                    help="write a Latest.txt with new entries")
+parser.add_argument('-o', '--old', action='store_true',
+                    help="also generate entries older than one week")
+parser.add_argument('-v', '--verbose', action='count', default=0,
+                    help="increase verbosity (may be repeated)")
+parser.add_argument('-f', '--no-footer', action='store_false', dest='footer',
+                    help="suppress entry footers", default=True)
+parser.add_argument('-t', '--timeout', type=int, default=0,
+                    help="global timeout in seconds")
+parser.add_argument('-V', '--version', action='store_true',
+                    help="display plagg's version")
+parser.add_argument('opmlfile', nargs='?',
+                    help="the file containing your news feeds")
+parser.add_argument('nicknames', nargs='*', help="only update these feeds")
 
-path = os.path.join(os.getenv('HOME'), 'bblog', 'news')
-news = verbose = timeout = feed = old_entries = 0
-footer = 1
-try:
-    opts, args = getopt.getopt(sys.argv[1:], 'd:fFnhoVvt:')
-except getopt.GetoptError as e:
-    print(e, file=sys.stderr)
-    usage(3)
-for o, v in opts:
-    if o == '-d':
-        path = v
-    elif o == '-F':
-        feed = 1
-    elif o == '-f':
-        footer = 0
-    elif o == '-n':
-        news = 1
-    elif o == '-h':
-        usage(0)
-    elif o == '-o':
-        old_entries = 1
-    elif o == '-V':
-        print(plagg.__version__)
-        sys.exit(0)
-    elif o == '-v':
-        verbose += 1
-    elif o == '-t':
-        timeout = int(v)
+args = parser.parse_args()
+if args.version:
+    print(plagg.__version__)
+    sys.exit(0)
+if args.feed and not args.nicknames:
+    parser.error("-F must be used with an opmlfile and one nickname")
 
-if timeout and hasattr(signal, 'alarm'):
+if args.timeout and hasattr(signal, 'alarm'):
     signal.signal(signal.SIGALRM, signal.default_int_handler)
-    signal.alarm(timeout)
+    signal.alarm(args.timeout)
 
-argc = len(args)
-if feed and argc != 2:
-    print("Usage: plagg -F feed-url nickname")
-    sys.exit(3)
-if argc == 0:
-    plagg = plagg.Plagg(os.path.join(path, 'news.opml'))
-elif argc == 1:
-    plagg = plagg.Plagg(args[0])
-elif argc >= 2:
-    old_entries = 1
-    plagg = plagg.Plagg(args[0], args[1:])
+if not args.opmlfile:
+    plagg = plagg.Plagg(os.path.join(args.dir, 'news.opml'))
+elif not args.nicknames:
+    plagg = plagg.Plagg(args.opmlfile)
 else:
-    usage(3)
+    args.old = True
+    plagg = plagg.Plagg(args.opmlfile, args.nicknames)
 
-plagg.setConfig(path, verbose, footer, old_entries)
+plagg.setConfig(args.dir, args.verbose, args.footer, args.old)
 try:
-    if feed:
-        plagg.singleFeed(args[0], args[1])
+    if args.feed:
+        plagg.singleFeed(args.opmlfile, args.nicknames[0])
     else:
         plagg.startOPML()
 except KeyboardInterrupt:
     pass
-if news:
+if args.news:
     plagg.newEntries()
 
 sys.exit(plagg.errors and 1 or 0)
