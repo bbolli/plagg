@@ -215,11 +215,9 @@ class HTMLFeed(SimulatedFeed):
     def match_regex(self, html):
         """Search for the regex."""
         regex = self.attrs['regex']
-        m = re.search(regex, html, re.I)
-        if m:
+        if m := re.search(regex, html, re.I):
             try:
-                groups = m.groupdict()
-                if groups:      # new-style named groups regex
+                if groups := m.groupdict():  # new-style named groups regex
                     self.imgLink = groups.get('link')
                     relLink = groups.get('rellink')
                     # handle relative links
