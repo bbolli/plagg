@@ -325,4 +325,4 @@ class ComputedFeed(HTMLFeed):
             self.imgLink = ''
             return
         if not self.itemTitle:
-            self.itemTitle = re.search('([^/]+)(?:\.\w+)?$', self.imgLink).group(1)
+            self.itemTitle = re.search(r'([^/]+)(?:\.\w+)?$', self.imgLink).group(1)
