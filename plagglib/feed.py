@@ -7,11 +7,12 @@ import pickle
 import re
 import socket
 import sys
-import urllib.request, urllib.error, urllib.parse
 import xml.etree.ElementTree as et
 
 import feedparser  # needs at least version 3 beta 22!
 import feedparser.urls
+import feedparser.http
+import requests
 
 from . import plagg
 
@@ -130,10 +131,14 @@ class RSSFeed(Feed):
     def getFeed(self):
         """Builds an ultra-liberally parsed feed dict from the URL."""
         self.loadCache()
-        feed = feedparser.parse(self.uri, etag=self.etag,
-            modified=self.modified, agent=USER_AGENT,
-            request_headers=self.headers
-        )
+        headers = {
+            'Accept': feedparser.http.ACCEPT_HEADER,
+            'Etag': self.etag,
+            'Last-Modified': self.modified,
+            'User-Agent': USER_AGENT,
+        }
+        resp = requests.get(self.uri, headers=headers)
+        feed = feedparser.parse(resp.text)
         if feed.get('status') == 304:
             # feed not modified
             return
@@ -190,22 +195,24 @@ class HTMLFeed(SimulatedFeed):
             return      # mandatory child element missing
 
         self.loadCache()
-        resp = {}
+        headers = {
+            'Etag': self.etag,
+            'Last-Modified': self.modified,
+            'User-Agent': USER_AGENT,
+        }
         try:
-            html = feedparser.api._open_resource(self.uri, self.etag, self.modified,
-                USER_AGENT, None, [], self.headers, resp
-            ).read()
+            resp = requests.get(self.uri, headers=headers)
         except Exception as e:
             print(f'Getting page {self.uri}: {e}', file=sys.stderr)
             return
 
-        if resp['status'] == 304 or not html:
+        if resp.status_code == 304 or not resp.content:
             # not modified or empty page
             return
 
-        self.saveCache(resp.get('etag'), resp.get('modified_parsed'))
+        self.saveCache(resp.headers.get('etag'), resp.headers.get('modified'))
 
-        html = feedparser.encodings.convert_to_utf8(resp['headers'], html, resp).decode('utf-8')
+        html = resp.text
         html = feedparser.urls.resolve_relative_uris(html, self.uri, 'utf-8', 'text/html')
         if 'regex' in self.attrs:
             self.match_regex(html)
@@ -298,11 +305,11 @@ class HTMLFeed(SimulatedFeed):
             localfile = os.path.join(self.attrs['savepath'], basename)
             # only get and save the file if it doesn't exist yet
             if not os.path.isfile(localfile):
-                req = urllib.request.Request(link)
-                req.add_header('Referer', self.attrs.get('referrer') or self.uri or self.imgLink)
-                image = urllib.request.urlopen(req).read()
+                resp = requests.get(link, headers={
+                    'Referer': self.attrs.get('referrer') or self.uri or self.imgLink
+                })
                 with file(localfile, 'wb') as f:
-                    f.write(image)
+                    f.write(resp.content)
             # adjust the imgLink in every case
             self.imgLink = self.attrs['saveurl'] + '/' + basename
 
