@@ -80,13 +80,11 @@ class Entry:
         try:
             adj = int(feed.attrs['h-adjust'])
         except (KeyError, ValueError):
-            pass
-        else:
-            body = _h14.sub(
-                lambda m: '%s%d>' % (m.group(1), int(m.group(2)) + adj),
-                body
-            )
-        self.body = body
+            adj = 2
+        self.body = _h14.sub(
+            lambda m: '%s%d>' % (m.group(1), int(m.group(2)) + adj),
+            body
+        )
 
         # title
         title = _unescape(item.get('title', '').replace('\n', ' ')).strip()

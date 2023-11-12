@@ -252,7 +252,7 @@ This is a new attribute of `<outline>`.
 
 **`h-adjust`="n"**
 
-The default value is zero. The HTML elements `h1` to `h4` have their heading
+The default value is 2. The HTML elements `h1` to `h4` have their heading
 level adjusted by the indicated amount. Useful values are in the range -2..2.
 
 #### 3.5.8 Setting HTTP request headers `<header>`
