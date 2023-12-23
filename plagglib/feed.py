@@ -39,7 +39,7 @@ try:
     feedparser._HTMLSanitizer.acceptable_elements.add('aside')
     feedparser._HTMLSanitizer.acceptable_elements.add('audio')
     feedparser._HTMLSanitizer.acceptable_elements.add('video')
-except:
+except Exception:
     pass
 
 # regex to strip scripts from a page
@@ -108,7 +108,7 @@ class Feed:
             return
         try:
             _uri, self.etag, self.modified = pickle.load(open(self.cachefile))
-        except Exception as e:
+        except Exception:
             self.etag = self.modified = None
 
     def saveCache(self, etag, mod):
@@ -119,10 +119,10 @@ class Feed:
                 os.makedirs(CACHE_DIR)
             # the URI is saved just for reference
             pickle.dump((self.uri, etag, mod), open(self.cachefile, 'w'))
-        except Exception as e:
+        except Exception:
             try:
                 os.unlink(self.cacheFile)
-            except:
+            except IOError:
                 pass
 
 
@@ -233,7 +233,8 @@ class HTMLFeed(SimulatedFeed):
                     self.iframe = groups.get('iframe')
                     self.itemTitle = groups.get('title')
                     # strip whitespace inside href attributes (for APOD)
-                    self.itemBody = re.sub(r'''(?s)href=(['"]).+?\1''',
+                    self.itemBody = re.sub(
+                        r'''(?s)href=(['"]).+?\1''',
                         lambda m: re.sub(r'\s+', '', m.group(0)),
                         groups.get('body', '')
                     )
@@ -246,8 +247,7 @@ class HTMLFeed(SimulatedFeed):
                 pass
         else:
             print(f"Regex '{regex}' not found at {self.uri}:\n\n----\n{html}----",
-                file=sys.stderr
-            )
+                  file=sys.stderr)
 
     def match_xpath(self, html):
         """Search for the content given by the {image,title,body,iframe}-xpath values."""
@@ -264,8 +264,7 @@ class HTMLFeed(SimulatedFeed):
             root = et.fromstring(html)
         except Exception as e:
             print(f"Page at {self.uri} not parseable as XML: {e}\n\n----\n{html}----",
-                file=sys.stderr
-            )
+                  file=sys.stderr)
             return
 
         def _find(attrname):
@@ -283,8 +282,7 @@ class HTMLFeed(SimulatedFeed):
             for e in root.iterfind('.' + xpath):
                 return accessf(e)               # use only the first match
             print(f"{attrname} '{xpath}' not found at {self.uri}:\n\n----\n{html}----",
-                file=sys.stderr
-            )
+                  file=sys.stderr)
 
         self.imgLink = _find('image-xpath')
         self.itemTitle = _find('title-xpath')
@@ -305,10 +303,10 @@ class HTMLFeed(SimulatedFeed):
             localfile = os.path.join(self.attrs['savepath'], basename)
             # only get and save the file if it doesn't exist yet
             if not os.path.isfile(localfile):
-                resp = requests.get(link, headers={
+                resp = requests.get(self.imgLink, headers={
                     'Referer': self.attrs.get('referrer') or self.uri or self.imgLink
                 })
-                with file(localfile, 'wb') as f:
+                with open(localfile, 'wb') as f:
                     f.write(resp.content)
             # adjust the imgLink in every case
             self.imgLink = self.attrs['saveurl'] + '/' + basename

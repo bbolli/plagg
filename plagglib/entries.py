@@ -26,6 +26,7 @@ def _unescape(text):
     """Replaces common HTML character entities."""
     return text.replace('&gt;', '>').replace('&lt;', '<').replace('&amp;', '&')
 
+
 _markup = re.compile(r'<.*?>', re.DOTALL)
 _notword = re.compile(r'\W')
 _idfirst = re.compile('^[a-zA-Z]')
@@ -35,10 +36,7 @@ _tumblr = re.compile(r'\.tumblr\.com/post/(\d+)$', re.IGNORECASE)
 _link = re.compile(r'''(?is)^<a href="([^"]+?)">(.*?)</a>((:\s+)|$)''')
 _h14 = re.compile(r'(?i)(</?h)([1-4])>')
 
-if time.localtime()[8]:
-    tz = time.altzone
-else:
-    tz = time.timezone
+tz = time.altzone if time.localtime()[8] else time.timezone
 
 
 class Entry:

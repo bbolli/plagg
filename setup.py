@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 from distutils.core import setup
-import sys, re, os, subprocess
+import os
+import subprocess
+import sys
 
 # patch distutils if it can't cope with the "classifiers" or
 # "download_url" keywords
@@ -17,8 +19,8 @@ version = plagglib.plagg.__version__
 if os.path.isdir('.git'):
     try:
         version = subprocess.check_output(
-	    ['git', 'describe', '--tags'], text=True
-	).strip().lstrip('v')
+            ['git', 'describe', '--tags'], text=True
+        ).strip().lstrip('v')
     except subprocess.CalledProcessError:
         pass
 
@@ -33,14 +35,14 @@ setup(
     download_url="http://drbeat.li/py/plagg/plagg.tar.gz",
     packages=['plagglib'],
     scripts=['plagg'],
-    classifiers = [
-	'Development Status :: 5 - Production/Stable',
-	'Environment :: Console',
-	'Intended Audience :: End Users/Desktop',
-	'License :: OSI Approved :: GNU General Public License (GPL)',
-	'Operating System :: POSIX',
-	'Programming Language :: Python',
-	'Topic :: Internet :: WWW/HTTP :: Dynamic Content :: News/Diary',
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Console',
+        'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: GNU General Public License (GPL)',
+        'Operating System :: POSIX',
+        'Programming Language :: Python',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content :: News/Diary',
         'Topic :: Utilities',
     ]
 )

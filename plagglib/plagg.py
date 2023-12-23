@@ -159,8 +159,7 @@ class Plagg(xml.sax.handler.ContentHandler):
             feed.getFeed()
         except http.client.HTTPException as e:
             print(f"Feed: {feed.name} ({feed.uri}): {e.__class__.__name__}",
-                file=sys.stderr
-            )
+                  file=sys.stderr)
             return
         except Exception as e:
             import traceback
@@ -176,8 +175,7 @@ class Plagg(xml.sax.handler.ContentHandler):
                     'name resolution', 'no route'
                 )):
                     print(f"Feed: {feed.name} ({feed.uri}):\n"
-                        f"{e.__class__.__name__}: {e}", file=sys.stderr
-                    )
+                          f"{e.__class__.__name__}: {e}", file=sys.stderr)
                     self.errors += 1
             return
 
