@@ -107,7 +107,7 @@ class Feed:
         if not self.use_cache:
             return
         try:
-            _uri, self.etag, self.modified = pickle.load(open(self.cachefile))
+            _uri, self.etag, self.modified = pickle.load(open(self.cachefile, 'rb'))
         except Exception:
             self.etag = self.modified = None
 
@@ -118,10 +118,10 @@ class Feed:
             if not os.path.isdir(CACHE_DIR):
                 os.makedirs(CACHE_DIR)
             # the URI is saved just for reference
-            pickle.dump((self.uri, etag, mod), open(self.cachefile, 'w'))
+            pickle.dump((self.uri, etag, mod), open(self.cachefile, 'wb'))
         except Exception:
             try:
-                os.unlink(self.cacheFile)
+                os.unlink(self.cachefile)
             except IOError:
                 pass
 
