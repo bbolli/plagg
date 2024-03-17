@@ -162,15 +162,14 @@ class Entry:
         """Sets a suitable file name for the current entry."""
         m = _tumblr.search(self._link) if self._link else None
         if m:
-            self.fname = m.group(1)
+            return m.group(1)
         else:
             fn = _markup.sub('', self._title)
             if not fn:  # use first 30 non-markup characters if no title
                 fn = _markup.sub('', self.body)[:30]
             fn = fn.replace('&apos;', "'").replace('&quot;', '"')
             fn = _notword.sub('_', fn)
-            self.fname = fn[:15] + '...' + fn[-5:]
-        return self.fname
+            return fn[:15] + '...' + fn[-5:]
 
     def makeId(self):
         self._id = _idwrong.sub('_', self.fname)
@@ -211,10 +210,7 @@ class Entry:
 
     def write(self, destdir, ext, overwrite=False, fname=None):
         """Writes the entry out to the filesystem."""
-        if fname:
-            self.fname = fname
-        elif not self.makeFilename():
-            return 0
+        self.fname = fname or self.makeFilename()
 
         # ignore entries in the future or older than 7 days
         if self.tm:
