@@ -32,7 +32,10 @@ _notword = re.compile(r'\W')
 _idfirst = re.compile('^[a-zA-Z]')
 _idwrong = re.compile('[^0-9a-zA-Z]+')
 _body = re.compile('<body>(.*?)</body>', re.IGNORECASE + re.DOTALL)
-_tumblr = re.compile(r'\.tumblr\.com/post/(\d+)$', re.IGNORECASE)
+_id_links = {
+    # the regex group must contain the post ID
+    'tumblr': re.compile(r'\.tumblr\.com/post/(\d+)$', re.IGNORECASE),
+}
 _link = re.compile(r'''(?is)^<a href="([^"]+?)">(.*?)</a>((:\s+)|$)''')
 _h14 = re.compile(r'(?i)(</?h)([1-4])>')
 
@@ -46,7 +49,7 @@ class Entry:
     TidyWarningDone = False
 
     def __init__(self):
-        self.channel = self.item = None
+        self.channel = self.item = self.origin = None
         self._title = self._link = self.body = self.footer = ''
         self.mdate = self.tm = None
         self.metas = {}
@@ -160,16 +163,19 @@ class Entry:
 
     def makeFilename(self):
         """Sets a suitable file name for the current entry."""
-        m = _tumblr.search(self._link) if self._link else None
-        if m:
-            return m.group(1)
-        else:
-            fn = _markup.sub('', self._title)
-            if not fn:  # use first 30 non-markup characters if no title
-                fn = _markup.sub('', self.body)[:30]
-            fn = fn.replace('&apos;', "'").replace('&quot;', '"')
-            fn = _notword.sub('_', fn)
-            return fn[:15] + '...' + fn[-5:]
+        if self._link:
+            # try all link regexes that extract an ID
+            for origin, pat in _id_links.items():
+                if m := pat.search(self._link):
+                    self.origin = origin
+                    return m.group(1)
+
+        fn = _markup.sub('', self._title)
+        if not fn:  # use first 30 non-markup characters if no title
+            fn = _markup.sub('', self.body)[:30]
+        fn = fn.replace('&apos;', "'").replace('&quot;', '"')
+        fn = _notword.sub('_', fn)
+        return fn[:15] + '...' + fn[-5:]
 
     def makeId(self):
         self._id = _idwrong.sub('_', self.fname)
