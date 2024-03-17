@@ -28,16 +28,18 @@ parser.add_argument('-t', '--timeout', type=int, default=0,
                     help="global timeout in seconds")
 parser.add_argument('-V', '--version', action='store_true',
                     help="display plagg's version")
-parser.add_argument('opmlfile', nargs='?',
-                    help="the file containing your news feeds")
-parser.add_argument('nicknames', nargs='*', help="only update these feeds")
+parser.add_argument('opmlfile', nargs='?', default='',
+                    help="the file containing your news feeds, or, "
+                    "with -F: a single feed URL; default=DIR/news.opml")
+parser.add_argument('nicknames', nargs='*', default=[],
+                    help="only update these feeds")
 
 args = parser.parse_args()
 if args.version:
     print(plagg.__version__)
     sys.exit(0)
-if args.feed and not args.nicknames:
-    parser.error("-F must be used with an opmlfile and one nickname")
+if args.feed and ('://' not in args.opmlfile or len(args.nicknames) != 1):
+    parser.error("-F must be used with a feed URL and one nickname")
 
 if args.timeout and hasattr(signal, 'alarm'):
     signal.signal(signal.SIGALRM, signal.default_int_handler)

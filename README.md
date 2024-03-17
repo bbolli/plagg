@@ -52,8 +52,8 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
 * _opmlfile_: The OPML file containing the feeds to read and generate news
   items from, or the feed URL if the `-F` option was given.
 * _nickname_: If given, updates only the feeds with the given nicknames
-  (ignoring their `hours` attribute), otherwise updates all feeds. If `-F`
-  was give, the name of the feed.
+  (ignoring their `hours` attribute, and enabling `-o`), otherwise updates all feeds.
+  If `-F` was given, the name of the feed.
 
 The default arguments for _opmlfile_ and _destdir_ can be set in the `plagg` script.
 
