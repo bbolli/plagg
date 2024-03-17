@@ -162,8 +162,8 @@ class Plagg(xml.sax.handler.ContentHandler):
                   file=sys.stderr)
             return
         except Exception as e:
-            import traceback
             if VERBOSE > 1:
+                import traceback
                 with self.lock:
                     print(f"Feed: {feed.name} ({feed.uri})", file=sys.stderr)
                     traceback.print_exc()
