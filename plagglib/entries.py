@@ -34,6 +34,7 @@ _idwrong = re.compile('[^0-9a-zA-Z-]+')
 _body = re.compile('<body>(.*?)</body>', re.IGNORECASE + re.DOTALL)
 _id_links = {
     # the regex group must contain the post ID
+    'Mastodon': re.compile(r'://[^/]+/@[^/]+/(\d+)$'),  # Mastodon post links
     'tumblr': re.compile(r'\.tumblr\.com/post/(\d+)$', re.IGNORECASE),
 }
 _link = re.compile(r'''(?is)^<a href="([^"]+?)">(.*?)</a>((:\s+)|$)''')
