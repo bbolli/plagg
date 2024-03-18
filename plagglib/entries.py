@@ -29,8 +29,8 @@ def _unescape(text):
 
 _markup = re.compile(r'<.*?>', re.DOTALL)
 _notword = re.compile(r'\W')
-_idfirst = re.compile('^[a-zA-Z]')
-_idwrong = re.compile('[^0-9a-zA-Z]+')
+_idfirst = re.compile('^[a-zA-Z_]')
+_idwrong = re.compile('[^0-9a-zA-Z-]+')
 _body = re.compile('<body>(.*?)</body>', re.IGNORECASE + re.DOTALL)
 _id_links = {
     # the regex group must contain the post ID
