@@ -17,6 +17,7 @@ from .entries import BlosxomEntries, Entry
 ENCODING = 'utf-8'      # default character encoding, used by feed.py and entries.py
 
 VERBOSE = 0             # will be set by Plagg.setConfig()
+MEDIA = (None, None)
 FOOTER = 1
 OLD_ENTRIES = 0
 
@@ -56,10 +57,13 @@ class Plagg(xml.sax.handler.ContentHandler):
         pprint = self.pprint
         xml.sax.handler.ContentHandler.__init__(self)
 
-    def setConfig(self, newspath, logging, footer, old_entries):
+    def setConfig(self, newspath, verbose, media, footer, old_entries):
         self.newspath = newspath
-        global VERBOSE, FOOTER, OLD_ENTRIES
-        VERBOSE = logging
+        global VERBOSE, FOOTER, OLD_ENTRIES, MEDIA
+        VERBOSE = verbose
+        if media:
+            media = media.split(':') + ['']
+            MEDIA = (media[0] + os.pathsep + media[1], media[1])
         FOOTER = footer
         OLD_ENTRIES = old_entries
 

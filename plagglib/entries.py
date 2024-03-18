@@ -7,6 +7,8 @@ import sys
 import time
 from urllib.parse import urlsplit
 
+import requests
+
 from . import plagg            # for default encoding and config
 
 
@@ -41,6 +43,10 @@ _link = re.compile(r'''(?is)^<a href="([^"]+?)">(.*?)</a>((:\s+)|$)''')
 _h14 = re.compile(r'(?i)(</?h)([1-4])>')
 
 tz = time.altzone if time.localtime()[8] else time.timezone
+
+
+def yyyymm_path(date):
+    return f'{date.tm_year // 10}x/{date.tm_year}-{date.tm_mon:02}'
 
 
 class Entry:
@@ -180,7 +186,7 @@ class Entry:
             self._id = '_' + self._id
         self.setMeta(entryId=self._id)
 
-    def render(self):
+    def render(self, file_base, url_base):
         """Renders itself, including any metas, if any."""
         s = [self.title]
         if self.metas:  # this needs the Blosxom "meta" plugin!
@@ -193,6 +199,16 @@ class Entry:
                 url = c['url']
                 name = urlsplit(url).path.split('/')[-1]
                 s.append(f'<a href="{url}">{name}</a>')
+                tag = {'image': 'img', 'video': 'video'}.get(c.get('medium'))
+                if tag and file_base:
+                    resp = requests.get(url, headers={'Referer': self._link})
+                    if resp.status_code // 100 != 2:
+                        continue
+                    year = yyyymm_path(self.mdate)
+                    os.makedirs(os.path.join(file_base, year), exist_ok=True)
+                    with open(os.path.join(file_base, year, name), 'wb') as f:
+                        f.write(resp.content)
+                    s[-1] = f'<{tag} src="{url_base}/{year}/{name}"><br>'
             s.append('</p>')
         s.append(self.footer)
         return '\n'.join(s)
@@ -232,7 +248,7 @@ class Entry:
 
         # write out the entry
         with open(fname, 'w') as f:
-            f.write(self.render())
+            f.write(self.render(*plagg.MEDIA))
 
         # set modification time if present
         if self.tm:
