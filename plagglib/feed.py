@@ -154,20 +154,6 @@ class SimulatedFeed(Feed):
     one entry. Is used by subclasses which know how to get an item from
     a website."""
 
-    RSS_TEMPLATE = """\
-<?xml version="1.0" encoding="%(encoding)s"?>
-
-<rss version="2.0">
-  <channel>
-    <title>%(name)s</title>
-    <link>%(uri)s</link>
-    <item>
-      <title>%(itemTitle)s</title>
-      <description>%(item)s\n%(itemBody)s</description>
-    </item>
-  </channel>
-</rss>"""
-
     def __init__(self, attrs, name, uri):
         Feed.__init__(self, attrs, name, uri)
         self.imgLink = ''
@@ -179,8 +165,19 @@ class SimulatedFeed(Feed):
         self.item = self.iframe or f'<p><img src="{self.imgLink}" /></p>'
         if self.itemBody and not self.itemBody.startswith('<'):
             self.itemBody = f'<p>{self.itemBody}</p>'
-        rss = self.RSS_TEMPLATE % self.__dict__
-        self.feed = feedparser.parse(rss)
+        self.feed = feedparser.parse(f"""\
+<?xml version="1.0" encoding="{self.encoding}"?>
+
+<rss version="2.0">
+  <channel>
+    <title>{self.name}</title>
+    <link>{self.uri}</link>
+    <item>
+      <title>{self.itemTitle}</title>
+      <description>{self.item}\n{self.itemBody}</description>
+    </item>
+  </channel>
+</rss>""")
 
 
 class HTMLFeed(SimulatedFeed):

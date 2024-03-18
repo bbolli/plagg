@@ -18,8 +18,8 @@ def _escape(text):
 
 def _linktag(href, text, **attrs):
     """Returns a HTML link tag."""
-    a = ''.join([' %s="%s"' % (k, _escape(v)) for k, v in attrs.items() if v])
-    return '<a href="%s"%s>%s</a>' % (href, a, text)
+    a = ''.join(f' {k}={_escape(v)}' for k, v in attrs.items() if v)
+    return f'<a href="{href}"{a}>{text}</a>'
 
 
 def _unescape(text):
@@ -82,10 +82,7 @@ class Entry:
             adj = int(feed.attrs['h-adjust'])
         except (KeyError, ValueError):
             adj = 2
-        self.body = _h14.sub(
-            lambda m: '%s%d>' % (m.group(1), int(m.group(2)) + adj),
-            body
-        )
+        self.body = _h14.sub(lambda m: f'{m.group(1)}{int(m.group(2)) + adj}>', body)
 
         # title
         title = _unescape(item.get('title', '').replace('\n', ' ')).strip()
@@ -130,13 +127,12 @@ class Entry:
                 item.get('date') or item.get('modified', '')
             )
             if self._link and (len(self.body) > 2500 or self._link != link):
-                footer += '\n[%s]' % _linktag(self._link, 'Link')
+                footer += f'\n[{_linktag(self._link, "Link")}]'
             if 'comments' in item:
-                footer += '\n[%s]' % _linktag(item['comments'], 'Comments')
+                footer += f'\n[{_linktag(item["comments"], "Comments")}]'
             if 'link' in channel:
-                footer += '\n[%s]\n</p>' % _linktag(
-                    channel['link'], channel['title'], title=channel.get('tagline')
-                )
+                ch = _linktag(channel['link'], channel['title'], title=channel.get('tagline'))
+                footer += f'\n[{ch}]'
             self.footer = footer + '\n'
 
         # modification time
@@ -187,8 +183,7 @@ class Entry:
         """Renders itself, including any metas, if any."""
         s = [self.title]
         if self.metas:  # this needs the Blosxom "meta" plugin!
-            for m in self.metas.items():
-                s.append('meta-%s: %s' % m)
+            s.extend(f'meta-{m}: {v}' for m, v in self.metas.items())
             s.append('')
         s.append(self.body)
         if self.item and self.item.get('media_content'):
@@ -196,7 +191,7 @@ class Entry:
             for c in self.item['media_content']:
                 url = c['url']
                 name = urlsplit(url).path.split('/')[-1]
-                s.append('<a href="%s">%s</a>' % (url, name))
+                s.append(f'<a href="{url}">{name}</a>')
             s.append('</p>')
         s.append(self.footer)
         return '\n'.join(s)
