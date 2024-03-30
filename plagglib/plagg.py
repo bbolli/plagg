@@ -19,7 +19,7 @@ ENCODING = 'utf-8'      # default character encoding, used by feed.py and entrie
 VERBOSE = 0             # will be set by Plagg.setConfig()
 MEDIA = (None, None)
 FOOTER = 1
-OLD_ENTRIES = 0
+TM_CUTOFF = 0
 
 pprint = None
 
@@ -59,13 +59,13 @@ class Plagg(xml.sax.handler.ContentHandler):
 
     def setConfig(self, newspath, verbose, media, footer, old_entries):
         self.newspath = newspath
-        global VERBOSE, FOOTER, OLD_ENTRIES, MEDIA
+        global VERBOSE, FOOTER, TM_CUTOFF, MEDIA
         VERBOSE = verbose
         if media:
             media = media.split(':') + ['']
             MEDIA = (media[0] + os.pathsep + media[1], media[1])
         FOOTER = footer
-        OLD_ENTRIES = old_entries
+        TM_CUTOFF = 0 if old_entries else time.time() - 7 * 86400
 
     def pprint(self, obj):
         with self.lock:

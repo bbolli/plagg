@@ -144,12 +144,10 @@ class Entry:
 
         # modification time
         if feed.attrs.get('ignoredate', 'no') != 'yes':
-            self.mdate = item.get('date_parsed') or item.get('modified_parsed') or \
-                item.get('updated_parsed')
-            if self.mdate:
-                # convert date/time 9-tuple in UTC to timestamp
-                self.tm = time.mktime(self.mdate[:8] + (-1, )) - tz
-                self.mdate = time.localtime(self.tm)    # convert timestamp to local 9-tuple
+            if date := item.get('updated_parsed') or item.get('date_parsed'):
+                # convert date/time 9-tuple in UTC to local
+                self.tm = time.mktime(date[:8] + (-1, )) - tz
+                self.mdate = time.localtime(self.tm)
 
         if plagg.VERBOSE > 1:
             plagg.pprint(('new item', self.__dict__))
@@ -230,13 +228,11 @@ class Entry:
         """Writes the entry out to the filesystem."""
         self.fname = fname or self.makeFilename()
 
-        # ignore entries in the future or older than 7 days
-        if self.tm:
-            now = time.time()
-            if self.tm > now:
-                return 0
-            if not plagg.OLD_ENTRIES and self.tm + 7 * 86400 < now:
-                return 0
+        # ignore old and future entries
+        if self.tm and (
+            self.tm < plagg.TM_CUTOFF or self.tm > time.time()
+        ):
+            return 0
 
         fname = os.path.join(destdir, self.fname + ext)
 
