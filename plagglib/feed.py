@@ -14,7 +14,7 @@ import feedparser.urls
 import feedparser.http
 import requests
 
-from . import plagg
+from . import plagg, requests_file
 
 USER_AGENT = f'plagg/{plagg.__version__} (+https://drbeat.li/py/plagg/)'
 
@@ -41,6 +41,10 @@ try:
     feedparser._HTMLSanitizer.acceptable_elements.add('video')
 except Exception:
     pass
+
+# register the file:// adapter
+session = requests.Session()
+session.mount('file://', requests_file.FileAdapter())
 
 # regex to strip scripts from a page
 script_re = re.compile(r'(?is)<script.*?</script>')
@@ -137,7 +141,7 @@ class RSSFeed(Feed):
             'Last-Modified': self.modified,
             'User-Agent': USER_AGENT,
         }
-        resp = requests.get(self.uri, headers=headers)
+        resp = session.get(self.uri, headers=headers)
         # provide the base URL to allow to resolve relative URLs
         if 'content-location' not in resp.headers:
             resp.headers['content-location'] = self.uri
@@ -201,7 +205,7 @@ class HTMLFeed(SimulatedFeed):
             'User-Agent': USER_AGENT,
         }
         try:
-            resp = requests.get(self.uri, headers=headers)
+            resp = session.get(self.uri, headers=headers)
         except Exception as e:
             print(f'Getting page {self.uri}: {e}', file=sys.stderr)
             return
@@ -303,7 +307,7 @@ class HTMLFeed(SimulatedFeed):
             localfile = os.path.join(self.attrs['savepath'], basename)
             # only get and save the file if it doesn't exist yet
             if not os.path.isfile(localfile):
-                resp = requests.get(self.imgLink, headers={
+                resp = session.get(self.imgLink, headers={
                     'Referer': self.attrs.get('referrer') or self.uri or self.imgLink
                 })
                 with open(localfile, 'wb') as f:
