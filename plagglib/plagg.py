@@ -14,8 +14,6 @@ __version__ = "3.1"
 from .feed import RSSFeed, HTMLFeed, ComputedFeed
 from .entries import BlosxomEntries, Entry
 
-ENCODING = 'utf-8'      # default character encoding, used by feed.py and entries.py
-
 VERBOSE = 0             # will be set by Plagg.setConfig()
 MEDIA = (None, None)
 FOOTER = 1

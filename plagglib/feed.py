@@ -16,6 +16,8 @@ import requests
 
 from . import plagg, requests_file
 
+ENCODING = 'utf-8'      # default character encoding
+
 USER_AGENT = f'plagg/{plagg.__version__} (+https://drbeat.li/py/plagg/)'
 
 try:
@@ -61,7 +63,6 @@ class Feed:
         self.headers = {}
         self.feed = {}
         self.replacements = collections.defaultdict(list)  # {what: [(old_re, new), ...]}
-        self.encoding = plagg.ENCODING
         self.skip = {}
 
         digest = hashlib.md5(self.uri.encode()).hexdigest()
@@ -170,7 +171,7 @@ class SimulatedFeed(Feed):
         if self.itemBody and not self.itemBody.startswith('<'):
             self.itemBody = f'<p>{self.itemBody}</p>'
         self.feed = feedparser.parse(f"""\
-<?xml version="1.0" encoding="{self.encoding}"?>
+<?xml version="1.0" encoding="{ENCODING}"?>
 
 <rss version="2.0">
   <channel>
