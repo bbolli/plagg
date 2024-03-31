@@ -89,6 +89,7 @@ class FileAdapter(BaseAdapter):
             # methods can't be added to file objects in python 2.
             resp.raw = io.open(path, "rb")
             resp.raw.release_conn = resp.raw.close
+            resp.encoding = 'utf-8'
         except IOError as e:
             if e.errno == errno.EACCES:
                 resp.status_code = codes.forbidden
