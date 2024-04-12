@@ -204,20 +204,22 @@ class Entry:
         if self.item and (encs := self.item.enclosures):
             s.append('<p class="blosxomMedia">')
             for enc in encs:
-                name = urlsplit(enc.href).path.split('/')[-1]
-                s.append(f'<a href="{enc.href}">{name}</a>')
-                if file_base and (tag := mime_to_tag(enc.type)):
-                    resp = requests.get(enc.href, headers={'Referer': self._link})
-                    if resp.status_code // 100 != 2:
-                        continue
-                    year = yyyymm_path(self.mdate)
-                    os.makedirs(os.path.join(file_base, year), exist_ok=True)
-                    with open(os.path.join(file_base, year, name), 'wb') as f:
-                        f.write(resp.content)
-                    s[-1] = f'<{tag} src="{url_base}/{year}/{name}"><br>'
+                s.append(self.render_enclosure(file_base, url_base, enc))
             s.append('</p>')
         s.append(self.footer)
         return '\n'.join(s)
+
+    def render_enclosure(self, file_base, url_base, enc):
+        name = urlsplit(enc.href).path.split('/')[-1]
+        if file_base and (tag := mime_to_tag(enc.type)):
+            resp = requests.get(enc.href, headers={'Referer': self._link})
+            if resp.status_code // 100 == 2:
+                year = yyyymm_path(self.mdate)
+                os.makedirs(os.path.join(file_base, year), exist_ok=True)
+                with open(os.path.join(file_base, year, name), 'wb') as f:
+                    f.write(resp.content)
+                return f'<{tag} src="{url_base}/{year}/{name}"><br>'
+        return f'<a href="{enc.href}">{name}</a>'
 
     def timestamp(self, suffix):
         if not self.mdate:
