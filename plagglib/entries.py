@@ -211,15 +211,18 @@ class Entry:
 
     def render_enclosure(self, file_base, url_base, enc):
         name = urlsplit(enc.href).path.split('/')[-1]
-        if file_base and (tag := mime_to_tag(enc.type)):
-            resp = requests.get(enc.href, headers={'Referer': self._link})
+        if not (tag := mime_to_tag(enc.type)):
+            return f'<a href="{enc.href}">{name}</a>'
+        href = enc.href
+        if file_base:
+            resp = requests.get(href, headers={'Referer': self._link})
             if resp.status_code // 100 == 2:
                 year = yyyymm_path(self.mdate)
                 os.makedirs(os.path.join(file_base, year), exist_ok=True)
                 with open(os.path.join(file_base, year, name), 'wb') as f:
                     f.write(resp.content)
-                return f'<{tag} src="{url_base}/{year}/{name}"><br>'
-        return f'<a href="{enc.href}">{name}</a>'
+                href = f'{url_base}/{year}/{name}'
+        return f'<{tag} src="{href}"><br>'
 
     def timestamp(self, suffix):
         if not self.mdate:
