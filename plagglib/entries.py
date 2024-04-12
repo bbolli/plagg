@@ -51,6 +51,14 @@ def yyyymm_path(date):
     return f'{date.tm_year // 10}x/{date.tm_year}-{date.tm_mon:02}'
 
 
+def mime_to_tag(mimetype):
+    return {
+        'image': 'img',
+        'video': 'video controls',
+        'audio': 'audio controls',
+    }.get(mimetype.split('/')[0])
+
+
 class Entry:
     """Blog entry class.
     Represents one Blosxom blog entry."""
@@ -187,21 +195,19 @@ class Entry:
         self.setMeta(entryId=self._id)
 
     def render(self, file_base, url_base):
-        """Renders itself, including any metas, if any."""
+        """Renders itself, including any metas and enclosures, if any."""
         s = [self.title]
         if self.metas:  # this needs the Blosxom "meta" plugin!
             s.extend(f'meta-{m}: {v}' for m, v in self.metas.items())
             s.append('')
         s.append(self.body)
-        if self.item and self.item.get('media_content'):
+        if self.item and (encs := self.item.enclosures):
             s.append('<p class="blosxomMedia">')
-            for c in self.item['media_content']:
-                url = c['url']
-                name = urlsplit(url).path.split('/')[-1]
-                s.append(f'<a href="{url}">{name}</a>')
-                tag = {'image': 'img', 'video': 'video'}.get(c.get('medium'))
-                if tag and file_base:
-                    resp = requests.get(url, headers={'Referer': self._link})
+            for enc in encs:
+                name = urlsplit(enc.href).path.split('/')[-1]
+                s.append(f'<a href="{enc.href}">{name}</a>')
+                if file_base and (tag := mime_to_tag(enc.type)):
+                    resp = requests.get(enc.href, headers={'Referer': self._link})
                     if resp.status_code // 100 != 2:
                         continue
                     year = yyyymm_path(self.mdate)
