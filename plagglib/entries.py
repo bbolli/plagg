@@ -201,10 +201,10 @@ class Entry:
             s.extend(f'meta-{m}: {v}' for m, v in self.metas.items())
             s.append('')
         s.append(self.body)
-        if self.item and (encs := self.item.enclosures):
+        if self.item and 'enclosures' in self.item:
             s.append('<p class="blosxomMedia">')
-            for enc in encs:
-                s.append(self.render_enclosure(file_base, url_base, enc))
+            s.extend(self.render_enclosure(file_base, url_base, enc)
+                     for enc in self.item.enclosures)
             s.append('</p>')
         s.append(self.footer)
         return '\n'.join(s)
