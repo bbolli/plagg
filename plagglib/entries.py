@@ -211,8 +211,9 @@ class Entry:
 
     def render_enclosure(self, file_base, url_base, enc):
         name = urlsplit(enc.href).path.split('/')[-1]
+        title = f' title="{_escape(enc.title)}"' if 'title' in enc else ''
         if not (tag := mime_to_tag(enc.type)):
-            return f'<a href="{enc.href}">{name}</a>'
+            return f'<a href="{enc.href}"{title}>{name}</a>'
         href = enc.href
         if file_base:
             resp = requests.get(href, headers={'Referer': self._link})
@@ -222,7 +223,7 @@ class Entry:
                 with open(os.path.join(file_base, year, name), 'wb') as f:
                     f.write(resp.content)
                 href = f'{url_base}/{year}/{name}'
-        return f'<{tag} src="{href}"><br>'
+        return f'<{tag} src="{href}"{title}><br>'
 
     def timestamp(self, suffix):
         if not self.mdate:
