@@ -14,7 +14,7 @@ __version__ = "3.1"
 from .feed import RSSFeed, HTMLFeed, ComputedFeed
 from .entries import BlosxomEntries, Entry
 
-VERBOSE = 0             # will be set by Plagg.setConfig()
+VERBOSE = 0             # will be set by Plagg.__init__()
 MEDIA = (None, None)
 FOOTER = 1
 TM_CUTOFF = 0
@@ -42,9 +42,7 @@ def _matchHours(hours, currentHour):
 class Plagg(xml.sax.handler.ContentHandler):
     """The application class. Generates entries from each feed in the OPML file."""
 
-    def __init__(self, opmlfile, nicks=None):
-        self.opmlfile = opmlfile
-        self.nicks = nicks
+    def __init__(self, args):
         self.logging = self.errors = 0
         self.newentries = []
         self.feed = None
@@ -55,15 +53,16 @@ class Plagg(xml.sax.handler.ContentHandler):
         pprint = self.pprint
         xml.sax.handler.ContentHandler.__init__(self)
 
-    def setConfig(self, newspath, verbose, media, footer, old_entries):
+        self.opmlfile = args.opmlfile
+        self.nicks = args.nicknames
         self.newspath = Path(args.dir).expanduser()
         global VERBOSE, FOOTER, TM_CUTOFF, MEDIA
-        VERBOSE = verbose
-        if media:
-            media = media.split(':') + ['']
+        VERBOSE = args.verbose
+        if args.media:
+            media = args.media.split(':') + ['']
             MEDIA = (Path(media[0]).expanduser() / media[1], '/' + media[1])
-        FOOTER = footer
-        TM_CUTOFF = 0 if old_entries else time.time() - 7 * 86400
+        FOOTER = args.footer
+        TM_CUTOFF = 0 if args.old else time.time() - 7 * 86400
 
     def pprint(self, obj):
         with self.lock:
@@ -190,9 +189,9 @@ class Plagg(xml.sax.handler.ContentHandler):
 
         return True
 
-    def singleFeed(self, url, name):
+    def singleFeed(self):
         """Handles a single feed URL"""
-        feed = self.createFeed({'xmlurl': url, 'text': name})
+        feed = self.createFeed({'xmlurl': self.opmlfile, 'text': self.nicks[0]})
         if feed:
             self.processFeed(feed)
 

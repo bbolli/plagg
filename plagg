@@ -41,25 +41,22 @@ args = parser.parse_args()
 if args.version:
     print(plagg.__version__)
     sys.exit(0)
-if args.feed and ('://' not in args.opmlfile or len(args.nicknames) != 1):
-    parser.error("-F must be used with a feed URL and one nickname")
+if args.feed:
+    if not args.opmlfile or '://' not in args.opmlfile:
+        parser.error("-F must be used with a feed URL")
+    if len(args.nicknames) != 1:
+        parser.error("-F must be used with exactly one nickname")
+if args.old is None:
+    args.old = bool(args.nicknames)
 
 if args.timeout and hasattr(signal, 'alarm'):
     signal.signal(signal.SIGALRM, signal.default_int_handler)
     signal.alarm(args.timeout)
 
-if not args.opmlfile:
-    plagg = plagg.Plagg(os.path.join(args.dir, 'news.opml'))
-elif not args.nicknames:
-    plagg = plagg.Plagg(args.opmlfile)
-else:
-    args.old = True
-    plagg = plagg.Plagg(args.opmlfile, args.nicknames)
-
-plagg.setConfig(args.dir, args.verbose, args.media, args.footer, args.old)
+plagg = plagg.Plagg(args)
 try:
     if args.feed:
-        plagg.singleFeed(args.opmlfile, args.nicknames[0])
+        plagg.singleFeed()
     else:
         plagg.startOPML()
 except KeyboardInterrupt:
