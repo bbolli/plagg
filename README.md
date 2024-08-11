@@ -38,7 +38,8 @@ You can see examples of plagg's output [on my news page](http://drbeat.li/news).
       mandatory and indicates the name of the folder within _newsdir_ where
       the entries get written.
 * -n: Write a file _newsdir_/`Latest.txt` that contains the new entries.
-* -o: Also generate entries older than one week. These are normally suppressed.
+* -o: Also generate entries older than one week. These are normally suppressed,
+      except if _nicknames_ are given.
 * -v: Be verbose. May be repeated for additional effect.
 * -t: Set a global timeout for the whole run.
 * -V: Display version information and exit.
