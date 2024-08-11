@@ -235,12 +235,10 @@ class Entry:
         return time.strftime('%H:%M:%S', self.mdate) + suffix
 
     def logSummary(self):
-        return self.timestamp(': ') + \
-            (_markup.sub('', self._title) or self.fname)
+        return self.timestamp(': ') + (_markup.sub('', self._title) or self.fname)
 
     def newSummary(self):
-        return self.timestamp('\N{EN SPACE}') + \
-            _linktag('#' + self._id, self._title)
+        return self.timestamp('\N{EN SPACE}') + _linktag('#' + self._id, self._title)
 
     def write(self, destdir, ext, overwrite=False, fname=None):
         """Writes the entry out to the filesystem."""
@@ -288,7 +286,7 @@ class Entry:
                 m = _body.search(r)
                 body = (m.group(1) if m else r).strip()
             elif plagg.VERBOSE > 3:
-                print("tidy errors; body left as-is" % t.returncode)
+                print("tidy errors; body left as-is")
         if plagg.VERBOSE > 3:
             print('after tidy:', body)
         return body
