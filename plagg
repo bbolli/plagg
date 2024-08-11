@@ -58,7 +58,7 @@ try:
     if args.feed:
         plagg.singleFeed()
     else:
-        plagg.startOPML()
+        plagg.allFeeds()
 except KeyboardInterrupt:
     pass
 if args.news:

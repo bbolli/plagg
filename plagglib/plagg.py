@@ -71,7 +71,7 @@ class Plagg(xml.sax.handler.ContentHandler):
             else:
                 _pprint.pprint(obj)
 
-    def startOPML(self):
+    def allFeeds(self):
         opmlfile = self.opmlfile or str(self.newspath / 'news.opml')
         xml.sax.parse(opmlfile, self)
         for t in self.threads:
