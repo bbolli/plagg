@@ -2,7 +2,7 @@
 corresponding to the items in the feeds."""
 
 import http.client
-import os
+from pathlib import Path
 import pprint as _pprint
 import sys
 import threading
@@ -56,12 +56,12 @@ class Plagg(xml.sax.handler.ContentHandler):
         xml.sax.handler.ContentHandler.__init__(self)
 
     def setConfig(self, newspath, verbose, media, footer, old_entries):
-        self.newspath = newspath
+        self.newspath = Path(args.dir).expanduser()
         global VERBOSE, FOOTER, TM_CUTOFF, MEDIA
         VERBOSE = verbose
         if media:
             media = media.split(':') + ['']
-            MEDIA = (media[0] + os.pathsep + media[1], media[1])
+            MEDIA = (Path(media[0]).expanduser() / media[1], '/' + media[1])
         FOOTER = footer
         TM_CUTOFF = 0 if old_entries else time.time() - 7 * 86400
 
@@ -73,7 +73,8 @@ class Plagg(xml.sax.handler.ContentHandler):
                 _pprint.pprint(obj)
 
     def startOPML(self):
-        xml.sax.parse(self.opmlfile, self)
+        opmlfile = self.opmlfile or str(self.newspath / 'news.opml')
+        xml.sax.parse(opmlfile, self)
         for t in self.threads:
             t.join()
 
@@ -139,7 +140,7 @@ class Plagg(xml.sax.handler.ContentHandler):
         else:
             return
 
-        feed.path = os.path.join(self.newspath, nick)
+        feed.path = self.newspath / nick
 
         # disable the cache if only some feeds are requested
         if self.nicks:

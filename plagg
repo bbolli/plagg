@@ -13,7 +13,7 @@ from plagglib import plagg
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('-d', '--dir', help="the destination directory",
-                    default=os.path.join(os.getenv('HOME'), 'bblog', 'news'))
+                    default='~/bblog/news')
 parser.add_argument('-F', '--feed', action='store_true',
                     help="use OPMLFILE as a single feed's URL")
 parser.add_argument('-m', '--media', metavar='MEDIADIR',

@@ -219,9 +219,9 @@ class Entry:
             resp = requests.get(href, headers={'Referer': self._link})
             if resp.status_code // 100 == 2:
                 year = yyyymm_path(self.mdate)
-                os.makedirs(os.path.join(file_base, year), exist_ok=True)
-                with open(os.path.join(file_base, year, name), 'wb') as f:
-                    f.write(resp.content)
+                dest_dir = file_base / year
+                dest_dir.mkdir(parents=True, exist_ok=True)
+                (dest_dir / name).write_bytes(resp.content)
                 href = f'{url_base}/{year}/{name}'
         return f'<{tag} src="{href}"{title}><br>'
 
@@ -248,17 +248,16 @@ class Entry:
         ):
             return 0
 
-        fname = os.path.join(destdir, self.fname + ext)
+        fname = destdir / (self.fname + ext)
 
         # if the file exists, we have handled this entry in an earlier run
-        if not overwrite and os.path.isfile(fname):
+        if not overwrite and fname.is_file():
             return 0
 
         self.makeId()
 
         # write out the entry
-        with open(fname, 'w') as f:
-            f.write(self.render(*plagg.MEDIA))
+        fname.write_text(self.render(*plagg.MEDIA))
 
         # set modification time if present
         if self.tm:
@@ -326,8 +325,7 @@ class BlosxomEntries(Entries):
         self.logging = 0        # logging of new entries
         self.logged = False
         # Create the directory if needed
-        if not os.path.isdir(path):
-            os.makedirs(path)
+        path.mkdir(parents=True, exist_ok=True)
 
     def processItem(self, item):
         """Builds the text of one Blosxom entry, saves it in self.path and
