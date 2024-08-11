@@ -216,13 +216,17 @@ class Entry:
             return f'<a href="{enc.href}"{title}>{name}</a>'
         href = enc.href
         if file_base:
-            resp = requests.get(href, headers={'Referer': self._link})
-            if resp.status_code // 100 == 2:
-                year = yyyymm_path(self.mdate)
-                dest_dir = file_base / year
-                dest_dir.mkdir(parents=True, exist_ok=True)
-                (dest_dir / name).write_bytes(resp.content)
+            year = yyyymm_path(self.mdate)
+            dest_dir = file_base / year
+            dest_file = dest_dir / name
+            if dest_file.is_file():
                 href = f'{url_base}/{year}/{name}'
+            else:
+                resp = requests.get(href, headers={'Referer': self._link})
+                if 200 <= resp.status_code <= 299:
+                    dest_dir.mkdir(parents=True, exist_ok=True)
+                    dest_file.write_bytes(resp.content)
+                    href = f'{url_base}/{year}/{name}'
         return f'<{tag} src="{href}"{title}><br>'
 
     def timestamp(self, suffix):
