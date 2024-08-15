@@ -14,11 +14,11 @@ import feedparser.urls
 import feedparser.http
 import requests
 
-from . import plagg, requests_file
+from . import __version__, Plagg, requests_file
 
 ENCODING = 'utf-8'      # default character encoding
 
-USER_AGENT = f'plagg/{plagg.__version__} (+https://drbeat.li/py/plagg/)'
+USER_AGENT = f'plagg/{__version__} (+https://drbeat.li/py/plagg/)'
 
 try:
     CACHE_DIR = [os.environ['XDG_CACHE_HOME']]
@@ -72,7 +72,7 @@ class Feed:
         self.use_cache = True
 
         # enable feedparser debugging
-        if plagg.VERBOSE > 2:
+        if Plagg.VERBOSE > 2:
             feedparser._debug = 1
 
     def addChildElement(self, name, attrs, content):

@@ -20,7 +20,7 @@ dist: ${source}
 	python3 setup.py sdist
 
 # get the version
-V := $(shell awk -F\" '/__version__/ { print $$2 }' <plagglib/plagg.py)
+V := $(shell awk -F\" '/__version__/ { print $$2 }' <plagg/__init__.py)
 
 # provide a Regex-escaped variant of $(V) for grep
 VE := $(subst .,\.,$(V))
@@ -40,10 +40,11 @@ release:
 install: plagg.tar.gz
 	su -c "python setup.py install"
 
-FEEDS ?= ongoing ch schneier
+PLAGG = python3 -m plagg
+FEEDS ?= ongoing ch crypto-gram
 test: clean
-	-./plagg -nvvv -d t news.opml $(FEEDS) >log 2>&1 && \
-	./plagg -vvv -d t -fF https://staff.tumblr.com/rss tumblr >>log 2>&1
+	-$(PLAGG) -nvv -d t news.opml $(FEEDS) >>log 2>&1
+	$(PLAGG) -vv -d t -m t/bb_rss:media -f -F https://swiss.social/@bbolli.rss bb_rss >>log 2>&1
 	vi log
 
 clean:

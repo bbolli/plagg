@@ -9,7 +9,7 @@ from urllib.parse import urlsplit
 
 import requests
 
-from . import plagg            # for default encoding and config
+from . import Plagg
 
 
 def _escape(text):
@@ -139,7 +139,7 @@ class Entry:
             self.setMeta(tags=' '.join(t.term.replace(' ', '+') for t in item.tags))
 
         # footer
-        if plagg.FOOTER:
+        if Plagg.FOOTER:
             footer = '\n<p class="blosxomEntryFoot">' + (
                 item.get('date') or item.get('modified', '')
             )
@@ -159,8 +159,8 @@ class Entry:
                 self.tm = time.mktime(date[:8] + (-1, )) - tz
                 self.mdate = time.localtime(self.tm)
 
-        if plagg.VERBOSE > 1:
-            plagg.pprint(('new item', self.__dict__))
+        if Plagg.VERBOSE > 1:
+            Plagg.pprint(('new item', self.__dict__))
 
         return True
 
@@ -246,7 +246,7 @@ class Entry:
 
         # ignore old and future entries
         if self.tm and (
-            self.tm < plagg.TM_CUTOFF or self.tm > time.time()
+            self.tm < Plagg.TM_CUTOFF or self.tm > time.time()
         ):
             return 0
 
@@ -259,7 +259,7 @@ class Entry:
         self.makeId()
 
         # write out the entry
-        fname.write_text(self.render(*plagg.MEDIA))
+        fname.write_text(self.render(*Plagg.MEDIA))
 
         # set modification time if present
         if self.tm:
@@ -268,7 +268,7 @@ class Entry:
         return 1
 
     def tidy(self, body):
-        if plagg.VERBOSE > 3:
+        if Plagg.VERBOSE > 3:
             print('before tidy:', body)
         tidy = ['/usr/bin/tidy', '-asxhtml', '-utf8', '-f', '/dev/null']
         try:
@@ -285,9 +285,9 @@ class Entry:
                 # Keep the part between <body> and </body>
                 m = _body.search(r)
                 body = (m.group(1) if m else r).strip()
-            elif plagg.VERBOSE > 3:
+            elif Plagg.VERBOSE > 3:
                 print("tidy errors; body left as-is")
-        if plagg.VERBOSE > 3:
+        if Plagg.VERBOSE > 3:
             print('after tidy:', body)
         return body
 
@@ -345,4 +345,4 @@ class BlosxomEntries(Entries):
         if self.logging:
             name = '' if self.logged else self.name + '\n'
             self.logged = True
-            plagg.pprint(name + '  ' + entry.logSummary())
+            Plagg.pprint(name + '  ' + entry.logSummary())

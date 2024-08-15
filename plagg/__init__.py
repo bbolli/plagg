@@ -9,17 +9,7 @@ import threading
 import time
 import xml.sax
 
-__version__ = "3.1"
-
-from .feed import RSSFeed, HTMLFeed, ComputedFeed
-from .entries import BlosxomEntries, Entry
-
-VERBOSE = 0             # will be set by Plagg.__init__()
-MEDIA = (None, None)
-FOOTER = 1
-TM_CUTOFF = 0
-
-pprint = None
+__version__ = "3.2"
 
 
 def _matchHours(hours, currentHour):
@@ -42,6 +32,11 @@ def _matchHours(hours, currentHour):
 class Plagg(xml.sax.handler.ContentHandler):
     """The application class. Generates entries from each feed in the OPML file."""
 
+    VERBOSE = 0
+    MEDIA = (None, None)
+    FOOTER = True
+    TM_CUTOFF = 0
+
     def __init__(self, args):
         self.logging = self.errors = 0
         self.newentries = []
@@ -49,20 +44,17 @@ class Plagg(xml.sax.handler.ContentHandler):
         self.attrstack = []
         self.threads = []
         self.lock = threading.Lock()
-        global pprint
-        pprint = self.pprint
         xml.sax.handler.ContentHandler.__init__(self)
 
         self.opmlfile = args.opmlfile
         self.nicks = args.nicknames
         self.newspath = Path(args.dir).expanduser()
-        global VERBOSE, FOOTER, TM_CUTOFF, MEDIA
-        VERBOSE = args.verbose
+        Plagg.VERBOSE = args.verbose
         if args.media:
             media = args.media.split(':') + ['']
-            MEDIA = (Path(media[0]).expanduser() / media[1], '/' + media[1])
-        FOOTER = args.footer
-        TM_CUTOFF = 0 if args.old else time.time() - 7 * 86400
+            Plagg.MEDIA = (Path(media[0]).expanduser() / media[1], '/' + media[1])
+        Plagg.FOOTER = args.footer
+        Plagg.TM_CUTOFF = 0 if args.old else time.time() - 7 * 86400
 
     def pprint(self, obj):
         with self.lock:
@@ -150,7 +142,7 @@ class Plagg(xml.sax.handler.ContentHandler):
     def processFeed(self, feed):
         if self.fetchFeed(feed):
             e = BlosxomEntries(feed.path)
-            e.logging = VERBOSE
+            e.logging = Plagg.VERBOSE
             new = e.processFeed(feed)
             if new:
                 with self.lock:
@@ -164,7 +156,7 @@ class Plagg(xml.sax.handler.ContentHandler):
                   file=sys.stderr)
             return
         except Exception as e:
-            if VERBOSE > 1:
+            if Plagg.VERBOSE > 1:
                 import traceback
                 with self.lock:
                     print(f"Feed: {feed.name} ({feed.uri})", file=sys.stderr)
@@ -181,7 +173,7 @@ class Plagg(xml.sax.handler.ContentHandler):
                     self.errors += 1
             return
 
-        if VERBOSE > 2:
+        if Plagg.VERBOSE > 2:
             with self.lock:
                 _pprint.pprint(feed.feed)
                 if 'bozo_exception' in feed.feed:
@@ -208,3 +200,7 @@ class Plagg(xml.sax.handler.ContentHandler):
             e.setEntry(f"Latest news ({time.strftime('%H:%M:%S')})", '\n'.join(body))
             e.setMeta(source='plagg')
             e.write(self.newspath, '.txt', overwrite=True, fname='Latest')
+
+
+from .feed import RSSFeed, HTMLFeed, ComputedFeed  # noqa; circular import
+from .entries import BlosxomEntries, Entry  # noqa; circular import

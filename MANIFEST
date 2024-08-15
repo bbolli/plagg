@@ -4,9 +4,10 @@ README
 README.html
 news.opml
 opml.xsl
-plagg
 setup.py
-plagglib/entries.py
-plagglib/feed.py
-plagglib/plagg.py
-plagglib/__init__.py
+plagg/cli.py
+plagg/entries.py
+plagg/feed.py
+plagg/plagg.py
+plagg/__init__.py
+plagg/__main__.py

@@ -1,17 +1,14 @@
-#!/usr/bin/env python3
-
 """Reads an OPML file, gets all feeds in it and writes Blosxom entries
 corresponding to the items in the feeds."""
 
 import argparse
-import os
 import signal
 import sys
 
-from plagglib import plagg
+from . import __version__, Plagg
 
 
-parser = argparse.ArgumentParser(description=__doc__)
+parser = argparse.ArgumentParser(prog='plagg', description=__doc__)
 parser.add_argument('-d', '--dir', help="the destination directory",
                     default='~/bblog/news')
 parser.add_argument('-F', '--feed', action='store_true',
@@ -39,7 +36,7 @@ parser.add_argument('nicknames', nargs='*', default=[],
 
 args = parser.parse_args()
 if args.version:
-    print(plagg.__version__)
+    print(__version__)
     sys.exit(0)
 if args.feed:
     if not args.opmlfile or '://' not in args.opmlfile:
@@ -53,7 +50,7 @@ if args.timeout and hasattr(signal, 'alarm'):
     signal.signal(signal.SIGALRM, signal.default_int_handler)
     signal.alarm(args.timeout)
 
-plagg = plagg.Plagg(args)
+plagg = Plagg(args)
 try:
     if args.feed:
         plagg.singleFeed()
