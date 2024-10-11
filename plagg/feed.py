@@ -146,7 +146,7 @@ class RSSFeed(Feed):
         # provide the base URL to allow to resolve relative URLs
         if 'content-location' not in resp.headers:
             resp.headers['content-location'] = self.uri
-        feed = feedparser.parse(resp.text, resp.headers)
+        feed = feedparser.parse(resp.content, resp.headers)
         if feed.get('status') == 304:
             # feed not modified
             return
